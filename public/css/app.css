@@ -1,10 +1,20 @@
+/*
+#68228F
+#502599
+#302683
+#253899
+#22518F
+*/
+@font-face {
+    font-family: OptimusPrime;
+    src: url('/fonts/Oxygen-Bold.tff');
+}
 header {
-    background-color: #718096;
+    background-color: #302683;
     height: 200px;
     display: flex;
     padding: 10px;
 }
-
 body {
     margin: 0;
 }
@@ -37,17 +47,23 @@ footer {
 header a {
     text-decoration: none;
     margin-left: 10px;
+    color: white;
+    font-family: OptimusPrime;
 }
-.journal-wrap{
+
+.journal-wrap {
     display: flex;
 }
-.journal-course{
+
+.journal-course {
     margin-left: 10px;
     border: 1px solid black;
 }
-.journal-task-block{
+
+.journal-task-block {
     display: flex;
 }
-.login{
+
+.login {
     margin-left: auto;
 }
