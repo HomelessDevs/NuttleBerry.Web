@@ -11,65 +11,125 @@
     src: url('fonts/Rubik.ttf');
     font-weight: bold;
 }
+
 @font-face {
     font-family: OptimusPrime;
     src: url('fonts/Oxygen-Regular.ttf');
 }
+
 /*--------------------------------------Header--------------------------------------*/
 header {
     font-size: 20px;
     background-color: #302683;
-    height: 30px;
     display: flex;
-    padding: 1% 14%;
+    min-height: 65px;
 }
-nav a:first-child{
-    margin-left: 0;
+@media only screen
+and (max-device-width : 480px) {
+    header {
+        font-size: 30px;
+    }
+    header a{
+        line-height: 35px;
+    }
 }
-header p {
-    margin: 0;
-
+header ul{
+    padding: 0;
 }
 header a {
-    margin-left: 10px;
-    color: white;
+    display: inline-block;
+    color: #fff;
+    line-height: 25px;
+    text-decoration: none;
+    cursor: pointer;
+    position: relative;
 }
+header a:after {
+    display: block;
+    content: "";
+    background-color: #fff;
+    height: 2px;
+    width: 0%;
+    left: 50%;
+    position: absolute;
+    -webkit-transition: width .3s ease-in-out;
+    -moz--transition: width .3s ease-in-out;
+    transition: width .3s ease-in-out;
+    -webkit-transform: translateX(-50%);
+    -moz-transform: translateX(-50%);
+    transform: translateX(-50%);
+}
+header a:hover:after,
+header a:focus:after {
+    width: 100%;
+}
+header ul li:first-child {
+    margin-left: 0;
+}
+
+header nav {
+    top: 30%;
+    margin: 0 2%;
+}
+
+header ul li {
+    margin-left: 15px;
+}
+
+header ul li a {
+    color: #fff;
+}
+
 .login {
     margin-left: auto;
 }
+header nav ul {
+    display: flex;
+}
+
 /*--------------------------------------Footer--------------------------------------*/
 footer {
-    left:0px;
-    bottom:0px;
+    left: 0px;
+    bottom: 0px;
     width: 100%;
     height: 80px;
     background-color: #302683;
 }
+
 /*--------------------------------------General--------------------------------------*/
-.main-wrap{
+.main-wrap {
     width: 70%;
     position: center;
     margin: 2% 14%;
     padding: 1%;
     font-weight: bold;
-    min-height:100%;
+    min-height: 100%;
     border-radius: 4px;
     background-color: #fff;
 
 }
-.app{
+
+.app {
     font-family: Rubick;
     background-color: #ececec;
 }
-.app a{
-    text-decoration: none ;
+
+.app a {
+    text-decoration: none;
 }
-h1{
+
+.app ul li {
+    list-style-type: none;
+}
+
+h1 {
     margin-top: 0;
 }
+
 body {
     margin: 0;
 }
+
 /*--------------------------------------Other--------------------------------------*/
 
 .destroy {
@@ -97,13 +157,12 @@ body {
     display: flex;
 }
 
-
-.groups-list{
-    list-style-type: none;
+.groups-list {
     padding-inline-start: 20px;
     font-size: 20px;
 }
-.groups-list li{
+
+.groups-list li {
     margin-top: 10px;
 }
 
