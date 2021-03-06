@@ -10,8 +10,7 @@
                     @foreach($tasks as $task)
                         @if($task->topic == $topic->topic)
                             <li>
-                                <a href="{{ route('task.show', [$task->id]) }}">{{ $task->title }}</a><i class="far fa-check-circle"></i>
-                            </li>
+                                <a href="{{ route('task.show', [$task->id]) }}">{{ $task->title }}</a></li>
                         @endif
                     @endforeach
                 </ul>

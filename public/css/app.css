@@ -164,11 +164,11 @@ header nav ul {
         content: "";
         background-color: #fff;
         height: 2px;
-        width: 0%;
+        width: 0;
         left: 50%;
         position: absolute;
         -webkit-transition: width .3s ease-in-out;
-        -moz--transition: width .3s ease-in-out;
+        -moz-transition: width .3s ease-in-out;
         transition: width .3s ease-in-out;
         -webkit-transform: translateX(-50%);
         -moz-transform: translateX(-50%);
@@ -198,8 +198,8 @@ div .hamburger-menu {
 footer {
     background-color: #5d48ff;
     min-height: 65px;
-    left: 0px;
-    bottom: 0px;
+    left: 0;
+    bottom: 0;
     width: 100%;
 }
 
@@ -321,6 +321,7 @@ body {
     -moz-transition: all ease 0.3s;
     transition: all ease 0.3s;
 }
+
 .topic-list li{
     margin-top: 10px;
 }
@@ -335,12 +336,6 @@ body {
 .task-list li a:hover:before{
     border-left: 2px solid #5d48ff;
 }
-.fa-check-circle{
-    color: #5d48ff;
-    margin-left: 10px;
+.task-list li a {
+    font-size: 22px;
 }
-
-
-
-
-

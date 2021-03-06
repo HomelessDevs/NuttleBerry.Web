@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>{{ config('app.name', 'Laravel') }}</title>
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ url('css/app.css') }}" rel="stylesheet">
     <meta name="viewport" content="width=device-width">
+    <script src="https://use.fontawesome.com/7531c8f813.js"></script>
 </head>
 <body>
 <div class="app">
@@ -14,6 +15,6 @@
     </div>
     @include('template-parts.footer')
 </div>
-<script src="{{ asset('js/script.js') }}"></script>
+<script src="{{ url('js/script.js') }}"></script>
 </body>
 </html>
