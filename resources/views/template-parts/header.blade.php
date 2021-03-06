@@ -1,6 +1,12 @@
 <header>
+    <div class="header-wrap">
     <nav class="header-navigation">
-        <ul>
+        <div id="hamburger" class="hamburger-menu">
+            <div class="stick"></div>
+            <div class="stick"></div>
+            <div class="stick"></div>
+        </div>
+        <ul id="nav-menu">
             <li><a href="{{ route('group.index') }}">Курси</a></li>
             @if(Auth::check())
                 @if(Auth::user()->role == "teacher" || Auth::user()->role == "admin")
@@ -11,6 +17,7 @@
             <li><a href="{{ route('course.myCourses') }}">Мої курси</a></li>
         </ul>
     </nav>
+
     @if (Route::has('login'))
         <nav class="login">
             <ul>
@@ -25,4 +32,5 @@
             </ul>
         </nav>
     @endif
+    </div>
 </header>

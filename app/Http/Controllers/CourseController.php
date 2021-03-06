@@ -16,7 +16,9 @@ class CourseController extends Controller
     public function index($group)
     {
         $courses = DB::table('courses')->where('group_id', $group)->get();
-        return view('course.courses', ['courses' => $courses]);
+        $group = DB::table('groups')->where('id', $group)->first();
+        $groupName = $group->name;
+        return view('course.courses', ['courses' => $courses, 'groupName' => $groupName]);
     }
 
     public function myCourses()
