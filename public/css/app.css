@@ -206,21 +206,21 @@ footer {
 /*--------------------------------------General--------------------------------------*/
 .main-wrap {
     max-width: 1200px;
-    margin: 40px auto;
+    margin: 20px auto;
     padding: 20px;
     font-weight: bold;
-    min-height: 750px;
+    min-height: 759px;
     border-radius: 4px;
     background-color: #fff;
 }
 
 @media (max-width: 1320px) {
     .main-wrap {
-        margin: 40px 40px;
+        margin: 20px 20px;
     }
 
     .header-wrap {
-        margin: 0 40px;
+        margin: 0 20px;
     }
 }
 
@@ -240,6 +240,7 @@ footer {
 
 h1 {
     margin-top: 0;
+    margin-bottom: 0;
 }
 
 body {
@@ -283,22 +284,62 @@ body {
     background: #FAFAFA;
     position: relative;
     margin-bottom: 20px;
-    padding: 16px 10px;
-    -webkit-transition: all ease 0.5s;
-    -moz-transition: all ease 0.5s;
-    transition: all ease 0.5s;
+    -webkit-transition: all ease 0.3s;
+    -moz-transition: all ease 0.3s;
+    transition: all ease 0.3s;
 }
-.standard-list li:hover{
-    box-shadow: inset 0 70px 0 0 #5d48ff;
 
-
+.standard-list li:hover {
+    background-color: #5d48ff;
 }
-.standard-list li:hover a{
+
+.standard-list li:hover a {
     color: #fff;
 }
-.standard-list li a{
+
+.standard-list li a {
     display: block;
+    padding: 16px 10px;
 }
+
+.task-list {
+    padding-inline-start: 20px;
+}
+
+.topic-list {
+    margin-left: 20px;
+}
+
+.topic-list h2 {
+    margin-top: 20px;
+}
+
+.topic-list li a {
+    color: #5d48ff;
+    font-size: 18px;
+    -webkit-transition: all ease 0.3s;
+    -moz-transition: all ease 0.3s;
+    transition: all ease 0.3s;
+}
+.topic-list li{
+    margin-top: 10px;
+}
+
+.task-list li a:before {
+    content: "";
+    border-left: 2px solid #a09f9f;
+    margin-right: 10px;
+    transition: all ease 0.3s;
+    border-radius: 3px;
+}
+.task-list li a:hover:before{
+    border-left: 2px solid #5d48ff;
+}
+.fa-check-circle{
+    color: #5d48ff;
+    margin-left: 10px;
+}
+
 
 
 
