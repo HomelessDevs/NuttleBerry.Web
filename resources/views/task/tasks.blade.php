@@ -10,7 +10,23 @@
                     @foreach($tasks as $task)
                         @if($task->topic == $topic->topic)
                             <li>
-                                <a href="{{ route('task.show', [$task->id]) }}">{{ $task->title }}</a></li>
+                                <a
+                                    @foreach ($completedTasks as $completed)
+                                        @if($completed->task_id == $task->id)
+                                            @if($completed->rating == "pending")
+                                                class="pending-task"
+                                            @else
+                                                class="completed-task"
+                                            @endif
+                                        @endif
+                                    @endforeach
+                                    @if($task->type == "advertisement")
+                                        class="advertisement"
+                                    @endif
+                                    @if($task->type == "theory")
+                                    class="theory"
+                                    @endif
+                                href="{{ route('task.show', [$task->id]) }}">{{ $task->title }}</a></li>
                         @endif
                     @endforeach
                 </ul>

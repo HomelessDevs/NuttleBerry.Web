@@ -14,9 +14,14 @@ class TaskController extends Controller
     {
         $topics = DB::table('tasks')->select('topic')->distinct()->where('course_id', $course_id)->get();
         $tasks = DB::table('tasks')->where('course_id', $course_id)->get();
+        $tasksIDs = array();
+        foreach ($tasks as $task){
+            $tasksIDs[] = $task->id;
+        }
+        $completedTasks = DB::table('completed_users_tasks')->where('user_id', Auth::user()->id)->whereIn('task_id', $tasksIDs)->get();
         $course = DB::table('courses')->where('id', $course_id)->first();
         $MyCourses = DB::table('my_courses')->where([['user_id', Auth::user()->id], ['course_id', $course_id]])->first();
-        return view('task.tasks', ['tasks' => $tasks, 'topics' => $topics, 'myCourse' => $MyCourses, 'course' => $course]);
+        return view('task.tasks', ['tasks' => $tasks, 'topics' => $topics, 'myCourse' => $MyCourses, 'course' => $course, 'completedTasks' => $completedTasks]);
     }
 
     public function store(Request $request)
