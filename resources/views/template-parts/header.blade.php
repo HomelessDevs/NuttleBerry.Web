@@ -26,6 +26,7 @@
                 @else
                     <li><a href="{{ route('login') }}">Логін</a></li>
                     @if (Route::has('register'))
+
                         <li><a href="{{ route('register') }}">Register</a></li>
                     @endif
                 @endauth

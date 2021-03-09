@@ -34,4 +34,5 @@ Route::name('api.')->group(function() {
     Route::get('task/{id}/download', [TaskController::class, 'download'])->name('task.download');
     Route::get('task/{id}/completed', [TaskController::class, 'completed'])->name('task.completed');
     ////////////////////////////////////////////ANSWERS////////////////////////////////////////////
+   // Route::post('login', [TaskController::class, 'rate'])->name('task.rate');
 });

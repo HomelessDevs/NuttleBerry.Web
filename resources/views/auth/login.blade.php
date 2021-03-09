@@ -4,7 +4,7 @@
     <form method="post" action="{{ route('login') }}">
         @csrf
         <label>
-            <input required type="email" name="email">
+            <input required type="email"  name="email">
         </label>
         @error('email')
         <strong>{{ $message }}</strong>

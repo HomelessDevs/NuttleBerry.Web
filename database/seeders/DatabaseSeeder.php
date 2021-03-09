@@ -25,7 +25,7 @@ class DatabaseSeeder extends Seeder
         Course::factory()->count(10)->create();
         MyCourses::factory()->count(2)->create();
         Task::factory()->count(15)->create();
-        Answer::factory()->count(10)->create();
+       // Answer::factory()->count(10)->create();
 
     }
 }

@@ -1,9 +1,10 @@
 <?php
 
 namespace App\Models;
-
+use App\Models\Course;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+
 
 /**
  * App\Models\Group
@@ -24,4 +25,8 @@ use Illuminate\Database\Eloquent\Model;
 class Group extends Model
 {
     use HasFactory;
+    public function comments()
+    {
+        return $this->hasMany(Course::class);
+    }
 }

@@ -18,7 +18,7 @@ class TaskController extends Controller
         foreach ($tasks as $task){
             $tasksIDs[] = $task->id;
         }
-        $completedTasks = DB::table('completed_users_tasks')->where('user_id', Auth::user()->id)->whereIn('task_id', $tasksIDs)->get();
+        $completedTasks = DB::table('completed_tasks')->where('user_id', Auth::user()->id)->whereIn('task_id', $tasksIDs)->get();
         $course = DB::table('courses')->where('id', $course_id)->first();
         $MyCourses = DB::table('my_courses')->where([['user_id', Auth::user()->id], ['course_id', $course_id]])->first();
         return view('task.tasks', ['tasks' => $tasks, 'topics' => $topics, 'myCourse' => $MyCourses, 'course' => $course, 'completedTasks' => $completedTasks]);
@@ -44,7 +44,7 @@ class TaskController extends Controller
     public function show($task_id)
     {
         $task = DB::table('tasks')->where('id', '=', $task_id)->first();
-        $completedTask = DB::table('completed_users_tasks')->where([
+        $completedTask = DB::table('completed_tasks')->where([
             ['user_id', '=', Auth::user()->id],
             ['task_id', '=', $task_id],
         ])->first();
@@ -128,13 +128,13 @@ class TaskController extends Controller
 
     public function completed($task_id)
     {
-        $answers = DB::table('completed_users_tasks')->where('task_id', $task_id)->get();
+        $answers = DB::table('completed_tasks')->where('task_id', $task_id)->get();
         return view('task.completed', ['answers' => $answers]);
     }
 
     public function journal()
     {
-        $answers = DB::table('completed_users_tasks')->where('user_id', Auth::user()->id)->get();
+        $answers = DB::table('completed_tasks')->where('user_id', Auth::user()->id)->get();
         $taskIDs = array();
         foreach ($answers as $answer) {
             $taskIDs[] = $answer->task_id;
