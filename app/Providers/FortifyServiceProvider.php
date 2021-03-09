@@ -61,13 +61,14 @@ class FortifyServiceProvider extends ServiceProvider
         Fortify::verifyEmailView(function (){
             return view('auth.verify-email');
         });
+        /*
         Fortify::authenticateUsing(function (Request $request) {
             $user = User::where('email', $request->email)->first();
-
             if ($user &&
                 Hash::check($request->password, $user->password)) {
-                return $user;
+                return response()->json($user, 200);
             }
         });
+        */
     }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Course;
 use App\Models\Task;
+use App\Models\Group;
 use App\Models\Answer;
 use App\Models\MyCourses;
 use Illuminate\Http\Request;
@@ -13,17 +14,15 @@ use Illuminate\Support\Facades\DB;
 class CourseController extends Controller
 {
 
-    public function index($group)
+    public function index($group_id)
     {
-        $courses = DB::table('courses')->where('group_id', $group)->get();
-        $group = DB::table('groups')->where('id', $group)->first();
-        $groupName = $group->name;
-        return view('course.courses', ['courses' => $courses, 'groupName' => $groupName]);
+        $group = Group::find($group_id);
+        $courses = $group->courses;
+        return view('course.courses', ['courses' => $courses, 'groupName' => $group->name]);
     }
-
     public function myCourses()
     {
-        $myCourses = DB::table('my_courses')->where('user_id', Auth::user()->id)->get();
+        $myCourses = MyCourses::where('user_id', Auth::user()->id)->get();
         $course_ids = array();
         foreach ($myCourses as $course) {
             $course_ids[] = $course->course_id;
@@ -59,6 +58,8 @@ class CourseController extends Controller
 
     public function destroy($id)
     {
+        $courses = Course::find($id);
+        ////
         $course = Course::where('id', $id)->select('name', 'id')->first();
         MyCourses::where('course_id', $course->id)->delete();
         Course::where('id', $id)->delete();

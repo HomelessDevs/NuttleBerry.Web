@@ -6,9 +6,19 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Hash;
 
 class ProfileController extends Controller
 {
+    public function login(Request $request)
+    {
+        $user = User::where('email', $request->email)->first();
+        if ($user &&
+            Hash::check($request->password, $user->password)) {
+            return response()->json($user, 200);
+        }
+    }
+
     public function show($id)
     {
         $user = DB::table('users')->where('id', '=', $id)->first();
