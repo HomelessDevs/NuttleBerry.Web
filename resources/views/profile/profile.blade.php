@@ -20,7 +20,16 @@
             </form>
             ';}
             }
+    @endphp
+    <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+        <br>Logout
+    </a>
+    <form id="logout-form" action="{{ route('logout') }}" method="POST">
+        @csrf
+    </form>
+    @php
         }
     @endphp
+
     <h1>section</h1>
 @endsection

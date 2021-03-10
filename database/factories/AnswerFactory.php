@@ -22,6 +22,7 @@ class AnswerFactory extends Factory
      */
     public function definition()
     {
+        /*
         $myCourses = DB::table('my_courses')->select('user_id','course_id')->get();
         $myCoursesData = array();
         foreach ($myCourses as $course){
@@ -45,5 +46,6 @@ class AnswerFactory extends Factory
             'message' => $this->faker->text(50),
             'rating' => $this->faker->numberBetween(1, 5),
             ];
+        */
     }
 }

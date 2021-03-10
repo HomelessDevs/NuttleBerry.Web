@@ -17,7 +17,10 @@ use App\Http\Controllers\TaskController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+<<<<<<< HEAD
 //and AGAIN testaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaazzzazazadawd
+=======
+>>>>>>> taskFront
 Route::get('/', function () {
     return view('main-page');
 })->name('main');
@@ -40,5 +43,5 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('task/{id}/rate', [TaskController::class, 'rate'])->name('task.rate');
 });
 Route::redirect('home', '/');
-
+//test
 

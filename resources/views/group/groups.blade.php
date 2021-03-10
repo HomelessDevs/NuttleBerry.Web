@@ -1,7 +1,7 @@
 @extends('templates.main-template')
 @section('content')
-    <h1>Groups</h1>
-        <ul>
+    <h1>Групи</h1>
+        <ul class="standard-list">
             @foreach($groups as $group)
                 <li><a href="{{ route('course.index', $group->id) }}">{{ $group->name }}</a>
                 </li>

@@ -19,19 +19,25 @@ use App\Http\Controllers\api\ProfileController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::middleware('auth:api')->get( '/user', function (Request $request){
-   return $request->user();
+Route::middleware('auth:api')->get('/user', function (Request $request) {
+    return $request->user();
 });
-Route::name('api.')->group(function() {
-    Route::apiResource('group', GroupController::class)->name('*', 'group');
-    Route::apiResource('course', CourseController::class)->name('*', 'course');
-    Route::apiResource('profile', ProfileController::class)->name('*', 'profile');
-    Route::apiResource('task', TaskController::class)->name('*', 'task');
-    ////////////////////////////////////////////ANSWERS////////////////////////////////////////////
-    Route::post('task/{id}/rate', [TaskController::class, 'rate'])->name('task.rate');
-    Route::post('task/{id}/answer', [TaskController::class, 'answer'])->name('task.answer');
-    Route::post('task/{id}/edit-answer', [TaskController::class, 'editAnswer'])->name('task.edit.answer');
-    Route::get('task/{id}/download', [TaskController::class, 'download'])->name('task.download');
-    Route::get('task/{id}/completed', [TaskController::class, 'completed'])->name('task.completed');
-    ////////////////////////////////////////////ANSWERS////////////////////////////////////////////
+Route::name('api.')->group(function () {
+    Route::middleware('throttle')->group(function () {
+        Route::post('login', [ProfileController::class, 'login'])->name('profile.login');
+    });
+    Route::middleware('auth:api', 'throttle')->group(function () {
+        Route::apiResource('group', GroupController::class)->name('*', 'group');
+        Route::apiResource('course', CourseController::class)->name('*', 'course');
+        Route::apiResource('profile', ProfileController::class)->name('*', 'profile');
+        Route::apiResource('task', TaskController::class)->name('*', 'task');
+        ////////////////////////////////////////////ANSWERS////////////////////////////////////////////
+        Route::post('task/{id}/rate', [TaskController::class, 'rate'])->name('task.rate');
+        Route::post('task/{id}/answer', [TaskController::class, 'answer'])->name('task.answer');
+        Route::post('task/{id}/edit-answer', [TaskController::class, 'editAnswer'])->name('task.edit.answer');
+        Route::get('task/{id}/download', [TaskController::class, 'download'])->name('task.download');
+        Route::get('task/{id}/completed', [TaskController::class, 'completed'])->name('task.completed');
+        ////////////////////////////////////////////PROFILE////////////////////////////////////////////
+        Route::post('logout', [ProfileController::class, 'logout'])->name('profile.logout');
+    });
 });
