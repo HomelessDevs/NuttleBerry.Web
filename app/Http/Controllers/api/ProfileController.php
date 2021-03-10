@@ -7,16 +7,28 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Hash;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 
 class ProfileController extends Controller
 {
+
     public function login(Request $request)
     {
         $user = User::where('email', $request->email)->first();
         if ($user &&
             Hash::check($request->password, $user->password)) {
-            return response()->json($user, 200);
+            $token = $user->createToken('Token');
+            return response()->json(array($token), 200);
         }
+    }
+
+    public function logout(Request $request)
+    {
+        $request->user()->token()->revoke();
+        return response()->json([
+            'message' => 'You are successfully logged out',
+        ]);
     }
 
     public function show($id)

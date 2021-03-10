@@ -94,7 +94,6 @@ class TaskController extends Controller
     public function destroy($id)
     {
         Task::where('id', $id)->delete();
-        Answer::where('task_id', $id)->delete();
         return redirect()->route('administrating');
     }
 

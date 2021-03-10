@@ -52,22 +52,7 @@ class GroupController extends Controller
 
     public function destroy($id)
     {
-        $group = Group::where('id', $id)->select('id')->first();
         Group::where('id', $id)->delete();
-        $courses = Course::where('group_id', $group->id)->select('id')->get();
-        $coursesIDs = array();
-        foreach ($courses as $course) {
-            $coursesIDs[] = $course->id;
-        }
-        MyCourses::whereIn('course_id', $coursesIDs)->delete();
-        Course::where('group_id', $group->id)->delete();
-        $tasks = Task::where('course_id', $coursesIDs)->get();
-        $tasksIDs = array();
-        foreach ($tasks as $task) {
-            $tasksIDs[] = $task->id;
-        }
-        Task::whereIn('course_id', $coursesIDs)->delete();
-        Answer::whereIn('task_id', $tasksIDs)->delete();
         return redirect()->route('administrating');
     }
 }

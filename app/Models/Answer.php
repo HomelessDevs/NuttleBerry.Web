@@ -9,6 +9,7 @@ use App\Models\Task;
 class Answer extends Model
 {
     use HasFactory;
+    public $table = "completed_tasks";
     public function users()
     {
         return $this->belongsToMany(Task::class);

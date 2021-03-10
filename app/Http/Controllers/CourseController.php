@@ -58,18 +58,7 @@ class CourseController extends Controller
 
     public function destroy($id)
     {
-        $courses = Course::find($id);
-        ////
-        $course = Course::where('id', $id)->select('name', 'id')->first();
-        MyCourses::where('course_id', $course->id)->delete();
         Course::where('id', $id)->delete();
-        $tasks = Task::where('course_id', $course->id)->get();
-        $tasksIDs = array();
-        foreach ($tasks as $task) {
-            $tasksIDs[] = $task->id;
-        }
-        Task::where('course_id', $course->id)->delete();
-        Answer::whereIn('task_id', $tasksIDs)->delete();
         return redirect()->route('administrating');
     }
 

@@ -16,7 +16,7 @@ class GroupController extends Controller
 
     public function index()
     {
-        $groups = DB::table('groups')->get();
+        $groups = Group::all();
         return response()->json($groups, 200);
     }
 
