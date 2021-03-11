@@ -1,10 +1,4 @@
-/*
-#33FF00 - green
-#fff - white
-#5d48ff - nuttleberry
-#a09f9f - grey
-#ffb248 - orange
- */
+
 /*--------------------------------------Fonts--------------------------------------*/
 @font-face {
     font-family: Rubick;
@@ -25,10 +19,15 @@ header {
 }
 
 .header-wrap {
+
     display: flex;
     max-width: 1240px;
     margin: 0 auto;
 }
+
+body {
+    margin: 0;
+
 
 header ul {
     padding: 0;
@@ -69,6 +68,7 @@ header nav ul {
 
 .header-navigation {
     display: flex;
+
 }
 
 /*--------------------------------------adaptive-meny--------------------------------------*/
@@ -262,6 +262,16 @@ body {
     margin: 20px;
 }
 
+
+header a {
+    text-decoration: none;
+    margin-left: 10px;
+    color: white;
+    font-family: OptimusPrime;
+}
+
+
+
 .journal-wrap {
     display: flex;
 }
@@ -275,6 +285,10 @@ body {
     display: flex;
 }
 
+
+.login {
+    margin-left: auto;
+}
 .standard-list {
     padding-inline-start: 0;
     font-size: 20px;
@@ -355,6 +369,7 @@ body {
 }
 .advertisement:before{
     border-left: 4px solid #00ffd7 !important;
+
 }
 /*
 #00e00d - green
