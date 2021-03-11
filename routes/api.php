@@ -19,9 +19,7 @@ use App\Http\Controllers\api\ProfileController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+
 Route::name('api.')->group(function () {
     Route::middleware('throttle')->group(function () {
         Route::post('login', [ProfileController::class, 'login'])->name('profile.login');
