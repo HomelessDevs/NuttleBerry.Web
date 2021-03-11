@@ -42,3 +42,4 @@ Route::middleware(['auth', 'verified'])->group(function () {
 });
 Route::redirect('home', '/');
 //testssssdadasdaw
+//somepush
