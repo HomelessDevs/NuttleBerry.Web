@@ -41,5 +41,4 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('task/{id}/rate', [TaskController::class, 'rate'])->name('task.rate');
 });
 Route::redirect('home', '/');
-//testssssdadasdaw
-//somepush
+//some fix
