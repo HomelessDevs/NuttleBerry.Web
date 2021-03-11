@@ -14,6 +14,6 @@
     </div>
     @include('template-parts.footer')
 </div>
-<script src="{{ url('js/script.js') }}"></script>
+<script src="{{ url('js/hamburger.js') }}"></script>
 </body>
 </html>

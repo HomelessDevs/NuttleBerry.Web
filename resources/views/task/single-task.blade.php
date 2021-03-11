@@ -13,7 +13,11 @@
         </div>
         <div class="task-answer">
             <div class="teacher-feedback">
-                    <p>Відгук вчителя: rem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recent</p>
+                <p>Відгук вчителя: rem Ipsum has been the industry's standard dummy text ever since the 1500s, when an
+                    unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived
+                    not only five centuries, but also the leap into electronic typesetting, remaining essentially
+                    unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem
+                    Ipsum passages, and more recent</p>
             </div>
             <div>
 
@@ -37,17 +41,20 @@
                 </div>
                 <div class="task-button-edit">
                     @if(!empty($completedTask) && Auth::user()->role == "student")
-                    <button>Редагувати відповідь</button>
+                        <button id="task-button">Редагувати відповідь</button>
                     @elseif(empty($completedTask)&& Auth::user()->role == "student")
-                            <button>Відповісти</button>
-                        @endif
+                        <button id="task-button">Відповісти</button>
+                    @endif
                     @if(Auth::user()->role == "teacher" && !empty($completedTask) || Auth::user()->role == "admin" && !empty($completedTask))
-                            <button>Оцінити</button>
+                        <button id="task-button">Оцінити</button>
+                    @endif
+                    @if(Auth::user()->role == "teacher" && empty($completedTask) || Auth::user()->role == "admin" && empty($completedTask))
+                        <button id="task-button">Нема робіт</button>
                     @endif
                 </div>
             </div>
         </div>
-        <div class="edit-task">
+        <div id="edit-task" class="none-displayed">
             @if(!empty($completedTask) && Auth::user()->id == $completedTask->user_id && request()->task == $completedTask->task_id )
                 <a href="#">edit answer</a>
                 <div class="edit-answer">
@@ -77,4 +84,6 @@
             @endif
         </div>
     </div>
+    <script src="{{ url('js/task-button.js') }}"></script>
 @endsection
+
