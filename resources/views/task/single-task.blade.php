@@ -1,21 +1,37 @@
 @extends('templates.main-template')
 @section('content')
+    <h1>{{$task->title}}</h1>
+    <p>{{$task->description}}</p>
     @if($task->file != "none")
         <a href="{{ route('task.download', $task->id) }}">{{$task->file}}</a>
     @endif
+    <div class="task-info">
+        <div class="task-status">
+        <p>status</p>
+        </div>
+        <div class="task-rating">
+            <p>rating</p>
+        </div>
+        <div class="task-teacher-message">
+        <p>message</p>
+        </div>
+    </div>
     @if(!empty($completedTask) && Auth::user()->id == $completedTask->user_id && request()->task == $completedTask->task_id )
-        <h3>Task complete</h3>
-        <a href="#">edit answer</a>
-        <form enctype="multipart/form-data" method="post" action="{{ route('task.edit.answer', Auth::user()->id) }}">
-            @csrf
-            <input type="text" value="{{ $completedTask->message }}" name="message">
-            <input type="file" name="file">
-            <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
-            <input type="hidden" name="task_id" value="{{ $task->id }}">
-            <input type="submit">
-        </form>
+        <div>
+            <a href="#">edit answer</a>
+            <div class="edit-answer">
+                <form enctype="multipart/form-data" method="post"
+                      action="{{ route('task.edit.answer', Auth::user()->id) }}">
+                    @csrf
+                    <input type="text" value="{{ $completedTask->message }}" name="message">
+                    <input type="file" name="file">
+                    <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
+                    <input type="hidden" name="task_id" value="{{ $task->id }}">
+                    <input type="submit">
+                </form>
+            </div>
+        </div>
     @else
-        <h1>{{$task->title}}</h1>
         <form enctype="multipart/form-data" method="post" action="{{ route('task.answer', Auth::user()->id) }}">
             @csrf
             <input type="text" name="message">

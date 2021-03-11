@@ -1,29 +1,4 @@
-<<<<<<< HEAD
 
-=======
-/*
-<<<<<<< HEAD
-#68228F
-#502599
-#302683
-#253899
-#22518F
-*/
-@font-face {
-    font-family: OptimusPrime;
-    src: url('/fonts/Oxygen-Bold.tff');
-}
-header {
-    background-color: #302683;
-    height: 200px;
-=======
-#33FF00 - green
-#fff - white
-#5d48ff - nuttleberry
-#a09f9f - grey
-#ffb248 - orange
- */
->>>>>>> 12f129bb482874bba804648245e27bebb6bae72a
 /*--------------------------------------Fonts--------------------------------------*/
 @font-face {
     font-family: Rubick;
@@ -44,23 +19,15 @@ header {
 }
 
 .header-wrap {
-<<<<<<< HEAD
 
-=======
->>>>>>> taskFront
->>>>>>> 12f129bb482874bba804648245e27bebb6bae72a
     display: flex;
     max-width: 1240px;
     margin: 0 auto;
 }
-<<<<<<< HEAD
-body {
-    margin: 0;
-=======
 
 body {
     margin: 0;
-
+}
 
 header ul {
     padding: 0;
@@ -101,11 +68,7 @@ header nav ul {
 
 .header-navigation {
     display: flex;
-<<<<<<< HEAD
 
-=======
->>>>>>> taskFront
->>>>>>> 12f129bb482874bba804648245e27bebb6bae72a
 }
 
 /*--------------------------------------adaptive-meny--------------------------------------*/
@@ -250,7 +213,9 @@ footer {
     border-radius: 4px;
     background-color: #fff;
 }
-
+.main-wrap p{
+    font-size: 19px;
+}
 @media (max-width: 1320px) {
     .main-wrap {
         margin: 20px 20px;
@@ -299,25 +264,15 @@ body {
     margin: 20px;
 }
 
-<<<<<<< HEAD
 
-=======
-<<<<<<< HEAD
->>>>>>> 12f129bb482874bba804648245e27bebb6bae72a
 header a {
     text-decoration: none;
     margin-left: 10px;
     color: white;
-    font-family: OptimusPrime;
 }
 
-<<<<<<< HEAD
 
 
-=======
-=======
->>>>>>> taskFront
->>>>>>> 12f129bb482874bba804648245e27bebb6bae72a
 .journal-wrap {
     display: flex;
 }
@@ -331,17 +286,10 @@ header a {
     display: flex;
 }
 
-<<<<<<< HEAD
 
 .login {
     margin-left: auto;
 }
-=======
-<<<<<<< HEAD
-.login {
-    margin-left: auto;
-=======
->>>>>>> 12f129bb482874bba804648245e27bebb6bae72a
 .standard-list {
     padding-inline-start: 0;
     font-size: 20px;
@@ -422,11 +370,7 @@ header a {
 }
 .advertisement:before{
     border-left: 4px solid #00ffd7 !important;
-<<<<<<< HEAD
 
-=======
->>>>>>> taskFront
->>>>>>> 12f129bb482874bba804648245e27bebb6bae72a
 }
 /*
 #00e00d - green
