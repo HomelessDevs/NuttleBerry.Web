@@ -34,7 +34,7 @@ class MyCoursesFactory extends Factory
         }
         return [
             'user_id' => $this->faker->randomElement($usersIDs),
-            'course_id' => $this->faker->unique()->randomElement($tasksIDs),
+            'course_id' => $this->faker->randomElement($tasksIDs),
         ];
     }
 }

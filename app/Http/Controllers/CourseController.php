@@ -36,6 +36,7 @@ class CourseController extends Controller
         DB::table('courses')->insert([
             'name' => $request->name,
             'group_id' => $request->group,
+            'teacher_id' => $request->teacher_id,
         ]);
         return redirect()->route('administrating');
     }

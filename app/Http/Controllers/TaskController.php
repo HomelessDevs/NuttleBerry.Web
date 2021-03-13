@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Auth;
 use App\Models\Task;
 use App\Models\Answer;
+use App\Models\Course;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -15,7 +17,7 @@ class TaskController extends Controller
         $topics = DB::table('tasks')->select('topic')->distinct()->where('course_id', $course_id)->get();
         $tasks = DB::table('tasks')->where('course_id', $course_id)->get();
         $tasksIDs = array();
-        foreach ($tasks as $task){
+        foreach ($tasks as $task) {
             $tasksIDs[] = $task->id;
         }
         $completedTasks = DB::table('completed_tasks')->where('user_id', Auth::user()->id)->whereIn('task_id', $tasksIDs)->get();
@@ -30,7 +32,7 @@ class TaskController extends Controller
         $task->topic = $request->input('topic');
         $task->title = $request->input('title');
         $task->type = $request->input('type');
-        $task->description = $request->input('message');
+        $task->description = nl2br($request->input('message'));
         $task->course_id = $request->input('course');
         if ($request->hasFile('file')) {
             $task->file = $request->file('file')->getClientOriginalName();
@@ -44,11 +46,20 @@ class TaskController extends Controller
     public function show($task_id)
     {
         $task = DB::table('tasks')->where('id', '=', $task_id)->first();
-        $completedTask = DB::table('completed_tasks')->where([
-            ['user_id', '=', Auth::user()->id],
-            ['task_id', '=', $task_id],
-        ])->first();
-        return view('task.single-task', ['task' => $task, 'completedTask' => $completedTask]);
+        $course_id = $task->course_id;
+        $teacher_id = Course::where('id', $course_id)->select('teacher_id')->first();
+        $teacher_name = User::where('id', $teacher_id->teacher_id)->select('name')->first();
+        if (Auth::user()->role == "student") {
+            $completedTask = DB::table('completed_tasks')->where([
+                ['user_id', '=', Auth::user()->id],
+                ['task_id', '=', $task_id],
+            ])->first();
+            return view('task.single-task', ['task' => $task, 'completedTask' => $completedTask, 'teacherName' => $teacher_name->name]);
+        } elseif (Auth::user()->role == "teacher" || Auth::user()->role == "admin") {
+            $completedTasksRated = count(Answer::where([["task_id", $task_id], ["status", "Оцінено"]])->get());
+            $completedTasksNotRated = count(Answer::where([["task_id", $task_id], ["status", "Не оцінено"]])->get());
+            return view('task.single-task', ['completedTasksNotRated' => $completedTasksNotRated, "completedTasksRated" => $completedTasksRated, 'task' => $task, 'teacherName' => $teacher_name->name]);
+        }
     }
 
     public function edit($id)
@@ -66,7 +77,9 @@ class TaskController extends Controller
             ['user_id', '=', $request->user_id],
             ['task_id', '=', $request->task_id],
         ])->first();
-        $answer->message = $request->message;
+        $answer->message = $request->input('message');
+        $answer->status = "Не оцінено";
+        $answer->rating = "-";
         if ($request->hasFile('file')) {
             $answer->file = $request->file('file')->getClientOriginalName();
             $request->file->storeAs('uploads', $request->file->getClientOriginalName());
@@ -99,8 +112,8 @@ class TaskController extends Controller
 
     public function download($id)
     {
-        $task = DB::table('tasks')->where('id', $id)->first();
-        return response()->download(storage_path('app/uploads/') . $task->file);
+        $answer = DB::table('completed_tasks')->where('id', $id)->first();
+        return response()->download(storage_path('app/uploads/') . $answer->file);
     }
 
     public function answer(Request $request)
@@ -121,14 +134,17 @@ class TaskController extends Controller
     {
         $answer = Answer::where('id', $answerID)->first();
         $answer->rating = $request->input('rating');
+        $answer->status = "Оцінено";
+        $answer->teacher_feedback = $request->input('teacher-feedback');
         $answer->save();
         return redirect()->route('task.completed', $request->taskID);
     }
 
     public function completed($task_id)
     {
-        $answers = DB::table('completed_tasks')->where('task_id', $task_id)->get();
-        return view('task.completed', ['answers' => $answers]);
+        $answers = Answer::where('task_id', $task_id)->get();
+        $task = Task::where('id', $task_id)->first();
+        return view('task.completed', ['answers' => $answers, 'task' => $task]);
     }
 
     public function journal()
@@ -143,7 +159,7 @@ class TaskController extends Controller
         foreach ($tasks as $task) {
             $coursesIDs[] = $task->course_id;
         }
-        $courses = DB::table('courses')->select('name','id')->whereIn('id', $coursesIDs)->get();
+        $courses = DB::table('courses')->select('name', 'id')->whereIn('id', $coursesIDs)->get();
         return view('journal.journal', ['answers' => $answers, 'tasks' => $tasks, 'courses' => $courses]);
     }
 }

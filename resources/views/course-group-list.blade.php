@@ -27,6 +27,7 @@
                 <label>name
                     <input required name="name" type="text">
                 </label>
+                <input name="teacher_id" type="hidden" value="{{ Auth::user()->id }}">
                 <label>group
                     <select name="group">
                         @foreach ($groups as $group)

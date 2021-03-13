@@ -18,9 +18,11 @@ class CreateCompletedTasksTable extends Migration
             $table->bigInteger('user_id')->unsigned();;
             $table->bigInteger('task_id')->unsigned();
             $table->foreign('task_id')->references('id')->on('tasks')->onDelete('cascade');
-            $table->string('file')->default('none');
-            $table->string('message');
-            $table->string('rating')->default('pending');
+            $table->string('file')->default("none");
+            $table->string('message')->default("none");
+            $table->string('teacher_feedback')->default("none");
+            $table->enum('status', ['Оцінено', 'Не оцінено'])->default('Не оцінено');
+            $table->string('rating')->default('-');
             $table->timestamps();
         });
     }

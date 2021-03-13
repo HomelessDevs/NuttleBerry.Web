@@ -17,6 +17,8 @@ class CreateCoursesTable extends Migration
             $table->id();
             $table->string('name');
             $table->bigInteger('group_id')->unsigned();
+            $table->bigInteger('teacher_id')->unsigned()->default("1");
+            $table->foreign('teacher_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('group_id')->references('id')->on('groups')->onDelete('cascade');
             $table->timestamps();
         });
