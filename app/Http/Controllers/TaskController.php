@@ -143,8 +143,13 @@ class TaskController extends Controller
     public function completed($task_id)
     {
         $answers = Answer::where('task_id', $task_id)->get();
+        $userIDs = array();
+        foreach ($answers as $answer) {
+            $userIDs[] = $answer->user_id;
+        }
+        $users = User::whereIn('id', $userIDs)->get();
         $task = Task::where('id', $task_id)->first();
-        return view('task.completed', ['answers' => $answers, 'task' => $task]);
+        return view('task.completed', ['answers' => $answers, 'task' => $task, 'users' => $users]);
     }
 
     public function journal()

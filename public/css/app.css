@@ -216,7 +216,7 @@ footer {
 .main-wrap p{
     font-size: 19px;
 }
-@media (max-width: 1320px) {
+@media (max-width: 1278px) {
     .main-wrap {
         margin: 20px 20px;
     }
@@ -552,15 +552,37 @@ content: attr(data-label);
 }
 .answers-blocks-wrap{
     display: flex;
+    flex-wrap: wrap;
+    margin: 0 auto;
+    justify-content: center;
 }
 .answer-form form{
     display: grid;
+
+}
+.answer-author p{
+    margin: 0;
+}
+.answer-form{
+    position: absolute;
+    width: 90%;
+    bottom: 20px;
+}
+
+.answer-form:last-child{
+    margin-bottom: 0 ;
 }
 .answer-form form input, .answer-form form textarea{
     margin-bottom: 20px;
+    border: 2px solid #a09f9f;
+    border-radius: 4px;
+    font-size: 17px;
 }
 .answer-message p{
     margin: 0;
+}
+.user-answer-info{
+    margin-bottom: 140px !important;
 }
 .answer-block div{
     margin-bottom: 20px;
@@ -569,11 +591,62 @@ content: attr(data-label);
     padding: 20px;
     border: 2px solid #a09f9f;
     border-radius: 4px;
+    width: 28.55%;
+    margin: 20px 20px 0 0;
+    min-height: 250px;
+    position: relative;
+    flex-basis: 342px;
+}
+@media screen and (min-width: 1278px) {
+    .answer-block:nth-child(-n+3){
+        margin-top: 0;
+    }
+    .answer-block:nth-child(3n){
+        margin-right: 0;
+    }
+}
+
+
+.submit-rated-task-rating{
+    display: flex;
+    font-size: 17px;
+    margin-bottom: 0 !important;
+}
+.submit-rated-task-rating input{
+    margin-bottom: 0 !important;
+}
+.submit-rated-task-button{
     margin-left: 20px;
+    width: 100%;
+    height: 50px;
+    background-color: #5d48ff;
+    font-family: Rubick;
+    color: #fff;
+    cursor: pointer;
+    border: none !important;
 }
-.answer-block:first-child{
-    border: 2px solid #00e00d;
+.rating-of-task-form{
+    text-align: center;
+    font-size: 17px;
 }
+.answer-block:last-child{
+    margin-right: 0;
+}
+@media screen and (max-width: 1278px) {
+    .answer-bloc:nth-child(-n+2){
+        margin-top: 0;
+    }
+    .answer-block:nth-child(2n){
+        margin-right: 0;
+    }
+}
+@media screen and (max-width: 871px) {
+    .answer-block{
+        margin-right: 0 !important;
+        flex-basis: 352px;
+    }
+}
+
 /*
 #00e00d - green
 #fff - white

@@ -1,5 +1,10 @@
 @extends('templates.main-template')
 @section('content')
+        <style>
+            .main-wrap{
+                padding: 0 !important;
+            }
+        </style>
     @if(isset($myCourse))
         <h1>{{ $course->name }}</h1>
 
