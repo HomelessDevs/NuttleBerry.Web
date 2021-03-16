@@ -1,19 +1,26 @@
 @extends('templates.main-template')
 @section('content')
     @if(Auth::user()->role == "teacher" || Auth::user()->role == "admin")
+        <div>
+            <h1 class="answers-task-title">{{$task->title}}</h1>
+        </div>
         <div class="answers-blocks-wrap">
             @foreach($answers as $answer)
                 <div class="answer-block">
 
                     <div class="user-answer-info">
                         @if($answer->message != "none")
-                            <div class="answer-author">
-                                @foreach($users as $user)
-                                    @if($user->id == $answer->user_id)
-                                        <p>{{$user->name}}</p>
-                                        @break
-                                    @endif
-                                @endforeach
+                            <div class="author-answer-status">
+                                <div class="answer-author">
+                                    @foreach($users as $user)
+                                        @if($user->id == $answer->user_id)
+                                            <p>{{$user->name}}</p>
+                                            @break
+                                        @endif
+                                    @endforeach
+                                </div>
+                                <div
+                                    class="circle @if($answer->status == "Не оцінено") orange @elseif($answer->status == "Оцінено") green @endif"></div>
                             </div>
                             <div class="answer-message">
                                 <p>{{$answer->message}}</p>
@@ -30,7 +37,12 @@
                               action="{{ route('task.rate', $answer->id) }}">
                             @csrf
                             <input type="hidden" name="taskID" value="{{$answer->task_id}}">
-                            <textarea name="teacher-feedback">{{$answer->teacher_feedback}}</textarea>
+                            <textarea name="teacher-feedback">
+                                @if($answer->teacher_feedback == "none")
+                                @else
+                                    {{ $answer->teacher_feedback }}
+                                @endif
+                            </textarea>
                             <div class="submit-rated-task-rating">
                                 <input class="rating-of-task-form" type="number" max="5" min="1" name="rating"
                                        value="{{ $answer->rating }}">

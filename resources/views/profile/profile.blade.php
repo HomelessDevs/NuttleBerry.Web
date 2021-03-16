@@ -1,35 +1,59 @@
 @extends('templates.main-template')
 @section('content')
-    @php
-        if($user == null){
-        echo 'User not found';
-        }
-        else{
-        echo '<p>' . $user->name . '</p>';
-                echo '<p>' . $user->role . '</p>';
-        if($user->id == Auth::user()->id){
-            echo '<a href=" ' . route('profile.edit', $user->id) . '">edit</a>';
-        }
-        if(Auth::user()->role == "teacher"  || Auth::user()->role == "admin"){
-            if( $user->role != 'admin' && $user->role != 'teacher' ){
-            echo '<form method="POST" action = "'. route('profile.promote', $user->id) .'">
-                    '. method_field('PUT') . '
 
-               ' . csrf_field()  . '
-            <input type="submit" value = "promote to teacher">
-            </form>
-            ';}
-            }
-    @endphp
-    <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-        <br>Logout
-    </a>
-    <form id="logout-form" action="{{ route('logout') }}" method="POST">
-        @csrf
-    </form>
-    @php
-        }
-    @endphp
-
-    <h1>section</h1>
+    @if($user == null)
+        <div><p>User not found</p></div>
+    @else
+        <div class="profile-title">
+            <h1>Профіль</h1>
+        </div>
+        <div class="main-profile-block">
+            <div class="profile-photo">
+            </div>
+            <div class="profile-info">
+                <div>
+                    <div class="profile-name">
+                        <p>{{$user->name}}</p>
+                    </div>
+                    <div class="profile-role">
+                        <p>{{$user->role}}</p>
+                    </div>
+                </div>
+                @if($user->id == Auth::user()->id)
+                    <div class="profile-edit">
+                        <a href="{{route('profile.edit', $user->id)}}">Редагувати</a>
+                    </div>
+                @endif
+                @if(Auth::user()->role == "teacher"  || Auth::user()->role == "admin")
+                    @if( $user->role != 'admin' && $user->role != 'teacher' )
+                        <form method="POST" action="'. route('profile.promote', $user->id) .'">
+                            {{method_field('PUT')}}
+                            @csrf
+                            <input type="submit" value="promote to teacher">
+                        </form>
+                    @endif
+                @endif
+                <div class="profile-logout">
+                    <br>
+                    <a href="{{ route('logout') }}"
+                       onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                        Вийти
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="my-courses-profile">
+        <h2>Мої курси</h2>
+        </div>
+        <ul class="standard-list">
+            @foreach($courses as $course)
+                <li>
+                    <a href="{{ route('task.index', $course->id) }}">{{ $course->name }}</a>
+                </li>
+            @endforeach
+        </ul>
+        <form id="logout-form" action="{{ route('logout') }}" method="POST">
+            @csrf
+        </form>
+    @endif
 @endsection

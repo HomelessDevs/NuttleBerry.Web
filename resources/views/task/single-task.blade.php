@@ -83,15 +83,10 @@
                         @elseif(empty($completedTask)&& Auth::user()->role == "student")
                             <button id="task-button"><span>Відповісти</span></button>
                         @endif
-                        @if(Auth::user()->role == "teacher" && $completedTasksNotRated != 0 || Auth::user()->role == "admin" && $completedTasksNotRated != 0)
+                        @if(Auth::user()->role == "teacher" && $completedTasksNotRated != 0 || Auth::user()->role == "admin" && $completedTasksNotRated != 0 || Auth::user()->role == "teacher" && $completedTasksNotRated == 0 || Auth::user()->role == "admin" && $completedTasksNotRated == 0)
                             <a href="{{ route('task.completed', $task->id) }}">
                                 <button class="task-button-rate" id="task-button"><span>Оцінити</span></button>
                             </a>
-                        @endif
-                        @if(Auth::user()->role == "teacher" && $completedTasksNotRated == 0 || Auth::user()->role == "admin" && $completedTasksNotRated == 0)
-                            <button disabled id="task-button"><span>@if($completedTasksRated > 0)Нема робіт для
-                                    перевірки @else Нема робіт @endif</span>
-                            </button>
                         @endif
                     </div>
                 </div>
@@ -106,7 +101,7 @@
                             <textarea class="textarea-task-form" type="text"
                                       name="message">{{ $completedTask->message  }}</textarea>
                                 <div class="drop-zone">
-                                    <span class="drop-zone__prompt">Drop file here or click to upload</span>
+                                    <span class="drop-zone__prompt">Опустіть файл сюди або натисніть, щоб завантажити</span>
                                     <input type="file" name="file" class="drop-zone__input">
                                 </div>
                             </div>
@@ -122,7 +117,7 @@
                         <div class="task-form">
                             <textarea class="textarea-task-form" type="text" name="message"></textarea>
                             <div class="drop-zone">
-                                <span class="drop-zone__prompt">Drop file here or click to upload</span>
+                                <span class="drop-zone__prompt">Опустіть файл сюди або натисніть, щоб завантажити</span>
                                 <input multiple type="file" name="file" class="drop-zone__input">
                             </div>
                         </div>

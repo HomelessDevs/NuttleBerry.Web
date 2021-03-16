@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\MyCourses;
+use App\Models\Course;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -12,7 +15,13 @@ class ProfileController extends Controller
     public function show($id)
     {
         $user = DB::table('users')->where('id', '=', $id)->first();
-        return view('profile.profile', ['user' => $user]);
+        $myCourses = MyCourses::where('user_id', Auth::user()->id)->get();
+        $course_ids = array();
+        foreach ($myCourses as $course) {
+            $course_ids[] = $course->course_id;
+        }
+        $courses = DB::table('courses')->whereIn('id', $course_ids)->get();
+        return view('profile.profile', ['user' => $user, 'courses' => $courses]);
     }
 
     public function edit($id)
@@ -26,7 +35,13 @@ class ProfileController extends Controller
         $user = User::where('id', $id)->first();
         $user->name = $request->input('name');
         $user->save();
-        return view('profile.profile', ['user' => $user]);
+        $myCourses = MyCourses::where('user_id', Auth::user()->id)->get();
+        $course_ids = array();
+        foreach ($myCourses as $course) {
+            $course_ids[] = $course->course_id;
+        }
+        $courses = DB::table('courses')->whereIn('id', $course_ids)->get();
+        return view('profile.profile', ['user' => $user, 'courses' => $courses]);
     }
 
 

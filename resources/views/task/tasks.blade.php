@@ -1,10 +1,5 @@
 @extends('templates.main-template')
 @section('content')
-        <style>
-            .main-wrap{
-                padding: 0 !important;
-            }
-        </style>
     @if(isset($myCourse))
         <h1>{{ $course->name }}</h1>
 
@@ -14,7 +9,19 @@
                 <ul class="task-list">
                     @foreach($tasks as $task)
                         @if($task->topic == $topic->topic)
+
                             <li>
+                                @foreach ($completedTasks as $completed)
+                                    @if($completed->task_id == $task->id)
+                                        <span class="completed-task-rating">
+                                        @if($completed->rating == "-")
+
+                                        @else
+                                            {{ $completed->rating }}/5
+                                        @endif
+                                            </span>
+                                    @endif
+                                @endforeach
                                 <a
                                     @foreach ($completedTasks as $completed)
                                         @if($completed->task_id == $task->id)
@@ -31,7 +38,8 @@
                                     @if($task->type == "theory")
                                     class="theory"
                                     @endif
-                                href="{{ route('task.show', [$task->id]) }}">{{ $task->title }}</a></li>
+                                href="{{ route('task.show', [$task->id]) }}">{{ $task->title }}</a>
+                            </li>
                         @endif
                     @endforeach
                 </ul>

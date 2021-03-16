@@ -15,10 +15,14 @@ class GroupController extends Controller
 {
     public function administrating()
     {
-        $courses = DB::table('courses')->get();
-        $groups = DB::table('groups')->get();
+        $groups = Group::all();
+        $courses = Course::where('teacher_id', Auth::user()->id)->get();
+        $coursesIDs = array();
+        foreach ($courses as $course){
+            $coursesIDs[] = $course->id;
+        }
+        $tasks = Task::whereIn('course_id', $coursesIDs)->get();
         $topics = DB::select('select distinct topic from tasks');
-        $tasks = DB::select('select distinct * from tasks');
         return view('course-group-list', ['courses' => $courses, 'groups' => $groups, 'topics' => $topics, 'tasks' => $tasks]);
     }
     public function index()

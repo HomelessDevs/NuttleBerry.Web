@@ -142,7 +142,7 @@ class TaskController extends Controller
 
     public function completed($task_id)
     {
-        $answers = Answer::where('task_id', $task_id)->get();
+        $answers = Answer::where('task_id', $task_id)->orderBy('status', 'desc')->get();
         $userIDs = array();
         foreach ($answers as $answer) {
             $userIDs[] = $answer->user_id;

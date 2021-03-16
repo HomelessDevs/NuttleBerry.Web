@@ -2,22 +2,24 @@
 @section('content')
     <form method="post" action="{{ route('password.update') }}">
         @csrf
-        <label>
-            <input type="hidden" name="token" value="{{ $request->route('token') }}">
-        </label>
-        <label>
+        <input type="hidden" name="token" value="{{ $request->route('token') }}">
+        <div>
+            <label>Е-мейл</label>
             <input type="email" name="email" value="{{ $request->email }}">
-        </label>
-        <label>
+        </div>
+        <div>
+            <label>Пароль</label>
             <input required type="text" name="password">
-        </label>
-        @error('password')
-        <strong>{{ $message }}</strong>
-        @enderror
-        <label>
+            @error('password')
+            <strong>{{ $message }}</strong>
+            @enderror
+        </div>
+        <div>
+            <label>Повторіть пароль</label>
             <input required type="text" name="password_confirmation">
-        </label>
-        <input name="reset" value="Update" type="submit">
-
+        </div>
+        <div>
+            <button name="reset" type="submit">Оновити</button>
+        </div>
     </form>
 @endsection

@@ -1,13 +1,16 @@
 @extends('templates.main-template')
 @section('content')
-    <form method="post" action="{{ route('password.request') }}">
+    <form class="simple-form" method="post" action="{{ route('password.request') }}">
         @csrf
         @if(session('status'))
             {{ session('status') }}
-            @endif
-        <label>
+        @endif
+        <div>
+            <label>email</label>
             <input type="email" name="email">
-            <input name="reset" type="submit">
-        </label>
+        </div>
+        <div>
+            <button name="reset" type="submit">Скинути</button>
+        </div>
     </form>
 @endsection

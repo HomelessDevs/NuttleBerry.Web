@@ -12,7 +12,6 @@
                 @if(Auth::user()->role == "teacher" || Auth::user()->role == "admin")
                     <li><a href="{{ route('administrating') }}">Створити курси</a></li>
                 @endif
-                <li><a href="{{ route('task.journal') }}">Журнал</a></li>
             @endif
             <li><a href="{{ route('course.myCourses') }}">Мої курси</a></li>
         </ul>
@@ -27,7 +26,7 @@
                     <li><a href="{{ route('login') }}">Логін</a></li>
                     @if (Route::has('register'))
 
-                        <li><a href="{{ route('register') }}">Register</a></li>
+                        <li><a href="{{ route('register') }}">Реєстрація</a></li>
                     @endif
                 @endauth
             </ul>

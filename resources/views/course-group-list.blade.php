@@ -1,99 +1,112 @@
 @extends('templates.main-template')
 @section('content')
+    <h1>Створення курсів</h1>
+    <div class="create-courses-btns">
+        <div>
+            <button onclick="displayForm(this)" class="new-btn selected-btn" id="group-btn">Додати групу</button>
+        </div>
+        <div>
+            <button onclick="displayForm(this)" class="new-btn" id="course-btn">Додати курс</button>
+        </div>
+        <div>
+            <button onclick="displayForm(this)" class="new-btn" id="task-btn">Додати завдання</button>
+        </div>
+    </div>
     <div class="course-group-form">
-        <div class="group-form">
-            <h2><a>create group</a></h2>
+        <div class="new-form" id="group-form">
             <form method="POST" action="{{ route('group.store')}}">
                 @csrf
-                <label>name
-                    <input required name="name" type="text">
-                </label>
-                <input type="submit">
+                <label for="name">Назва</label>
+                <input required name="name" type="text">
+                <input class="btn" value="Додати" type="submit">
             </form>
             <ul>
                 @foreach($groups as $group)
-                    <li><a href="{{ route('group.edit', $group->id) }}">{{ $group->name }}</a>
-                        <form method="post"
-                              action="{{route('group.destroy', $group->id)}}"> {{ method_field('DELETE') }}
-                            @csrf<input value="destroy" type="submit"></form>
-                    </li>
+                    <li>
+                        <div><a href="{{ route('group.index', $group->id) }}">{{ $group->name }}</a></div>
+                        <div><a
+                                href="{{ route('group.edit', $group->id) }}"> edit</a></div>
                 @endforeach
             </ul>
         </div>
-        <div class="course-from">
-            <h2><a>create course</a></h2>
+        <div class="new-form none-displayed" id="course-form">
             <form method="POST" action="{{ route('course.store')}}">
                 @csrf
-                <label>name
-                    <input required name="name" type="text">
-                </label>
+                <label>Назва</label>
+                <input required name="name" type="text">
+
                 <input name="teacher_id" type="hidden" value="{{ Auth::user()->id }}">
-                <label>group
-                    <select name="group">
-                        @foreach ($groups as $group)
-                            <option value="{{$group->id}}">{{$group->name}}</option>
-                        @endforeach
-                    </select>
-                </label>
-                <input type="submit">
+                <label>Група</label>
+
+                <select name="group">
+
+                    @foreach ($groups as $group)
+                        <option value="{{$group->id}}">{{$group->name}}</option>
+                    @endforeach
+                </select>
+                <input class="btn" value="Додати" type="submit">
             </form>
             <ul>
                 @foreach($courses as $course)
-                    <li><a href="{{ route('course.edit', $course->id) }}">{{ $course->name }}</a>
-                        <form method="post"
-                              action="{{route('course.destroy', $course->id)}}"> {{ method_field('DELETE') }}
-                            @csrf<input value="destroy" type="submit"></form>
+                    <li>
+                        <div><a href="{{ route('course.index', $course->id) }}">{{ $course->name }}</a></div>
+                        <div><a
+                                href="{{ route('course.edit', $course->id) }}"> edit</a></div>
                     </li>
                 @endforeach
             </ul>
         </div>
-        <div class="task-form">
-            <h2><a>create task</a></h2>
+        <div class="new-form none-displayed" id="task-form">
             <form enctype="multipart/form-data" method="POST" action="{{ route('task.store')}}">
                 @csrf
-                <label>course
-                    <select name="course">
-                        @foreach ($courses as $course)
-                            <option value="{{$course->id}}">{{$course->name}}</option>
-                        @endforeach
-                    </select>
-                </label>
-                <label>topic
-                    <input name="topic" list="topic">
-                    <datalist id="topic">
-                        @foreach ($topics as $topic)
-                            <option value="{{$topic->topic}}">
-                        @endforeach
-                    </datalist>
-                </label>
-                <label>title
-                    <input required name="title" type="text">
-                </label>
-                <label>type
-                    <select name="type">
-                        <option value="practice">practice</option>
-                        <option value="theory">theory</option>
-                        <option value="advertisement">advertisement</option>
-                    </select>
-                </label>
-                <br>
-                <label>message
-                    <input required name="message" type="text">
-                </label>
-                <label>file
-                    <input name="file" type="file">
-                </label>
-                <input type="submit">
+                <label>Курси</label>
+
+                <select name="course">
+                    @foreach ($courses as $course)
+                        <option value="{{$course->id}}">{{$course->name}}</option>
+                    @endforeach
+                </select>
+                <label>Теми</label>
+                <input name="topic" list="topic">
+                <datalist id="topic">
+                    @foreach ($topics as $topic)
+                        <option value="{{$topic->topic}}">
+                    @endforeach
+                </datalist>
+
+                <label>Назва</label>
+                <input required name="title" type="text">
+
+                <label>Тип</label>
+
+                <select name="type">
+                    <option value="practice">practice</option>
+                    <option value="theory">theory</option>
+                    <option value="advertisement">advertisement</option>
+                </select>
+                <label>Опис завдання</label>
+                <textarea name="message" required></textarea>
+                <label>Файл</label>
+                <div class="drop-zone create-task-drop-input">
+                    <span class="drop-zone__prompt">Drop file here or click to upload</span>
+                    <input type="file" name="file" class="drop-zone__input">
+                </div>
+
+                <input class="btn" value="Додати" type="submit">
             </form>
             <ul>
                 @foreach($tasks as $task)
-                    <li><a href="{{ route('task.show', $task->id) }}">{{ $task->title }}</a><a href="{{ route('task.edit', $task->id) }}"> edit</a>
-                        <form method="post"
-                              action="{{route('task.destroy', $task->id)}}"> {{ method_field('DELETE') }}
-                            @csrf<input value="destroy" type="submit"></form>
+                    <li>
+                        <div><a href="{{ route('task.show', $task->id) }}">{{ $task->title }}</a></div>
+                        <div><a
+                                href="{{ route('task.edit', $task->id) }}"> edit</a></div>
+
                     </li>
                 @endforeach
             </ul>
+            <script src="{{ url('js/new-btn.js') }}"></script>
         </div>
     </div>
+    <script src="{{ url('js/drag-and-drop.js') }}"></script>
+
 @endsection
