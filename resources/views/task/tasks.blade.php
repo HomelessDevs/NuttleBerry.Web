@@ -13,7 +13,7 @@
                                 <a
                                     @foreach ($completedTasks as $completed)
                                         @if($completed->task_id == $task->id)
-                                            @if($completed->rating == "pending")
+                                            @if($completed->rating == "-")
                                                 class="pending-task"
                                             @else
                                                 class="completed-task"

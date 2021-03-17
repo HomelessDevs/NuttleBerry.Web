@@ -28,8 +28,9 @@ class CourseFactory extends Factory
             $IDs[] = $group->id;
         }
         return [
-            'name' => 'course' . $this->faker->unique()->numberBetween(1, 20),
-            'group_id' => $this->faker->randomElement($IDs)
+            'name' => 'course' . $this->faker->unique()->numberBetween(1, 1000),
+            'group_id' => $this->faker->randomElement($IDs),
+            'teacher_id' => '1'
         ];
     }
 }

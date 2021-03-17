@@ -3,7 +3,7 @@
     <h1>{{$task->title}}</h1>
     <div class="task-wrap">
         <div class="task-teacher">
-            <p>Teacher:Adison Maksvel</p>
+            <p>Викладач: {{ $teacherName }}</p>
         </div>
         <div class="task-description-info">
             <p>{{$task->description}}</p>
@@ -11,79 +11,129 @@
                 <a href="{{ route('task.download', $task->id) }}">{{$task->file}}</a>
             @endif
         </div>
-        <div class="task-answer">
-            <div class="teacher-feedback">
-                <p>Відгук вчителя: rem Ipsum has been the industry's standard dummy text ever since the 1500s, when an
-                    unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived
-                    not only five centuries, but also the leap into electronic typesetting, remaining essentially
-                    unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem
-                    Ipsum passages, and more recent</p>
-            </div>
-            <div>
-
-            </div>
-            <div class="task-info">
-                <div class="task-info-status">
-                    <div>
-                        <p>status:</p>
-                    </div>
-                    <div>
-                        <p>pending</p>
+        <div>
+            <div class="task-answer">
+                @if(Auth::user()->role == "student")
+                    @if(isset($completedTask) )
+                        <div class="teacher-feedback">
+                            <p>
+                                @if($completedTask->status == "Не оцінено")
+                                    <span>Ваша робота ще не оцінена</span>
+                                @elseif($completedTask->status == "Оцінено")
+                                    @if($completedTask->teacher_feedback != "none")
+                                        <span>Відгук вчителя:</span> {{$completedTask->teacher_feedback}}
+                                    @else
+                                        Ваша робота
+                                        оцінена
+                                    @endif
+                                @endif</p>
+                        </div>
+                    @endif
+                @endif
+                <div
+                    class="task-info @if(Auth::user()->role == "teacher" || Auth::user()->role == "admin") teacher-task-info @endif ">
+                    @if(Auth::user()->role == "student")
+                        <div class="task-info-status">
+                            <div>
+                                <p>Статус:</p>
+                            </div>
+                            <div>
+                                <p class=" @if($completedTask) @if($completedTask->status == "Оцінено") rated @elseif($completedTask->status == "Не оцінено") pending  @endif @endif">@if($completedTask)
+                                        {{ $completedTask->status }}
+                                    @else
+                                        Не здано
+                                    @endif</p>
+                            </div>
+                        </div>
+                        <div class="task-info-rating">
+                            <div>
+                                <p>Оцінка:</p>
+                            </div>
+                            <div>
+                                <p @if($completedTask) class="rated-task" @endif >@if($completedTask)
+                                        {{ $completedTask->rating }}
+                                    @else
+                                        -
+                                    @endif</p>
+                            </div>
+                        </div>
+                    @endif
+                    @if(Auth::user()->role == "teacher" || Auth::user()->role == "admin")
+                        <div class="task-info-status">
+                            <div>
+                                <p>Здано робіт:</p>
+                            </div>
+                            <div>
+                                <p>{{ $completedTasksNotRated + $completedTasksRated }}</p>
+                            </div>
+                        </div>
+                        <div class="task-info-status">
+                            <div>
+                                <p>Оцінено:</p>
+                            </div>
+                            <div>
+                                <p>{{ $completedTasksRated .  "/" . ($completedTasksRated + $completedTasksNotRated)  }}</p>
+                            </div>
+                        </div>
+                    @endif
+                    <div class="task-button-edit">
+                        @if(!empty($completedTask) && Auth::user()->role == "student")
+                            <button id="task-button"><span>Редагувати відповідь</span></button>
+                        @elseif(empty($completedTask)&& Auth::user()->role == "student")
+                            <button id="task-button"><span>Відповісти</span></button>
+                        @endif
+                        @if(Auth::user()->role == "teacher" && $completedTasksNotRated != 0 || Auth::user()->role == "admin" && $completedTasksNotRated != 0)
+                            <a href="{{ route('task.completed', $task->id) }}">
+                                <button class="task-button-rate" id="task-button"><span>Оцінити</span></button>
+                            </a>
+                        @endif
+                        @if(Auth::user()->role == "teacher" && $completedTasksNotRated == 0 || Auth::user()->role == "admin" && $completedTasksNotRated == 0)
+                            <button disabled id="task-button"><span>@if($completedTasksRated > 0)Нема робіт для
+                                    перевірки @else Нема робіт @endif</span>
+                            </button>
+                        @endif
                     </div>
                 </div>
-                <div class="task-info-rating">
-                    <div>
-                        <p>rating:</p>
-                    </div>
-                    <div>
-                        <p>5/5</p>
-                    </div>
-                </div>
-                <div class="task-button-edit">
-                    @if(!empty($completedTask) && Auth::user()->role == "student")
-                        <button id="task-button">Редагувати відповідь</button>
-                    @elseif(empty($completedTask)&& Auth::user()->role == "student")
-                        <button id="task-button">Відповісти</button>
-                    @endif
-                    @if(Auth::user()->role == "teacher" && !empty($completedTask) || Auth::user()->role == "admin" && !empty($completedTask))
-                        <button id="task-button">Оцінити</button>
-                    @endif
-                    @if(Auth::user()->role == "teacher" && empty($completedTask) || Auth::user()->role == "admin" && empty($completedTask))
-                        <button id="task-button">Нема робіт</button>
-                    @endif
-                </div>
             </div>
-        </div>
-        <div id="edit-task" class="none-displayed">
-            @if(!empty($completedTask) && Auth::user()->id == $completedTask->user_id && request()->task == $completedTask->task_id )
-                <a href="#">edit answer</a>
-                <div class="edit-answer">
+            <div id="edit-task" class="none-displayed">
+                @if(!empty($completedTask) && Auth::user()->role == "student" )
+                    <div class="edit-answer">
+                        <form enctype="multipart/form-data" method="post"
+                              action="{{ route('task.edit.answer', Auth::user()->id) }}">
+                            @csrf
+                            <div class="task-form">
+                            <textarea class="textarea-task-form" type="text"
+                                      name="message">{{ $completedTask->message  }}</textarea>
+                                <div class="drop-zone">
+                                    <span class="drop-zone__prompt">Drop file here or click to upload</span>
+                                    <input type="file" name="file" class="drop-zone__input">
+                                </div>
+                            </div>
+                            <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
+                            <input type="hidden" name="task_id" value="{{ $task->id }}">
+                            <input class="submit-task-button" type="submit" value="Відпраивти">
+                        </form>
+                    </div>
+                @elseif(empty($completedTask) && Auth::user()->role == "student")
                     <form enctype="multipart/form-data" method="post"
-                          action="{{ route('task.edit.answer', Auth::user()->id) }}">
+                          action="{{ route('task.answer', Auth::user()->id) }}">
                         @csrf
-                        <input type="text" value="{{ $completedTask->message }}" name="message">
-                        <input type="file" name="file">
+                        <div class="task-form">
+                            <textarea class="textarea-task-form" type="text" name="message"></textarea>
+                            <div class="drop-zone">
+                                <span class="drop-zone__prompt">Drop file here or click to upload</span>
+                                <input multiple type="file" name="file" class="drop-zone__input">
+                            </div>
+                        </div>
                         <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
                         <input type="hidden" name="task_id" value="{{ $task->id }}">
-                        <input type="submit">
+                        <input class="submit-task-button" type="submit" value="Надіслати відповідь">
                     </form>
-                </div>
-            @else
-                <form enctype="multipart/form-data" method="post"
-                      action="{{ route('task.answer', Auth::user()->id) }}">
-                    @csrf
-                    <input type="text" name="message">
-                    <input type="file" name="file">
-                    <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
-                    <input type="hidden" name="task_id" value="{{ $task->id }}">
-                    <input type="submit">
-                </form>
-            @endif
-            @if(Auth::user()->role == "teacher" || Auth::user()->role == "admin")
-                <a href="{{ route('task.completed', $task->id) }}">rate</a>
-            @endif
+                @endif
+            </div>
         </div>
     </div>
     <script src="{{ url('js/task-button.js') }}"></script>
+    <script src="{{ url('js/drag-and-drop.js') }}"></script>
 @endsection
 

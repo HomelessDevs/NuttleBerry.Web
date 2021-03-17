@@ -8,6 +8,7 @@
                 @csrf
                 <input type="text" name="rating" value="{{ $answer->rating }}">
                 <input type="hidden" name="taskID" value="{{$answer->task_id}}">
+                <input type="text" name="teacher-feedback" value="{{$answer->teacher_feedback}}">
                 <input type="submit">
             </form>
         @endforeach

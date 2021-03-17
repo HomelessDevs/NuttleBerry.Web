@@ -21,11 +21,12 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         User::create(['name' => 'root', 'role' => 'admin', 'email_verified_at' => now(), 'email' => 'root@example.com', 'password' => bcrypt('root')]);
-        Group::factory()->count(5)->create();
-        Course::factory()->count(10)->create();
-        MyCourses::factory()->count(2)->create();
-        Task::factory()->count(15)->create();
-       // Answer::factory()->count(10)->create();
+        User::factory()->count(200)->create();
+        Group::factory()->count(10)->create();
+        Course::factory()->count(60)->create();
+        MyCourses::factory()->count(100)->create();
+        Task::factory()->count(1000)->create();
+        //Answer::factory()->count(4)->create();
 
     }
 }
