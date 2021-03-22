@@ -1,4 +1,4 @@
-@extends('templates.main-template')
+@extends('templates.form-template')
 @section('content')
     <form class="simple-form" method="POST" action="{{ route('course.update', $course->id)}}">
         {{ method_field('PUT') }}

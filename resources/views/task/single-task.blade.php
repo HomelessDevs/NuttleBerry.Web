@@ -52,7 +52,7 @@
                             </div>
                             <div>
                                 <p @if($completedTask) class="rated-task" @endif >@if($completedTask)
-                                        {{ $completedTask->rating }}
+                                        {{ $completedTask->rating }}/{{ $task->max_rating }}
                                     @else
                                         -
                                     @endif</p>
@@ -101,7 +101,7 @@
                             <textarea class="textarea-task-form" type="text"
                                       name="message">{{ $completedTask->message  }}</textarea>
                                 <div class="drop-zone">
-                                    <span class="drop-zone__prompt">Опустіть файл сюди або натисніть, щоб завантажити</span>
+                                    <span class="drop-zone__prompt">Drop file here or click to upload(zip, rar)</span>
                                     <input type="file" name="file" class="drop-zone__input">
                                 </div>
                             </div>

@@ -1,4 +1,4 @@
-@extends('templates.main-template')
+@extends('templates.form-template')
 @section('content')
     <h1>Реєстрація</h1>
     <form class="simple-form" method="post" action="{{ route('register') }}">

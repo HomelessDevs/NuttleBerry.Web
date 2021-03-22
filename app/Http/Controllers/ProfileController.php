@@ -34,6 +34,10 @@ class ProfileController extends Controller
     {
         $user = User::where('id', $id)->first();
         $user->name = $request->input('name');
+        if ($request->hasFile('photo')) {
+            $user->photo = $request->file('photo');
+            $request->photo->storeAs('public', $request->photo);
+        }
         $user->save();
         $myCourses = MyCourses::where('user_id', Auth::user()->id)->get();
         $course_ids = array();

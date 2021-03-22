@@ -9,6 +9,7 @@
         </div>
         <div class="main-profile-block">
             <div class="profile-photo">
+                <img src="@if($user->photo != "none"){{ asset("storage/$user->photo") }}@else{{ asset("storage/profile-picture.png") }}@endif">
             </div>
             <div class="profile-info">
                 <div>

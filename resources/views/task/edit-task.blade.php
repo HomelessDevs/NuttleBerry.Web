@@ -1,4 +1,4 @@
-@extends('templates.main-template')
+@extends('templates.form-template')
 @section('content')
     <form class="simple-form" enctype="multipart/form-data" method="POST" action="{{ route('task.update', $task->id)}}">
         {{ method_field('PUT') }}

@@ -20,7 +20,7 @@ use App\Http\Controllers\TaskController;
 
 
 Route::get('/', function () {
-    return view('main-page');
+    return redirect(route('group.index'));
 })->name('main');
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('profile', ProfileController::class)->name('*', 'profile')->only(['show', 'edit', 'update', 'destroy']);
@@ -31,13 +31,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('group/{id}/register', [CourseController::class, 'register'])->name('course.register');
     Route::get('course/{id}', [TaskController::class, 'index'])->name('task.index');
     Route::get('my-courses', [CourseController::class, 'myCourses'])->name('course.myCourses');
-    Route::put('profile/{id}/promote', [ProfileController::class, 'promote'])->name('profile.promote');
-    Route::get('journal', [TaskController::class, 'journal'])->name('task.journal');
-    Route::get('task/{id}/download', [TaskController::class, 'download'])->name('task.download');
-    Route::get('task/{id}/completed', [TaskController::class, 'completed'])->name('task.completed');
-    Route::get('administrating', [GroupController::class, 'administrating'])->name('administrating');
+    Route::put('profile/{id}/promote', [ProfileController::class, 'promote'])->name('profile.promote')->middleware('teacher');
+    //Route::get('journal', [TaskController::class, 'journal'])->name('task.journal');
+    Route::get('task/{id}/download', [TaskController::class, 'downloadTask'])->name('task.download');
+    Route::get('task/{id}/download-completed', [TaskController::class, 'downloadCompletedTask'])->name('task.download.completed')->middleware('teacher');
+    Route::get('task/{id}/completed', [TaskController::class, 'completed'])->name('task.completed')->middleware('teacher');
+    Route::get('administrating', [GroupController::class, 'administrating'])->name('administrating')->middleware('teacher');
     Route::post('task/{id}/answer', [TaskController::class, 'answer'])->name('task.answer');
     Route::post('task/{id}/edit-answer', [TaskController::class, 'editAnswer'])->name('task.edit.answer');
-    Route::post('task/{id}/rate', [TaskController::class, 'rate'])->name('task.rate');
+    Route::post('task/{id}/rate', [TaskController::class, 'rate'])->name('task.rate')->middleware('teacher');
 });
 Route::redirect('home', '/');

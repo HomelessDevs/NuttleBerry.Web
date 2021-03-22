@@ -1,6 +1,6 @@
 @extends('templates.main-template')
 @section('content')
-    <h1>Створення курсів</h1>
+    <h1 xmlns="http://www.w3.org/1999/html">Створення курсів</h1>
     <div class="create-courses-btns">
         <div>
             <button onclick="displayForm(this)" class="new-btn selected-btn" id="group-btn">Додати групу</button>
@@ -18,7 +18,7 @@
                 @csrf
                 <label for="name">Назва</label>
                 <input required name="name" type="text">
-                <input class="btn" value="Додати" type="submit">
+                <button class="btn" type="submit">Додати</button>
             </form>
             <ul>
                 @foreach($groups as $group)
@@ -44,7 +44,7 @@
                         <option value="{{$group->id}}">{{$group->name}}</option>
                     @endforeach
                 </select>
-                <input class="btn" value="Додати" type="submit">
+                <button class="btn" type="submit">Додати</button>
             </form>
             <ul>
                 @foreach($courses as $course)
@@ -84,15 +84,17 @@
                     <option value="theory">theory</option>
                     <option value="advertisement">advertisement</option>
                 </select>
+                <label>Максимальний бал</label>
+                <input required name="max_rating" type="number" min="1">
                 <label>Опис завдання</label>
                 <textarea name="message" required></textarea>
                 <label>Файл</label>
                 <div class="drop-zone create-task-drop-input">
-                    <span class="drop-zone__prompt">Drop file here or click to upload</span>
-                    <input type="file" name="file" class="drop-zone__input">
+                    <span class="drop-zone__prompt">Drop file here or click to upload(zip, rar)</span>
+                    <input accept=".zip, .rar" type="file" name="file" class="drop-zone__input">
                 </div>
 
-                <input class="btn" value="Додати" type="submit">
+                <button class="btn" type="submit">Додати</button>
             </form>
             <ul>
                 @foreach($tasks as $task)

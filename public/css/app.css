@@ -26,6 +26,7 @@ header {
 
 body {
     margin: 0;
+    background: #a09f9f;
 }
 
 header ul {
@@ -213,7 +214,23 @@ footer {
     border-radius: 4px;
     background-color: #fff;
 }
+.main-wrap-form{
+    max-width: 400px;
+    margin: 20px auto;
+    padding: 20px;
+    font-weight: bold;
+    border-radius: 4px;
+    background-color: #fff;
+    min-height: 759px;
+}
 
+
+
+
+
+.main-wrap-form p {
+    font-size: 19px;
+}
 .main-wrap p {
     font-size: 19px;
 }
@@ -250,6 +267,7 @@ h1 {
 
 body {
     margin: 0;
+    background: #ececec;
 }
 
 /*--------------------------------------Other--------------------------------------*/
@@ -380,7 +398,6 @@ header a {
 }
 
 .task-description-info {
-    display: flex;
     border-bottom: 2px solid #a09f9f;
     margin: 20px 0;
     padding-bottom: 20px;
@@ -753,7 +770,7 @@ textarea {
 }
 .course-group-form ul li{
     margin-top: 20px;
-    display: -webkit-box;
+    display: flex;
     border-bottom: 2px solid #a09f9f4f;
     padding-bottom: 3px;
 }
@@ -800,6 +817,23 @@ textarea {
     margin: 10px 0 3px 0;
 }
 .new-form form .btn{
+    font-size: 20px;
+    font-style: inherit;
+    width: 100%;
+    border-radius: 4px;
+    border: 2px solid #5d48ff ;
+    background: #fff;
+    height: 60px;
+    color: #5d48ff;
+    transition: 0.3s ease-in-out;
+    cursor: pointer;
+    margin-top: 30px;
+}
+.register-btn{
+    margin:0 auto;
+    max-width: 320px;
+}
+.btn{
     font-size: 20px;
     font-style: inherit;
     width: 100%;
@@ -860,7 +894,7 @@ text-align: center
 }
 .simple-form{
     display: block;
-    width: 40%;
+    width: 100%;
     margin: 0 auto;
 }
 .simple-form div{
@@ -904,6 +938,13 @@ text-align: center
 }
 .forgot-register a:nth-child(2){
     margin-left: auto;
+}
+.profile-photo img{
+    height: 100%;
+    width: 100%;
+}
+.completed-none-answers{
+    text-align: center;
 }
 /*
 #00e00d - green

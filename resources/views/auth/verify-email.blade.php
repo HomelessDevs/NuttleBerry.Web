@@ -1,4 +1,4 @@
-@extends('templates.main-template')
+@extends('templates.form-template')
 @section('content')
 <p>To continue pls verify your email</p>
 @if(session('status'))

@@ -1,4 +1,4 @@
-@extends('templates.main-template')
+@extends('templates.form-template')
 @section('content')
     <form class="simple-form" method="POST" action="{{ route('group.update', $group->id)}}">
         {{ method_field('PUT') }}

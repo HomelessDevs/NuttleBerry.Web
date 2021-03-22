@@ -1,4 +1,4 @@
-@extends('templates.main-template')
+@extends('templates.form-template')
 @section('content')
     <form method="post" action="{{ route('password.update') }}">
         @csrf

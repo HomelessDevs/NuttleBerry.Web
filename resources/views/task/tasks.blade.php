@@ -1,7 +1,7 @@
 @extends('templates.main-template')
 @section('content')
+    <h1>{{ $course->name }}</h1>
     @if(isset($myCourse))
-        <h1>{{ $course->name }}</h1>
 
         @foreach ($topics as $topic)
             <div class="topic-list">
@@ -50,6 +50,8 @@
             <p>No tasks</p>
         @endif
     @else
-        <a href="{{ route('course.register', $course->id) }}">register</a>
+        <div class="register-btn">
+        <a href="{{ route('course.register', $course->id) }}"><button class="btn">register</button></a>
+        </div>
     @endif
 @endsection

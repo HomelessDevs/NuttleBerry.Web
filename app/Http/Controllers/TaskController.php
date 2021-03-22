@@ -9,6 +9,7 @@ use App\Models\Course;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class TaskController extends Controller
 {
@@ -34,9 +35,11 @@ class TaskController extends Controller
         $task->type = $request->input('type');
         $task->description = nl2br($request->input('message'));
         $task->course_id = $request->input('course');
+        $task->max_rating = $request->input('max_rating');
+
         if ($request->hasFile('file')) {
             $task->file = $request->file('file')->getClientOriginalName();
-            $request->file->storeAs('uploads', $request->file->getClientOriginalName());
+            $request->file->storeAs('public', $request->file->getClientOriginalName());
         }
         $task->save();
 
@@ -81,8 +84,9 @@ class TaskController extends Controller
         $answer->status = "Не оцінено";
         $answer->rating = "-";
         if ($request->hasFile('file')) {
+            unlink(storage_path("app/public/$answer->file"));
             $answer->file = $request->file('file')->getClientOriginalName();
-            $request->file->storeAs('uploads', $request->file->getClientOriginalName());
+            $request->file->storeAs('public', $request->file->getClientOriginalName());
         }
         $answer->save();
         return redirect()->route('task.show', $request->input('task_id'));
@@ -96,9 +100,11 @@ class TaskController extends Controller
         $task->type = $request->input('type');
         $task->description = $request->input('message');
         $task->course_id = $request->input('course');
+        $task->max_rating = $request->input('max_rating');
         if ($request->hasFile('file')) {
+            unlink(storage_path("app/public/$task->file"));
             $task->file = $request->file('file')->getClientOriginalName();
-            $request->file->storeAs('uploads', $request->file->getClientOriginalName());
+            $request->file->storeAs('public', $request->file->getClientOriginalName());
         }
         $task->save();
         return redirect()->route('administrating');
@@ -110,12 +116,16 @@ class TaskController extends Controller
         return redirect()->route('administrating');
     }
 
-    public function download($id)
+    public function downloadCompletedTask($id)
     {
         $answer = DB::table('completed_tasks')->where('id', $id)->first();
-        return response()->download(storage_path('app/uploads/') . $answer->file);
+        return response()->download(storage_path('app/public/') . $answer->file);
     }
-
+    public function downloadTask($id)
+    {
+        $answer = DB::table('tasks')->where('id', $id)->first();
+        return response()->download(storage_path('app/public/') . $answer->file);
+    }
     public function answer(Request $request)
     {
         $answer = new Answer;
@@ -124,7 +134,7 @@ class TaskController extends Controller
         $answer->message = $request->input('message');
         if ($request->hasFile('file')) {
             $answer->file = $request->file('file')->getClientOriginalName();
-            $request->file->storeAs('uploads', $request->file->getClientOriginalName());
+            $request->file->storeAs('public', $request->file->getClientOriginalName());
         }
         $answer->save();
         return redirect()->route('task.show', $request->input('task_id'));
