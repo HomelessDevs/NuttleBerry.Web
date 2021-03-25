@@ -4,6 +4,7 @@
     <title>Nuttleberry</title>
     <link href="{{ url('css/app.css') }}" rel="stylesheet">
     <meta name="viewport" content="width=device-width">
+    <!--<meta name="main-component" author="first nuttleberry tester: ©marichka" content="В кожну м'ятну вспливашку було вкладено душу" > -->
 </head>
 <body>
 <div class="app">
