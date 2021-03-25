@@ -18,17 +18,17 @@
         <div>
             <label>Пароль</label>
 
-            <input required type="text" name="password">
+            <input required type="password" name="password">
             @error('password')
             <strong>{{ $message }}</strong>
             @enderror
         </div>
         <div>
             <label>Повторіть пароль</label>
-            <input required type="text" name="password_confirmation">
+            <input required type="password" name="password_confirmation">
         </div>
         <div>
-            <button type="submit">Ввійти</button>
+            <button type="submit">Зареєструватися</button>
         </div>
     </form>
 @endsection

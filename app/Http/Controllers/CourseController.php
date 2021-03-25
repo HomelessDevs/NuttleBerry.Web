@@ -10,7 +10,7 @@ use App\Models\MyCourses;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-
+use Mail;
 class CourseController extends Controller
 {
 
@@ -33,12 +33,17 @@ class CourseController extends Controller
 
     public function store(Request $request)
     {
+        Mail::raw('Hello, I am a PHP program!', function ($message) { $to = 'tarnavskij2002@gmail.com'; $message ->to($to)->subject('plain text message test'); });
+        $validated = $request->validate([
+            'name' => 'required|max:30',
+            'group' => 'required'
+        ]);
         DB::table('courses')->insert([
             'name' => $request->name,
             'group_id' => $request->group,
             'teacher_id' => $request->teacher_id,
         ]);
-        return redirect()->route('administrating');
+        return redirect()->route('administrating')->with('message', 'Курс успішно додано');;
     }
 
     public function edit($id)
@@ -50,11 +55,15 @@ class CourseController extends Controller
 
     public function update(Request $request, $id)
     {
+        $validated = $request->validate([
+            'name' => 'required|max:30',
+            'group' => 'required'
+        ]);
         $course = Course::where('id', $id)->first();
         $course->name = $request->input('name');
         $course->group_id = $request->input('group');
         $course->save();
-        return redirect()->route('administrating');
+        return redirect()->route('administrating')->with('message', 'Курс успішно відредаговано');
     }
 
     public function destroy($id)

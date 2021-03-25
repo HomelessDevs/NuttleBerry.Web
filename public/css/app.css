@@ -11,6 +11,9 @@
 }
 
 /*--------------------------------------Header--------------------------------------*/
+button, textarea, input{
+    outline: #5d48ff !important;
+}
 header {
     font-size: 20px;
     background-color: #5d48ff;
@@ -494,7 +497,7 @@ header a {
 }
 
 .none-displayed {
-    display: none;
+    display: none !important;
 }
 
 textarea {
@@ -539,8 +542,8 @@ textarea {
 .drop-zone {
     margin-left: 20px;
     width: 30%;
-    height: 75px;
-    padding: 25px;
+    height: 66px;
+    padding: 25px 0;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -570,7 +573,8 @@ textarea {
     background-color: #5d48ff;
     background-size: cover;
     position: relative;
-
+    max-height: 40px;
+    font-size: 15px;
 }
 
 .drop-zone__thumb::after {
@@ -584,7 +588,17 @@ textarea {
         display: block;
         border-bottom: none;
     }
-
+    .task-form{
+        display: block;
+    }
+    .textarea-task-form{
+        width: 100%;
+        margin-bottom: 20px;
+    }
+    .drop-zone{
+        width: 100%;
+        margin-left: 0;
+    }
     .task-info {
         border-left: none;
         padding-left: 0;
@@ -641,6 +655,7 @@ textarea {
 
 .answer-message p {
     margin: 0;
+    overflow: hidden;
 }
 
 .user-answer-info {
@@ -687,6 +702,8 @@ textarea {
     color: #fff;
     cursor: pointer;
     border: none !important;
+    border-radius: 4px;
+    font-size: 20px ;
 }
 
 .rating-of-task-form {
@@ -734,18 +751,17 @@ textarea {
     display: flex;
 }
 .completed-task-rating{
-    margin-right: 7px;
     font-size: 22px;
 }
-.create-courses-btns{
+.create-courses-btns, .select-edit-create-courses-btns{
     margin-top: 20px;
     display: flex;
     justify-content: space-between;
 }
-.create-courses-btns div{
+.create-courses-btns div, .select-edit-create-courses-btns div{
     width: 30%;
 }
-.create-courses-btns div button{
+.create-courses-btns div button, .select-edit-create-courses-btns div button{
     font-size: 20px;
     font-style: inherit;
     width: 100%;
@@ -832,6 +848,10 @@ textarea {
 .register-btn{
     margin:0 auto;
     max-width: 320px;
+    transition: 0.3s ease-in-out;
+    padding-top: 30px;
+    outline: none;
+    border: none;
 }
 .btn{
     font-size: 20px;
@@ -844,7 +864,7 @@ textarea {
     color: #5d48ff;
     transition: 0.3s ease-in-out;
     cursor: pointer;
-    margin-top: 30px;
+    outline: none;
 }
 .new-form form .btn:hover{
     background-color: #5d48ff;
@@ -860,7 +880,9 @@ textarea {
     .create-courses-btns {
         display: block;
     }
-
+    .message-success{
+        width: 100% !important;
+    }
     .create-courses-btns div{
         margin-top: 20px;
         width: 100%;
@@ -893,6 +915,7 @@ textarea {
 text-align: center
 }
 .simple-form{
+
     display: block;
     width: 100%;
     margin: 0 auto;
@@ -909,6 +932,7 @@ text-align: center
     margin-bottom: 10px;
     box-sizing: border-box;
     width: 100%;
+    font-family: Rubick;
 }
 .simple-form div textarea{
     height: 150px;
@@ -944,6 +968,53 @@ text-align: center
     width: 100%;
 }
 .completed-none-answers{
+    text-align: center;
+}
+
+.select-edit-create-courses-btns div{
+    width: 48%;
+}
+.error-text{
+    color: red;
+    text-align: center;
+}
+li{
+    list-style-type: none; /* Убираем маркеры */
+}
+.message-success {
+    display: flex;
+    width: 30%;
+    text-align: center;
+    margin-top: 40px;
+    margin: 40px auto 0 auto;
+    border-radius: 4px;
+    padding: 20px 0;
+    -webkit-box-shadow: 2px 2px 8px 0px rgba(34, 60, 80, 0.2);
+    -moz-box-shadow: 2px 2px 8px 0px rgba(34, 60, 80, 0.2);
+    box-shadow: 2px 2px 8px 0px rgba(34, 60, 80, 0.2);
+    background: #b4febb;
+}
+.message-success p{
+    text-align: center;
+    margin: 0 auto;
+    color: #5d48ff;
+    font-size: 20px;
+}
+.register-btn:hover a button {
+    background-color: #5d48ff;
+}
+
+.register-btn:hover a button {
+    color: #fff !important;
+}
+.resend-btn:hover{
+    background-color: #5d48ff;
+}
+
+.resend-btn:hover{
+    color: #fff !important;
+}
+.text-to-verify{
     text-align: center;
 }
 /*

@@ -26,12 +26,8 @@
             <input value="{{ $task->title }}" required name="title" type="text">
         </div>
         <div>
-            <label>Тип</label>
-            <select name="type">
-                <option @if($task->type == "practice") selected @endif value="practice">practice</option>
-                <option @if($task->type== "theory") selected @endif value="theory">theory</option>
-                <option @if($task->type == "advertisement") selected @endif value="advertisement">advertisement</option>
-            </select>
+            <label>Максимальний бал</label>
+            <input value="{{ $task->max_rating }}" required name="max_rating" type="number" min="1">
         </div>
         <div>
             <label>Опис завдання</label>
@@ -46,6 +42,9 @@
             <button type="submit">Редагувати</button>
         </div>
     </form>
+    @foreach ($errors->all() as $error)
+        <li><p class="error-text">{{ $error }}</p></li>
+    @endforeach
     <script src="{{ url('js/drag-and-drop.js') }}"></script>
 
 @endsection

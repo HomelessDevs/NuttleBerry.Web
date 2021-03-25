@@ -29,6 +29,15 @@ class TaskController extends Controller
 
     public function store(Request $request)
     {
+        $validated = $request->validate([
+            'topic' => 'required',
+            'title' => 'required|max:50',
+            'type' => 'required',
+            'message' => 'required|max:2000',
+            'course' => 'required',
+            'max_rating' => 'required|max:5',
+            'file' => 'file|size:20000|mimes:rar,zip',
+        ]);
         $task = new Task;
         $task->topic = $request->input('topic');
         $task->title = $request->input('title');
@@ -43,7 +52,7 @@ class TaskController extends Controller
         }
         $task->save();
 
-        return redirect()->route('administrating');
+        return redirect()->route('administrating')->with('message', 'Завдання успішно додано');
     }
 
     public function show($task_id)
@@ -76,6 +85,12 @@ class TaskController extends Controller
 
     public function editAnswer(Request $request)
     {
+        $validated = $request->validate([
+            'user_id' => 'required',
+            'task_id' => 'required',
+            'message' => 'required|max:150',
+            'file' => 'file|size:20000|mimes:rar,zip',
+        ]);
         $answer = Answer::where([
             ['user_id', '=', $request->user_id],
             ['task_id', '=', $request->task_id],
@@ -84,30 +99,47 @@ class TaskController extends Controller
         $answer->status = "Не оцінено";
         $answer->rating = "-";
         if ($request->hasFile('file')) {
-            unlink(storage_path("app/public/$answer->file"));
-            $answer->file = $request->file('file')->getClientOriginalName();
-            $request->file->storeAs('public', $request->file->getClientOriginalName());
+            $imagePath = $request->file('file')->getClientOriginalName();
+            $filename = pathinfo($imagePath, PATHINFO_FILENAME);
+            $extension = pathinfo($imagePath, PATHINFO_EXTENSION);
+            if (file_exists(storage_path("app/public/$answer->file"))) {
+                unlink(storage_path("app/public/$answer->file"));
+            }
+            $answer->file = $filename . time() . '.' . $extension;
+            $request->file->storeAs('public', $answer->file);
         }
         $answer->save();
-        return redirect()->route('task.show', $request->input('task_id'));
+        return redirect()->route('task.show', $request->input('task_id'))->with('message', 'Ваша відповіль успішно відредаговано');
     }
 
     public function update(Request $request, $id)
     {
+        $validated = $request->validate([
+            'topic' => 'required',
+            'title' => 'required|max:50',
+            'message' => 'required|max:2000',
+            'course' => 'required',
+            'max_rating' => 'required|max:5',
+            'file' => 'file|size:20000|mimes:rar,zip',
+        ]);
         $task = Task::where('id', $id)->first();
         $task->topic = $request->input('topic');
         $task->title = $request->input('title');
-        $task->type = $request->input('type');
         $task->description = $request->input('message');
         $task->course_id = $request->input('course');
         $task->max_rating = $request->input('max_rating');
         if ($request->hasFile('file')) {
-            unlink(storage_path("app/public/$task->file"));
-            $task->file = $request->file('file')->getClientOriginalName();
-            $request->file->storeAs('public', $request->file->getClientOriginalName());
+            $imagePath = $request->file('file')->getClientOriginalName();
+            $filename = pathinfo($imagePath, PATHINFO_FILENAME);
+            $extension = pathinfo($imagePath, PATHINFO_EXTENSION);
+            if (file_exists(storage_path("app/public/$task->file"))) {
+                unlink(storage_path("app/public/$task->file"));
+            }
+            $task->file = $filename . time() . '.' . $extension;
+            $request->file->storeAs('public', $task->file);
         }
         $task->save();
-        return redirect()->route('administrating');
+        return redirect()->route('administrating')->with('message', 'Завдання успішно відредаговано');
     }
 
     public function destroy($id)
@@ -121,33 +153,49 @@ class TaskController extends Controller
         $answer = DB::table('completed_tasks')->where('id', $id)->first();
         return response()->download(storage_path('app/public/') . $answer->file);
     }
+
     public function downloadTask($id)
     {
         $answer = DB::table('tasks')->where('id', $id)->first();
         return response()->download(storage_path('app/public/') . $answer->file);
     }
+
     public function answer(Request $request)
     {
+        $validated = $request->validate([
+            'user_id' => 'required',
+            'task_id' => 'required',
+            'message' => 'required|max:150',
+          //  'file' => 'file|size:20000|mimes:rar,zip',
+        ]);
         $answer = new Answer;
         $answer->user_id = $request->input('user_id');
         $answer->task_id = $request->input('task_id');
         $answer->message = $request->input('message');
         if ($request->hasFile('file')) {
-            $answer->file = $request->file('file')->getClientOriginalName();
-            $request->file->storeAs('public', $request->file->getClientOriginalName());
+            $imagePath = $request->file('file')->getClientOriginalName();
+            $filename = pathinfo($imagePath, PATHINFO_FILENAME);
+            $extension = pathinfo($imagePath, PATHINFO_EXTENSION);
+            $answer->file = $filename . time() . '.' . $extension;
+            $request->file->storeAs('public', $answer->file);
         }
         $answer->save();
-        return redirect()->route('task.show', $request->input('task_id'));
+        return redirect()->route('task.show', $request->input('task_id'))->with('message', 'Ваша робота успішно відправлена на перевірку');
     }
 
     public function rate(Request $request, $answerID)
     {
         $answer = Answer::where('id', $answerID)->first();
+        $task = Task::where('id', $answer->task_id)->first();
+        $validated = $request->validate([
+            'rating' => 'required|numeric|max:' . $task->max_rating,
+            'teacher_feedback' => 'max:150',
+        ]);
         $answer->rating = $request->input('rating');
         $answer->status = "Оцінено";
         $answer->teacher_feedback = $request->input('teacher-feedback');
         $answer->save();
-        return redirect()->route('task.completed', $request->taskID);
+        return redirect()->route('task.completed', $request->taskID)->with('message', 'Робота успішно оцінена');
     }
 
     public function completed($task_id)

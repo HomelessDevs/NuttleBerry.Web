@@ -11,6 +11,8 @@
             <button type="submit">Редагувати</button>
         </div>
     </form>
-
+    @foreach ($errors->all() as $error)
+        <li><p class="error-text">{{ $error }}</p></li>
+    @endforeach
 @endsection
 

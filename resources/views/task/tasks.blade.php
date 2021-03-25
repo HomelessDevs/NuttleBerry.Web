@@ -17,7 +17,7 @@
                                         @if($completed->rating == "-")
 
                                         @else
-                                            {{ $completed->rating }}/5
+                                                {{ $completed->rating }}/{{ $task->max_rating }}
                                         @endif
                                             </span>
                                     @endif
@@ -51,7 +51,7 @@
         @endif
     @else
         <div class="register-btn">
-        <a href="{{ route('course.register', $course->id) }}"><button class="btn">register</button></a>
+        <a href="{{ route('course.register', $course->id) }}"><button class="btn">Зареєструватися на курс</button></a>
         </div>
     @endif
 @endsection

@@ -3,11 +3,19 @@
     @if(Auth::user()->role == "teacher" || Auth::user()->role == "admin")
         <div>
             <h1 class="answers-task-title">{{$task->title}}</h1>
+            @if(session()->has('message'))
+                <div class="message-success">
+                    <p>{{ session()->get('message') }}</p>
+                </div>
+            @endif
         </div>
-        @if(empty($answers))
+        @foreach ($errors->all() as $error)
+            <li><p class="error-text">{{ $error }}</p></li>
+        @endforeach
+        @if(isset($answers[0]))
             <div class="answers-blocks-wrap">
                 @foreach($answers as $answer)
-                    <div class="answer-block">
+                    <div class="answer-block {{$answer->id}}">
 
                         <div class="user-answer-info">
                             @if($answer->message != "none")
@@ -50,7 +58,9 @@
                                            value="{{ $answer->rating }}">
                                     <button type="submit" class="submit-rated-task-button">Оцінити</button>
                                 </div>
+
                             </form>
+
                         </div>
                     </div>
                 @endforeach

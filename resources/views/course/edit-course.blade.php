@@ -12,7 +12,7 @@
         <select name="group">
             @foreach ($groups as $group)
                 <option @if($course->group_id == $group->id) selected
-                        @endif value="{{$group->name}}">{{$group->name}}</option>
+                        @endif value="{{$group->id}}">{{$group->name}}</option>
             @endforeach
         </select>
         </div>
@@ -20,5 +20,8 @@
             <button type="submit">Редагувати</button>
         </div>
     </form>
+    @foreach ($errors->all() as $error)
+        <li><p class="error-text">{{ $error }}</p></li>
+    @endforeach
 @endsection
 

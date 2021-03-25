@@ -1,5 +1,6 @@
 @extends('templates.form-template')
 @section('content')
+    <h1>Забув пароль</h1>
     <form class="simple-form" method="post" action="{{ route('password.request') }}">
         @csrf
         @if(session('status'))

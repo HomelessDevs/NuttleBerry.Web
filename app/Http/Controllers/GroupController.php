@@ -34,10 +34,20 @@ class GroupController extends Controller
 
     public function store(Request $request)
     {
+        $validated = $request->validate([
+            'name' => 'required|max:30',
+        ]);
         DB::table('groups')->insert([
             'name' => $request->name,
         ]);
-        return redirect()->route('administrating');
+        $userID = Auth::user()->id;
+        /*
+        $myCourse = new MyCourses;
+        $myCourse->user_id = $userID;
+        $myCourse->course_id = $courseID;
+        $myCourse->save();
+        */
+        return redirect()->route('administrating')->with('message', 'Групу успішно додано');
     }
 
     public function edit($id)
@@ -48,10 +58,13 @@ class GroupController extends Controller
 
     public function update(Request $request, $id)
     {
+        $validated = $request->validate([
+            'name' => 'required|max:30',
+        ]);
         $group = Group::where('id', $id)->first();
         $group->name = $request->input('name');
         $group->save();
-        return redirect()->route('administrating');
+        return redirect()->route('administrating')->with('message', 'Групу успішно відредаговано');
     }
 
     public function destroy($id)

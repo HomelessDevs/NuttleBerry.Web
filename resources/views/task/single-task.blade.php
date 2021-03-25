@@ -11,6 +11,7 @@
                 <a href="{{ route('task.download', $task->id) }}">{{$task->file}}</a>
             @endif
         </div>
+
         @if($task->type == "practice")
         <div>
             <div class="task-answer">
@@ -107,7 +108,7 @@
                             </div>
                             <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
                             <input type="hidden" name="task_id" value="{{ $task->id }}">
-                            <input class="submit-task-button" type="submit" value="Відпраивти">
+                            <input class="submit-task-button" type="submit" value="Редагувати">
                         </form>
                     </div>
                 @elseif(empty($completedTask) && Auth::user()->role == "student")
@@ -128,6 +129,11 @@
                 @endif
             </div>
         </div>
+            @if(session()->has('message'))
+                <div class="message-success">
+                    <p>{{ session()->get('message') }}</p>
+                </div>
+            @endif
             @endif
     </div>
     <script src="{{ url('js/task-button.js') }}"></script>
