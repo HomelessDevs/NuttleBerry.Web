@@ -8,6 +8,10 @@
             <input required type="text" name="name">
         </div>
         <div>
+            <label>Прізвище</label>
+            <input required type="text" name="surname">
+        </div>
+        <div>
             <label>Е-мейл</label>
 
             <input required type="email" name="email">

@@ -33,16 +33,21 @@ class CourseController extends Controller
 
     public function store(Request $request)
     {
-        Mail::raw('Hello, I am a PHP program!', function ($message) { $to = 'tarnavskij2002@gmail.com'; $message ->to($to)->subject('plain text message test'); });
         $validated = $request->validate([
             'name' => 'required|max:30',
             'group' => 'required'
         ]);
-        DB::table('courses')->insert([
-            'name' => $request->name,
-            'group_id' => $request->group,
-            'teacher_id' => $request->teacher_id,
-        ]);
+        $teacherID = Auth::user()->id;
+        $course = new Course;
+        $course->teacher_id = $teacherID;
+        $course->group_id = $request->group;
+        $course->name = $request->name;
+        $course->save();
+
+        $myCourse = new MyCourses;
+        $myCourse->user_id = $teacherID;
+        $myCourse->course_id = $course->id;
+        $myCourse->save();
         return redirect()->route('administrating')->with('message', 'Курс успішно додано');;
     }
 

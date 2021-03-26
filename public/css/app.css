@@ -897,6 +897,9 @@ textarea {
     border-radius: 4px;
     background: #c1c1c1;
 }
+.profile-title{
+    margin-bottom: 20px;
+}
 .main-profile-block{
     display: flex;
     padding-bottom: 20px;
@@ -966,6 +969,7 @@ text-align: center
 .profile-photo img{
     height: 100%;
     width: 100%;
+    border-radius: 4px;
 }
 .completed-none-answers{
     text-align: center;
@@ -1017,6 +1021,23 @@ li{
 .text-to-verify{
     text-align: center;
 }
+.noone-create-group{
+    text-align: center;
+}
+.here-point{
+    cursor: pointer;
+    color: #5d48ff;
+}
+.destroy-btn{
+    color: #e31d1d !important;
+    border: 2px solid #e31d1d !important;
+}
+.destroy-btn:hover{
+    color: #fff !important;
+    border: 2px solid #e31d1d !important;
+    background: #e31d1d !important;
+}
+
 /*
 #00e00d - green
 #fff - white

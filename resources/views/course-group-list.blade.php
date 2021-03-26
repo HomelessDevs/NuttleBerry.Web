@@ -34,17 +34,25 @@
                 <button class="btn" type="submit">Додати</button>
             </form>
             <ul>
-            @foreach ($errors->all() as $error)
-                <li><p class="error-text">{{ $error }}</p></li>
-            @endforeach
+                @foreach ($errors->all() as $error)
+                    <li><p class="error-text">{{ $error }}</p></li>
+                @endforeach
             </ul>
             <ul class="none-displayed" id="group-list">
-                @foreach($groups as $group)
-                    <li>
-                        <div><a href="{{ route('group.index', $group->id) }}">{{ $group->name }}</a></div>
-                        <div><a
-                                href="{{ route('group.edit', $group->id) }}"> Редагувати</a></div>
-                @endforeach
+                @if(isset($groups[0]))
+                    @foreach($groups as $group)
+                        <li>
+                            <div><a href="{{ route('course.index', $group->id) }}">{{ $group->name }}</a></div>
+                            <div><a
+                                    href="{{ route('group.edit', $group->id) }}"> Редагувати</a></div>
+                            @endforeach
+                            @elseif(!isset($groups[0]))
+                                <p class="noone-create-group">Ніхто ще не створював групи...</p>
+                                <p class="noone-create-group">Нажміть <a class="here-point" id="edit-course-btn"
+                                                                         onclick="displayList(this)">сюди</a> щоб
+                                    створити</p>
+                        @endif
+
             </ul>
         </div>
         <div class="new-form none-displayed" id="course-form">
@@ -65,20 +73,30 @@
                 <button class="btn" type="submit">Додати</button>
             </form>
             <ul class="none-displayed" id="course-list">
-                @foreach($courses as $course)
-                    <li>
-                        <div><a href="{{ route('course.index', $course->id) }}">{{ $course->name }}</a></div>
-                        <div><a
-                                href="{{ route('course.edit', $course->id) }}"> Редагувати</a></div>
-                    </li>
-                @endforeach
+                @if(isset($courses[0]))
+                    @foreach($courses as $course)
+                        <li>
+                            <div><a href="{{ route('task.index', $course->id) }}">{{ $course->name }}</a></div>
+                            <div><a
+                                    href="{{ route('course.edit', $course->id) }}"> Редагувати</a></div>
+                        </li>
+                    @endforeach
+                @elseif(!isset($courses[0]))
+                    <p class="noone-create-group">Ви ще не створювали
+                        <курси></курси>
+                        ...
+                    </p>
+                    <p class="noone-create-group">Нажміть <a class="here-point" id="edit-course-btn"
+                                                             onclick="displayList(this)">сюди</a> щоб створити</p>
+                @endif
+
             </ul>
             @foreach ($errors->all() as $error)
                 <li><p class="error-text">{{ $error }}</p></li>
             @endforeach
         </div>
         <div class="new-form none-displayed" id="task-form">
-            <form id="task-list-form"  enctype="multipart/form-data" method="POST" action="{{ route('task.store')}}">
+            <form id="task-list-form" enctype="multipart/form-data" method="POST" action="{{ route('task.store')}}">
                 @csrf
                 <label>Курси</label>
 
@@ -118,14 +136,21 @@
                 <button class="btn" type="submit">Додати</button>
             </form>
             <ul class="none-displayed" id="task-list">
-                @foreach($tasks as $task)
-                    <li>
-                        <div><a href="{{ route('task.show', $task->id) }}">{{ $task->title }}</a></div>
-                        <div><a
-                                href="{{ route('task.edit', $task->id) }}"> Редагувати</a></div>
+                @if(isset($tasks[0]))
+                    @foreach($tasks as $task)
+                        <li>
+                            <div><a href="{{ route('task.show', $task->id) }}">{{ $task->title }}</a></div>
+                            <div><a
+                                    href="{{ route('task.edit', $task->id) }}"> Редагувати</a></div>
+                        </li>
+                    @endforeach
+                @elseif(!isset($tasks[0]))
+                    <p class="noone-create-group">Ви ще не створювали завдань ...</p>
+                    <p class="noone-create-group">Нажміть <a class="here-point" id="edit-course-btn"
+                                                             onclick="displayList(this)">сюди</a> щоб створити</p>
+                @endif
 
-                    </li>
-                @endforeach
+            </ul>
             </ul>
             @foreach ($errors->all() as $error)
                 <li><p class="error-text">{{ $error }}</p></li>

@@ -36,7 +36,6 @@ class TaskController extends Controller
             'message' => 'required|max:2000',
             'course' => 'required',
             'max_rating' => 'required|max:5',
-            'file' => 'file|size:20000|mimes:rar,zip',
         ]);
         $task = new Task;
         $task->topic = $request->input('topic');
@@ -60,24 +59,24 @@ class TaskController extends Controller
         $task = DB::table('tasks')->where('id', '=', $task_id)->first();
         $course_id = $task->course_id;
         $teacher_id = Course::where('id', $course_id)->select('teacher_id')->first();
-        $teacher_name = User::where('id', $teacher_id->teacher_id)->select('name')->first();
-        if (Auth::user()->role == "student") {
+        $teacher = User::where('id', $teacher_id->teacher_id)->select('name', 'id')->first();
+        if (Auth::user()->id != $teacher->id ) {
             $completedTask = DB::table('completed_tasks')->where([
                 ['user_id', '=', Auth::user()->id],
                 ['task_id', '=', $task_id],
             ])->first();
-            return view('task.single-task', ['task' => $task, 'completedTask' => $completedTask, 'teacherName' => $teacher_name->name]);
-        } elseif (Auth::user()->role == "teacher" || Auth::user()->role == "admin") {
+            return view('task.single-task', ['task' => $task, 'completedTask' => $completedTask, 'teacher' => $teacher]);
+        } elseif (Auth::user()->id == $teacher->id ) {
             $completedTasksRated = count(Answer::where([["task_id", $task_id], ["status", "Оцінено"]])->get());
             $completedTasksNotRated = count(Answer::where([["task_id", $task_id], ["status", "Не оцінено"]])->get());
-            return view('task.single-task', ['completedTasksNotRated' => $completedTasksNotRated, "completedTasksRated" => $completedTasksRated, 'task' => $task, 'teacherName' => $teacher_name->name]);
+            return view('task.single-task', ['completedTasksNotRated' => $completedTasksNotRated, "completedTasksRated" => $completedTasksRated, 'task' => $task, 'teacher' => $teacher]);
         }
     }
 
     public function edit($id)
     {
         $groups = DB::table('groups')->get();
-        $courses = DB::table('courses')->get();
+        $courses = Course::where('teacher_id', Auth::user()->id)->get();
         $task = DB::table('tasks')->where('id', $id)->first();
         $topics = DB::select('select distinct topic from tasks');
         return view('task.edit-task', ['courses' => $courses, 'groups' => $groups, 'task' => $task, 'topics' => $topics]);
@@ -185,6 +184,11 @@ class TaskController extends Controller
 
     public function rate(Request $request, $answerID)
     {
+        $validated = $request->validate([
+            'teacher_feedback' => 'required|max:150',
+            'rating' => 'required',
+            //  'file' => 'file|size:20000|mimes:rar,zip',
+        ]);
         $answer = Answer::where('id', $answerID)->first();
         $task = Task::where('id', $answer->task_id)->first();
         $validated = $request->validate([

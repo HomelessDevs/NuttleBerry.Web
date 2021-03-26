@@ -20,6 +20,13 @@
             <button type="submit">Редагувати</button>
         </div>
     </form>
+    <form class="simple-form" method="POST" action="{{ route('course.destroy', $course->id)}}">
+        @csrf
+        {{ method_field('DELETE') }}
+        <div>
+        <button class="destroy-btn" type="submit">Видалити</button>
+        </div>
+    </form>
     @foreach ($errors->all() as $error)
         <li><p class="error-text">{{ $error }}</p></li>
     @endforeach

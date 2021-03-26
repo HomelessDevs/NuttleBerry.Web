@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        User::create(['name' => 'root', 'role' => 'admin', 'email_verified_at' => now(), 'email' => 'root@example.com', 'password' => bcrypt('root')]);
+        User::create(['surname' => 'rootSurname', 'name' => 'root', 'role' => 'admin', 'email_verified_at' => now(), 'email' => 'root@example.com', 'password' => bcrypt('root')]);
         User::factory()->count(200)->create();
         Group::factory()->count(10)->create();
         Course::factory()->count(60)->create();
