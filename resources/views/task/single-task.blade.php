@@ -109,6 +109,7 @@
                                 </div>
                                 <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
                                 <input type="hidden" name="task_id" value="{{ $task->id }}">
+                                    
                                 <input class="submit-task-button" type="submit" value="Редагувати">
                             </form>
                         </div>

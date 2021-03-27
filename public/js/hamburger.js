@@ -17,3 +17,10 @@ function displayText() {
     }
 };
 hamburger.addEventListener("click", displayText, false);
+
+function delMessage() {
+    var el = document.getElementsByClassName('message-success');
+    el[0].remove();
+}
+
+setTimeout(delMessage, 3000);

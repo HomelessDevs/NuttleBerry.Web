@@ -1,8 +1,8 @@
 @extends('templates.form-template')
 @section('content')
-<p class="text-to-verify">To continue pls verify your email</p>
+<p class="text-to-verify nuttleberry-text">Щоб продовжити підтвердіть вашу електронну адресу</p>
 @if(session('status'))
-    <p lass="text-to-verify">{{ session('status') }}</p>
+    <p class="text-to-verify status-span-message">{{ session('status') }}</p>
     @endif
     <form method="post" action="{{ route('verification.send') }}">
         @csrf

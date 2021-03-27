@@ -22,8 +22,11 @@ use App\Http\Controllers\TaskController;
 Route::get('/', function () {
     return redirect(route('group.index'));
 })->name('main');
-Route::middleware(['auth', 'verified'])->group(function () {
+Route::middleware(['auth'])->group(function () {
     Route::resource('profile', ProfileController::class)->name('*', 'profile')->only(['show', 'edit', 'update', 'destroy']);
+});
+
+Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('group', GroupController::class)->name('*', 'group')->only(['edit', 'update', 'destroy', 'index', 'store']);
     Route::resource('course', CourseController::class)->name('*', 'course')->only(['edit', 'update', 'destroy', 'create', 'store']);
     Route::resource('task', TaskController::class)->name('*', 'task')->only(['edit', 'update', 'destroy', 'create', 'store', 'show']);

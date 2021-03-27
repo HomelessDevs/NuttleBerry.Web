@@ -5,7 +5,7 @@
         @csrf
         <div>
             <label>Курс</label>
-            <select name="course">
+            <select required name="course">
                 @foreach ($courses as $course)
                     <option @if($task->course_id == $course->id) selected
                             @endif value="{{$course->id}}">{{$course->name}}</option>
@@ -14,7 +14,7 @@
         </div>
         <div>
             <label>Теми</label>
-            <input value="{{ $task->topic }}" name="topic" list="topic">
+            <input minlength="3" maxlength="100" required value="{{ $task->topic }}" name="topic" list="topic">
             <datalist id="topic">
                 @foreach ($topics as $topic)
                     <option value="{{$topic->topic}}">
@@ -23,15 +23,15 @@
         </div>
         <div>
             <label>Назва</label>
-            <input value="{{ $task->title }}" required name="title" type="text">
+            <input minlength="3" maxlength="100" value="{{ $task->title }}" required name="title" type="text">
         </div>
         <div>
             <label>Максимальний бал</label>
-            <input value="{{ $task->max_rating }}" required name="max_rating" type="number" min="1">
+            <input max="1000" value="{{ $task->max_rating }}" required name="max_rating" type="number" min="1">
         </div>
         <div>
             <label>Опис завдання</label>
-            <textarea required name="message" type="text">{{ $task->description }}</textarea>
+            <textarea minlength="3" maxlength="2000" required name="message" type="text">{{ $task->description }}</textarea>
         </div>
         <label>Файл</label>
         <div class="drop-zone create-task-drop-input">
@@ -46,7 +46,7 @@
         @csrf
         {{ method_field('DELETE') }}
         <div>
-            <button class="destroy-btn" type="submit">Видалити</button>
+            <button onclick="return confirm('Ви впевнені що хочете видалити завдання разом з виконаними роботами ?')" class="destroy-btn" type="submit">Видалити</button>
         </div>
     </form>
     @foreach ($errors->all() as $error)

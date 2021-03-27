@@ -5,7 +5,7 @@
         @csrf
         <div>
         <label>Назва</label>
-        <input value="{{ $course->name }}" name="name" type="text">
+        <input minlength="3" maxlength="100" value="{{ $course->name }}" name="name" type="text">
         </div>
         <div>
         <label>Група</label>
@@ -24,7 +24,7 @@
         @csrf
         {{ method_field('DELETE') }}
         <div>
-        <button class="destroy-btn" type="submit">Видалити</button>
+        <button onclick="return confirm('Ви впевнені що хочете видалити курс разом зі всіма його завданнями та виконаними роботами')" class="destroy-btn" type="submit">Видалити</button>
         </div>
     </form>
     @foreach ($errors->all() as $error)

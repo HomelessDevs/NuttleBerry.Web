@@ -5,7 +5,7 @@
         @csrf
         <div>
             <label>Назва</label>
-            <input value="{{ $group->name }}" name="name" type="text">
+            <input maxlength="30" value="{{ $group->name }}" name="name" type="text">
         </div>
         <div>
             <button type="submit">Редагувати</button>

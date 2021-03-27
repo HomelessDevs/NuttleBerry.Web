@@ -34,7 +34,7 @@ class CourseController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'name' => 'required|max:30',
+            'name' => 'required|max:100|min:3',
             'group' => 'required'
         ]);
         $teacherID = Auth::user()->id;
@@ -48,7 +48,7 @@ class CourseController extends Controller
         $myCourse->user_id = $teacherID;
         $myCourse->course_id = $course->id;
         $myCourse->save();
-        return redirect()->route('administrating')->with('message', 'Курс успішно додано');;
+        return redirect()->route('administrating')->with('message', 'Курс успішно додано');
     }
 
     public function edit($id)
@@ -61,11 +61,13 @@ class CourseController extends Controller
     public function update(Request $request, $id)
     {
         $validated = $request->validate([
-            'name' => 'required|max:30',
+            'name' => 'required|max:100|min:3',
             'group' => 'required'
         ]);
+        $teacherID = Auth::user()->id;
         $course = Course::where('id', $id)->first();
         $course->name = $request->input('name');
+        $course->teacher_id = $teacherID;
         $course->group_id = $request->input('group');
         $course->save();
         return redirect()->route('administrating')->with('message', 'Курс успішно відредаговано');
@@ -74,7 +76,7 @@ class CourseController extends Controller
     public function destroy($id)
     {
         Course::where('id', $id)->delete();
-        return redirect()->route('administrating');
+        return redirect()->route('administrating')->with('message', 'Курс успішно видалено');
     }
 
     public function register($courseID)

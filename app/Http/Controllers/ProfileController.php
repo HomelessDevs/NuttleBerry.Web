@@ -32,8 +32,13 @@ class ProfileController extends Controller
 
     public function update(Request $request, $id)
     {
+        $validated = $request->validate([
+            'name' => 'required|min:2',
+            'surname' => 'required|min:2',
+        ]);
         $user = User::where('id', $id)->first();
         $user->name = $request->input('name');
+        $user->surname = $request->input('surname');
         if ($request->hasFile('photo')) {
             $imagePath = $request->file('photo')->getClientOriginalName();
             $filename = pathinfo($imagePath, PATHINFO_FILENAME);
@@ -51,7 +56,7 @@ class ProfileController extends Controller
             $course_ids[] = $course->course_id;
         }
         $courses = DB::table('courses')->whereIn('id', $course_ids)->get();
-        return view('profile.profile', ['user' => $user, 'courses' => $courses]);
+        return redirect()->route('profile.show', Auth::user()->id)->with('message', 'Данні вашого профілю успішно змінені');
     }
 
 

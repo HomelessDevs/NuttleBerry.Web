@@ -408,6 +408,7 @@ header a {
 
 .task-description-info p {
     font-size: 25px;
+    margin-bottom: 10px !important;
 }
 
 .task-info {
@@ -581,7 +582,9 @@ textarea {
     content: attr(data-label);
     color: #fff;
 }
-
+.answer-download{
+    overflow: hidden;
+}
 /*--------------------------------------Adaptive-answer-block--------------------------------------*/
 @media screen and (max-width: 520px) {
     .task-answer {
@@ -989,8 +992,7 @@ li{
     display: flex;
     width: 30%;
     text-align: center;
-    margin-top: 40px;
-    margin: 40px auto 0 auto;
+    margin: 20px auto 20px auto;
     border-radius: 4px;
     padding: 20px 0;
     -webkit-box-shadow: 2px 2px 8px 0px rgba(34, 60, 80, 0.2);
@@ -1037,7 +1039,30 @@ li{
     border: 2px solid #e31d1d !important;
     background: #e31d1d !important;
 }
-
+.promote-block{
+    margin-top: 20px;
+    margin-left: 20px;
+}
+.promote-block form button{
+    font-size: 16px !important;
+    font-family: Rubick;
+}
+.nuttleberry-text{
+    color: #5d48ff;
+}
+.promote-block form button:hover {
+    background-color: #5d48ff;
+    color: #fff !important;
+}
+.error-message{
+    color: red;
+}
+.status-span-message{
+    color: #00e00d
+}
+.add-new-errors-list{
+    margin: 0;
+}
 /*
 #00e00d - green
 #fff - white

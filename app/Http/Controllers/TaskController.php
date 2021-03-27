@@ -10,7 +10,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
-
+use Mail;
 class TaskController extends Controller
 {
     public function index($course_id)
@@ -30,12 +30,12 @@ class TaskController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'topic' => 'required',
-            'title' => 'required|max:50',
+            'topic' => 'required|max:100|min:3',
+            'title' => 'required|max:100|min:3',
+            'message' => 'required|max:2000|min:3',
             'type' => 'required',
-            'message' => 'required|max:2000',
             'course' => 'required',
-            'max_rating' => 'required|max:5',
+            'max_rating' => 'required|max:5|min:1',
         ]);
         $task = new Task;
         $task->topic = $request->input('topic');
@@ -61,11 +61,17 @@ class TaskController extends Controller
         $teacher_id = Course::where('id', $course_id)->select('teacher_id')->first();
         $teacher = User::where('id', $teacher_id->teacher_id)->select('name', 'id')->first();
         if (Auth::user()->id != $teacher->id ) {
+
+
+            $answer = Answer::where([['task_id', $task_id],['user_id', Auth::user()->id]])->get();
+
+
+
             $completedTask = DB::table('completed_tasks')->where([
                 ['user_id', '=', Auth::user()->id],
                 ['task_id', '=', $task_id],
             ])->first();
-            return view('task.single-task', ['task' => $task, 'completedTask' => $completedTask, 'teacher' => $teacher]);
+                return view('task.single-task', ['task' => $task, 'completedTask' => $completedTask, 'teacher' => $teacher]);
         } elseif (Auth::user()->id == $teacher->id ) {
             $completedTasksRated = count(Answer::where([["task_id", $task_id], ["status", "Оцінено"]])->get());
             $completedTasksNotRated = count(Answer::where([["task_id", $task_id], ["status", "Не оцінено"]])->get());
@@ -114,12 +120,11 @@ class TaskController extends Controller
     public function update(Request $request, $id)
     {
         $validated = $request->validate([
-            'topic' => 'required',
-            'title' => 'required|max:50',
-            'message' => 'required|max:2000',
+            'topic' => 'required|max:100|min:3',
+            'title' => 'required|max:100|min:3',
+            'message' => 'required|max:2000|min:3',
             'course' => 'required',
-            'max_rating' => 'required|max:5',
-            'file' => 'file|size:20000|mimes:rar,zip',
+            'max_rating' => 'required|max:5|min:1',
         ]);
         $task = Task::where('id', $id)->first();
         $task->topic = $request->input('topic');
@@ -144,7 +149,7 @@ class TaskController extends Controller
     public function destroy($id)
     {
         Task::where('id', $id)->delete();
-        return redirect()->route('administrating');
+        return redirect()->route('administrating')->with('message', 'Завдання успішно видалено');
     }
 
     public function downloadCompletedTask($id)
@@ -164,7 +169,7 @@ class TaskController extends Controller
         $validated = $request->validate([
             'user_id' => 'required',
             'task_id' => 'required',
-            'message' => 'required|max:150',
+            'message' => 'required|',
           //  'file' => 'file|size:20000|mimes:rar,zip',
         ]);
         $answer = new Answer;
@@ -179,13 +184,18 @@ class TaskController extends Controller
             $request->file->storeAs('public', $answer->file);
         }
         $answer->save();
+        Mail::send(['text'=>'mail'], array(), function($message)  {
+            $message->to('tarnavskij2002@gmail.com', 'Tutorials Point')->subject
+            ('Здане завдання');
+            $message->from('tarnavskij2002@gmail.com','Петро Олексійович');
+        });
         return redirect()->route('task.show', $request->input('task_id'))->with('message', 'Ваша робота успішно відправлена на перевірку');
     }
 
     public function rate(Request $request, $answerID)
     {
         $validated = $request->validate([
-            'teacher_feedback' => 'required|max:150',
+            'teacher-feedback' => 'required|max:150',
             'rating' => 'required',
             //  'file' => 'file|size:20000|mimes:rar,zip',
         ]);
@@ -199,6 +209,14 @@ class TaskController extends Controller
         $answer->status = "Оцінено";
         $answer->teacher_feedback = $request->input('teacher-feedback');
         $answer->save();
+        $user = User::where('id',$answer->user_id)->first();
+        $data = array('email'=>$user);
+        Mail::send(['text'=>'mail'], $data, function($message) use ($user) {
+            $message->to($user->email, 'Tutorials Point')->subject
+            ('Оцінка матан');
+            $message->attach(storage_path("app/public/More-tasks.txt"));
+            $message->from('tarnavskij2002@gmail.com','Петро Олексійович');
+        });
         return redirect()->route('task.completed', $request->taskID)->with('message', 'Робота успішно оцінена');
     }
 

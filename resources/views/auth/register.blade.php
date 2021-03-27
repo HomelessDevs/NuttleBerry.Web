@@ -15,22 +15,30 @@
             <label>Е-мейл</label>
 
             <input required type="email" name="email">
-            @error('email')
-            <strong>{{ $message }}</strong>
-            @enderror
+
         </div>
         <div>
             <label>Пароль</label>
 
-            <input required type="password" name="password">
-            @error('password')
-            <strong>{{ $message }}</strong>
-            @enderror
+            <input min="8" required type="password" name="password">
+
         </div>
         <div>
             <label>Повторіть пароль</label>
-            <input required type="password" name="password_confirmation">
+            <input min="8" required type="password" name="password_confirmation">
         </div>
+        @php
+            $inputNames = array('password','email','password_confirmation','surname','name');
+        @endphp
+        <ul>
+            @foreach($inputNames as $name)
+                @error($name)
+                <li>
+                    <span class="error-message">{{ $message }}</span>
+                </li>
+                @enderror
+            @endforeach
+        </ul>
         <div>
             <button type="submit">Зареєструватися</button>
         </div>
