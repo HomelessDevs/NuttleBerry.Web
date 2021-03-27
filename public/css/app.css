@@ -1063,6 +1063,9 @@ li{
 .add-new-errors-list{
     margin: 0;
 }
+.opps-no-tasks{
+    text-align: center;
+}
 /*
 #00e00d - green
 #fff - white

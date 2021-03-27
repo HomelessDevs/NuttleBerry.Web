@@ -47,7 +47,7 @@
         @endforeach
 
         @if(count($tasks)==0)
-            <p>No tasks</p>
+            <p class="opps-no-tasks">Ой, вчитель ще не опублікував завдання для цього курсу</p>
         @endif
     @else
         <div class="register-btn">
