@@ -7,6 +7,10 @@
                 <div class="message-success">
                     <p>{{ session()->get('message') }}</p>
                 </div>
+            @elseif(session()->has('message-warning'))
+                <div class="message-warning">
+                    <p>{{ session()->get('message-warning') }}</p>
+                </div>
             @endif
         </div>
         @foreach ($errors->all() as $error)
@@ -46,17 +50,12 @@
                                   action="{{ route('task.rate', $answer->id) }}">
                                 @csrf
                                 <input type="hidden" name="taskID" value="{{$answer->task_id}}">
-                                <textarea name="teacher-feedback">
-                                @if($answer->teacher_feedback == "none")
-                                    @else
-                                        {{ $answer->teacher_feedback }}
-                                    @endif
-                            </textarea>
+                                <textarea @if($answer->status == "Оцінено") disabled @endif name="teacher-feedback">@if($answer->teacher_feedback == "none")@else{{ $answer->teacher_feedback }}@endif</textarea>
                                 <div class="submit-rated-task-rating">
-                                    <input placeholder="{{$task->max_rating}}" class="rating-of-task-form" type="number"
+                                    <input @if($answer->status == "Оцінено") disabled @endif required placeholder="{{$task->max_rating}}" class="rating-of-task-form" type="number"
                                            max="{{$task->max_rating}}" min="1" name="rating"
                                            value="{{ $answer->rating }}">
-                                    <button type="submit" class="submit-rated-task-button">Оцінити</button>
+                                    <button @if($answer->status == "Оцінено") disabled class="submit-rated-task-button disabled" @else class="submit-rated-task-button" @endif type="submit" >Оцінити</button>
                                 </div>
 
                             </form>

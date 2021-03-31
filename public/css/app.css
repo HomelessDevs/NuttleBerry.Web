@@ -286,8 +286,12 @@ body {
 .course-group-form div {
     margin: 20px;
 }
-
-
+.group-list li div a{
+    overflow: hidden;
+}
+.course-group-form div ul li div:first-child{
+    overflow: hidden;
+}
 header a {
     text-decoration: none;
     color: white;
@@ -314,31 +318,56 @@ header a {
 .standard-list {
     padding-inline-start: 0;
     font-size: 20px;
+    margin-top: 20px;
+}
+.standard-list div div:first-child a{
+    width: 100%;
 }
 
-.standard-list li {
+.standard-list div {
+    display: flex;
     border-radius: 4px;
-    background: #FAFAFA;
     position: relative;
-    margin-bottom: 20px;
     -webkit-transition: all ease 0.3s;
     -moz-transition: all ease 0.3s;
     transition: all ease 0.3s;
+    margin-bottom: 10px;
 }
 
-.standard-list li:hover {
+.standard-list div div:hover:first-child  {
     background-color: #5d48ff;
 }
 
-.standard-list li:hover a {
+.standard-list div div:hover:first-child a{
     color: #fff;
 }
-
-.standard-list li a {
+.standard-list div div:first-child{
+    background: #FAFAFA;
+}
+.svg-a-edit svg{
+    height: 25px;
+    width: 25px;
+    fill: #5d48ff;
+    margin-left: 10px;
+}
+.svg-a-edit:before{
+    border-left: none !important;
+}
+.svg-a-edit:hover:before{
+    border-left: none !important;
+}
+.standard-list div div a{
     display: block;
     padding: 16px 10px;
 }
+.standard-list div div:nth-child(2){
+    margin-left: 20px;
+}
+.standard-list div div:first-child{
 
+    width: 100%;
+    overflow: hidden;
+}
 .task-list {
     padding-inline-start: 20px;
 }
@@ -365,10 +394,10 @@ header a {
 }
 
 .topic-list li {
-    margin-top: 10px;
+    margin-top: 20px;
 }
 
-.task-list li a:before {
+.task-list li .left-border a:before {
     content: "";
     border-left: 4px solid #a09f9f;
     margin-right: 10px;
@@ -383,7 +412,12 @@ header a {
 .task-list li a {
     font-size: 22px;
 }
-
+.task-list li{
+    display: flex;
+}
+.task-list li div:nth-child(2){
+    margin-left: auto;
+}
 .completed-task:before {
     border-left: 4px solid #00e00d !important;
 }
@@ -643,12 +677,19 @@ textarea {
     position: absolute;
     width: 90%;
     bottom: 20px;
+    padding-top: 20px;
+    border-top: 2px solid #a09f9f;
 }
 
 .answer-form:last-child {
     margin-bottom: 0;
 }
-
+.non-form-teacher{
+    border: 2px solid #a09f9f;
+    border-radius: 4px;
+    font-size: 17px;
+    width: 100%;
+}
 .answer-form form input, .answer-form form textarea {
     margin-bottom: 20px;
     border: 2px solid #a09f9f;
@@ -662,7 +703,7 @@ textarea {
 }
 
 .user-answer-info {
-    margin-bottom: 140px !important;
+    margin-bottom: 170px !important;
 }
 
 .answer-block div {
@@ -776,7 +817,11 @@ textarea {
     transition: 0.3s ease-in-out;
     cursor: pointer;
 }
-
+@media screen and (max-width: 470px) {
+    .new-form form input, .new-form form select, .new-form form textarea{
+        font-size: 100% !important;
+    }
+}
 .create-courses-btns div button:focus{
     outline: none;
 }
@@ -808,8 +853,8 @@ textarea {
     color: #fff !important;
 }
 .new-form{
-    margin: 20px auto !important;
-    width: 50%;
+    margin: 20px 0 !important;
+    width: 100%;
 }
 .new-form form{
    display: grid;
@@ -900,6 +945,9 @@ textarea {
     border-radius: 4px;
     background: #c1c1c1;
 }
+.profile-logout{
+    margin-top: 87px;
+}
 .profile-title{
     margin-bottom: 20px;
 }
@@ -909,7 +957,7 @@ textarea {
     border-bottom: 2px solid #a09f9f;
 }
 .main-profile-block p, .main-profile-block a{
-    margin: 0 0 20px 20px;
+    margin: 0 0 10px 10px;
     font-size: 20px;
 }
 
@@ -1006,6 +1054,9 @@ li{
     color: #5d48ff;
     font-size: 20px;
 }
+.disabled{
+    background-color: #a2a2a7;
+}
 .register-btn:hover a button {
     background-color: #5d48ff;
 }
@@ -1040,8 +1091,11 @@ li{
     background: #e31d1d !important;
 }
 .promote-block{
-    margin-top: 20px;
-    margin-left: 20px;
+    margin-top: 10px;
+    margin-left: 10px;
+}
+.promote-block form button{
+    height: 50px !important;
 }
 .promote-block form button{
     font-size: 16px !important;
@@ -1060,11 +1114,40 @@ li{
 .status-span-message{
     color: #00e00d
 }
+.profile-info p{
+    margin-bottom: 10;
+}
 .add-new-errors-list{
     margin: 0;
 }
 .opps-no-tasks{
     text-align: center;
+}
+@media screen and (max-width: 515px) {
+.main-profile-block{
+    display: block;
+}
+    .profile-photo{
+        margin: 0 auto;
+    }
+    .profile-info{
+        text-align: center;
+    }
+    .profile-logout{
+        margin-top: 10px;
+    }
+}
+.exit-a{
+    color: red !important;
+}
+.svg-crown{
+    height: 30px;
+    width: 37px;
+    margin-top: 14px;
+    fill: #ffd80b !important;
+}
+.rated-task{
+
 }
 /*
 #00e00d - green

@@ -27,8 +27,8 @@ class GroupController extends Controller
     }
     public function index()
     {
-        $courses = DB::table('courses')->get();
-        $groups = DB::table('groups')->get();
+        $courses = Course::all();
+        $groups = Group::all();
         return view('group.groups', ['courses' => $courses, 'groups' => $groups]);
     }
 
@@ -37,7 +37,7 @@ class GroupController extends Controller
         $validated = $request->validate([
             'name' => 'required|max:30',
         ]);
-        DB::table('groups')->insert([
+        Group::insert([
             'name' => $request->name,
         ]);
         $userID = Auth::user()->id;
@@ -52,7 +52,7 @@ class GroupController extends Controller
 
     public function edit($id)
     {
-        $group = DB::table('groups')->where('id', $id)->first();
+        $group = Group::where('id', $id)->first();
         return view('group.edit-group', ['group' => $group]);
     }
 

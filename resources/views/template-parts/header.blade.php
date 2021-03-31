@@ -7,10 +7,10 @@
             <div class="stick"></div>
         </div>
         <ul id="nav-menu">
-            <li><a href="{{ route('group.index') }}">Курси</a></li>
+            <li><a href="{{ route('group.index') }}">Групи</a></li>
             @if(Auth::check())
                 @if(Auth::user()->role == "teacher" || Auth::user()->role == "admin")
-                    <li><a href="{{ route('administrating') }}">Створити курси</a></li>
+                    <li><a href="{{ route('administrating') }}">Адміністрування</a></li>
                 @endif
             @endif
             <li><a href="{{ route('course.myCourses') }}">Мої курси</a></li>

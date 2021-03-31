@@ -177,6 +177,8 @@ return [
         //laravel ide-helper
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class    ,
         App\Providers\FortifyServiceProvider::class,
+        //google drive
+        App\Providers\GoogleDriveServiceProvider::class,
 
     ],
 

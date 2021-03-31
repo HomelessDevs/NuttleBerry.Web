@@ -11,7 +11,7 @@
             <label>Фото</label>
             <div class="drop-zone create-task-drop-input">
                 <span class="drop-zone__prompt">Опустіть файл сюди або натисніть, щоб завантажити</span>
-                <input type="file" name="photo" accept="image/jpeg,image/png,image/jpg" class="drop-zone__input">
+                <input type="file" name="photo" accept="image/x-png,image/gif,image/jpeg" class="drop-zone__input">
             </div>
         </div>
         @php

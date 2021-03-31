@@ -27,7 +27,7 @@ class CourseController extends Controller
         foreach ($myCourses as $course) {
             $course_ids[] = $course->course_id;
         }
-        $courses = DB::table('courses')->whereIn('id', $course_ids)->get();
+        $courses = Course::whereIn('id', $course_ids)->get();
         return view('course.my-courses', ['courses' => $courses]);
     }
 
@@ -43,7 +43,6 @@ class CourseController extends Controller
         $course->group_id = $request->group;
         $course->name = $request->name;
         $course->save();
-
         $myCourse = new MyCourses;
         $myCourse->user_id = $teacherID;
         $myCourse->course_id = $course->id;
@@ -53,8 +52,8 @@ class CourseController extends Controller
 
     public function edit($id)
     {
-        $groups = DB::table('groups')->get();
-        $course = DB::table('courses')->where('id', $id)->first();
+        $groups = Group::all();
+        $course = Course::where('id', $id)->first();
         return view('course.edit-course', ['course' => $course, 'groups' => $groups]);
     }
 

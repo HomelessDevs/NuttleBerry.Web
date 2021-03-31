@@ -14,19 +14,19 @@ class ProfileController extends Controller
 {
     public function show($id)
     {
-        $user = DB::table('users')->where('id', '=', $id)->first();
+        $user = User::where('id', '=', $id)->first();
         $myCourses = MyCourses::where('user_id', Auth::user()->id)->get();
         $course_ids = array();
         foreach ($myCourses as $course) {
             $course_ids[] = $course->course_id;
         }
-        $courses = DB::table('courses')->whereIn('id', $course_ids)->get();
+        $courses = Course::whereIn('id', $course_ids)->get();
         return view('profile.profile', ['user' => $user, 'courses' => $courses]);
     }
 
     public function edit($id)
     {
-        $user = DB::table('users')->where('id', '=', $id)->first();
+        $user = User::where('id', '=', $id)->first();
         return view('profile.edit-profile', ['user' => $user]);
     }
 
@@ -35,6 +35,7 @@ class ProfileController extends Controller
         $validated = $request->validate([
             'name' => 'required|min:2',
             'surname' => 'required|min:2',
+            'photo' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
         $user = User::where('id', $id)->first();
         $user->name = $request->input('name');
@@ -55,7 +56,7 @@ class ProfileController extends Controller
         foreach ($myCourses as $course) {
             $course_ids[] = $course->course_id;
         }
-        $courses = DB::table('courses')->whereIn('id', $course_ids)->get();
+        $courses = Course::whereIn('id', $course_ids)->get();
         return redirect()->route('profile.show', Auth::user()->id)->with('message', 'Данні вашого профілю успішно змінені');
     }
 

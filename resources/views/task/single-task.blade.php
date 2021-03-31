@@ -92,6 +92,9 @@
                         </div>
                     </div>
                 </div>
+                @foreach ($errors->all() as $error)
+                    <li><p class="error-text">{{ $error }}</p></li>
+                @endforeach
                 <div id="edit-task" class="none-displayed">
                     @if(!empty($completedTask) && Auth::user()->id != $teacher->id )
                         <div class="edit-answer">
@@ -99,17 +102,16 @@
                                   action="{{ route('task.edit.answer', Auth::user()->id) }}">
                                 @csrf
                                 <div class="task-form">
-                            <textarea class="textarea-task-form" type="text"
-                                      name="message">{{ $completedTask->message  }}</textarea>
+                            <textarea maxlength="300" class="textarea-task-form" type="text" name="message">{{$completedTask->message}}</textarea>
                                     <div class="drop-zone">
                                         <span
                                             class="drop-zone__prompt">Drop file here or click to upload(zip, rar)</span>
-                                        <input type="file" name="file" class="drop-zone__input">
+                                        <input accept=".zip,.rar" type="file" name="file" class="drop-zone__input">
                                     </div>
                                 </div>
                                 <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
                                 <input type="hidden" name="task_id" value="{{ $task->id }}">
-                                    
+
                                 <input class="submit-task-button" type="submit" value="Редагувати">
                             </form>
                         </div>
@@ -118,11 +120,11 @@
                               action="{{ route('task.answer', Auth::user()->id) }}">
                             @csrf
                             <div class="task-form">
-                                <textarea class="textarea-task-form" type="text" name="message"></textarea>
+                                <textarea maxlength="300" class="textarea-task-form" type="text" name="message"></textarea>
                                 <div class="drop-zone">
                                     <span
                                         class="drop-zone__prompt">Опустіть файл сюди або натисніть, щоб завантажити</span>
-                                    <input multiple type="file" name="file" class="drop-zone__input">
+                                    <input  type="file" name="file" class="drop-zone__input">
                                 </div>
                             </div>
                             <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
