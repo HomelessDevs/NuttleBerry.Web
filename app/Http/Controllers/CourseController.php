@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Mail;
+
 class CourseController extends Controller
 {
 
@@ -18,16 +19,31 @@ class CourseController extends Controller
     {
         $group = Group::find($group_id);
         $courses = $group->courses;
+        $user = Auth::user();
+        if ($user->role == 'teacher' || $user->role == 'admin') {
+            foreach ($courses as $course) {
+                if($course->teacher_id == $user->id) {
+                    $tasksIDs = Task::where('course_id', $course->id)->pluck('id');
+                    $course->count = Answer::whereIn('task_id', $tasksIDs)->where('status', 'Не оцінено')->count();
+                }
+            }
+        }
         return view('course.courses', ['courses' => $courses, 'groupName' => $group->name]);
     }
+
     public function myCourses()
     {
-        $myCourses = MyCourses::where('user_id', Auth::user()->id)->get();
-        $course_ids = array();
-        foreach ($myCourses as $course) {
-            $course_ids[] = $course->course_id;
-        }
+        $course_ids = MyCourses::where('user_id', Auth::user()->id)->pluck('course_id');
         $courses = Course::whereIn('id', $course_ids)->get();
+        $user = Auth::user();
+        if ($user->role == 'teacher' || $user->role == 'admin') {
+            foreach ($courses as $course) {
+                if($course->teacher_id == $user->id) {
+                    $tasksIDs = Task::where('course_id', $course->id)->pluck('id');
+                    $course->count = Answer::whereIn('task_id', $tasksIDs)->where('status', 'Не оцінено')->count();
+                }
+            }
+        }
         return view('course.my-courses', ['courses' => $courses]);
     }
 

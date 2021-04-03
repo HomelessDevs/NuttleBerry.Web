@@ -5,23 +5,39 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\MyCourses;
 use App\Models\Course;
+use App\Models\Task;
+use App\Models\Answer;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class ProfileController extends Controller
 {
     public function show($id)
     {
         $user = User::where('id', '=', $id)->first();
-        $myCourses = MyCourses::where('user_id', Auth::user()->id)->get();
-        $course_ids = array();
-        foreach ($myCourses as $course) {
-            $course_ids[] = $course->course_id;
-        }
+        $course_ids = MyCourses::where('user_id', Auth::user()->id)->pluck('course_id');
         $courses = Course::whereIn('id', $course_ids)->get();
-        return view('profile.profile', ['user' => $user, 'courses' => $courses]);
+        $user = Auth::user();
+        if ($user->role == 'teacher' || $user->role == 'admin') {
+            foreach ($courses as $course) {
+                if($course->teacher_id == $user->id) {
+                    $tasksIDs = Task::where('course_id', $course->id)->pluck('id');
+                    $course->count = Answer::whereIn('task_id', $tasksIDs)->where('status', 'Не оцінено')->count();
+                }
+            }
+        }
+        $files = Storage::allFiles();
+        $photoID = '';
+        foreach ($files as $file){
+            $fileName = Storage::getMetadata($file);
+            if($fileName['name'] == $user->photo){
+                $photoID = $file;
+            }
+        }
+        return view('profile.profile', ['user' => $user, 'courses' => $courses, 'photo' => $photoID]);
     }
 
     public function edit($id)
@@ -41,22 +57,17 @@ class ProfileController extends Controller
         $user->name = $request->input('name');
         $user->surname = $request->input('surname');
         if ($request->hasFile('photo')) {
-            $imagePath = $request->file('photo')->getClientOriginalName();
-            $filename = pathinfo($imagePath, PATHINFO_FILENAME);
-            $extension = pathinfo($imagePath, PATHINFO_EXTENSION);
-            if (file_exists(storage_path("app/public/$user->photo"))) {
-                unlink(storage_path("app/public/$user->photo"));
+            $files = Storage::allFiles();
+            foreach ($files as $file){
+                $fileName = Storage::getMetadata($file);
+                if($fileName['name'] == $user->photo){
+                    Storage::delete($fileName['path']);
+                }
             }
-            $user->photo = $filename . time() . '.' . $extension;
-            $request->photo->storeAs('public', $user->photo);
+            $filename = $request->file('photo')->store('');
+            $user->photo = $filename;
         }
         $user->save();
-        $myCourses = MyCourses::where('user_id', Auth::user()->id)->get();
-        $course_ids = array();
-        foreach ($myCourses as $course) {
-            $course_ids[] = $course->course_id;
-        }
-        $courses = Course::whereIn('id', $course_ids)->get();
         return redirect()->route('profile.show', Auth::user()->id)->with('message', 'Данні вашого профілю успішно змінені');
     }
 

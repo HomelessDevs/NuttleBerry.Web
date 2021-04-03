@@ -22,11 +22,7 @@ class CourseFactory extends Factory
      */
     public function definition()
     {
-        $groupNames = DB::table('groups')->select('id')->get();
-        $IDs = array();
-        foreach ($groupNames as $group){
-            $IDs[] = $group->id;
-        }
+        $IDs = DB::table('groups')->select('id')->pluck('id');
         return [
             'name' => 'course' . $this->faker->unique()->numberBetween(1, 1000),
             'group_id' => $this->faker->randomElement($IDs),

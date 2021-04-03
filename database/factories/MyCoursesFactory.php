@@ -22,16 +22,8 @@ class MyCoursesFactory extends Factory
      */
     public function definition()
     {
-        $tasks = DB::table('courses')->select('id')->get();
-        $users = DB::table('users')->select('id')->get();
-        $tasksIDs = array();
-        $usersIDs = array();
-        foreach ($tasks as $task){
-            $tasksIDs[] = $task->id;
-        }
-        foreach ($users as $user){
-            $usersIDs[] = $user->id;
-        }
+        $tasksIDs = DB::table('courses')->pluck('id');
+        $usersIDs = DB::table('users')->pluck('id');
         return [
             'user_id' => $this->faker->randomElement($usersIDs),
             'course_id' => $this->faker->randomElement($tasksIDs),

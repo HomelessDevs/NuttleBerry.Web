@@ -22,11 +22,7 @@ class TaskFactory extends Factory
      */
     public function definition()
     {
-        $courseIDs = DB::table('courses')->select('id')->get();
-        $IDs = array();
-        foreach ($courseIDs as $group){
-            $IDs[] = $group->id;
-        }
+        $IDs = DB::table('courses')->pluck('id');
         return [
             'course_id' => $this->faker->randomElement($IDs),
             'title' => $this->faker->company,

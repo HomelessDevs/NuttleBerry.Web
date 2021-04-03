@@ -20,10 +20,7 @@ class TaskController extends Controller
     {
         $topics = DB::table('tasks')->select('topic')->distinct()->where('course_id', $course_id)->get();
         $tasks = Task::where('course_id', $course_id)->get();
-        $tasksIDs = array();
-        foreach ($tasks as $task) {
-            $tasksIDs[] = $task->id;
-        }
+        $tasksIDs = $tasks->pluck('id');
         $completedTasks = DB::table('completed_tasks')->where('user_id', Auth::user()->id)->whereIn('task_id', $tasksIDs)->get();
         $course = Course::where('id', $course_id)->first();
         $MyCourses = MyCourses::where([['user_id', Auth::user()->id], ['course_id', $course_id]])->first();
@@ -72,8 +69,8 @@ class TaskController extends Controller
         $task->max_rating = $request->input('max_rating');
 
         if ($request->hasFile('file')) {
-            $task->file = $request->file('file')->getClientOriginalName();
-            $request->file->storeAs('public', $request->file->getClientOriginalName());
+            $filename = $request->file('file')->store('');
+            $task->file = $filename;
         }
         $task->save();
 
@@ -106,6 +103,7 @@ class TaskController extends Controller
 
     public function edit($id)
     {
+
         $groups = Group::all();
         $courses = Course::where('teacher_id', Auth::user()->id)->get();
         $task = Task::where('id', $id)->first();
@@ -129,15 +127,25 @@ class TaskController extends Controller
         $answer->status = "Не оцінено";
         $answer->rating = "-";
         if ($request->hasFile('file')) {
+            /*
+            $file = $request->file('file');
             $imagePath = $request->file('file')->getClientOriginalName();
             $filename = pathinfo($imagePath, PATHINFO_FILENAME);
             $extension = pathinfo($imagePath, PATHINFO_EXTENSION);
-            if (file_exists(storage_path("app/public/$answer->file"))) {
-                unlink(storage_path("app/public/$answer->file"));
+            if (Storage::disk('google')->exists('$answer->file')) {
+                Storage::disk('google')->delete($answer->file);
             }
             $answer->file = $filename . time() . '.' . $extension;
-            $request->file('file')->store($answer->file,"google");
-
+            */
+            $files = Storage::allFiles();
+            foreach ($files as $file){
+                $fileName = Storage::getMetadata($file);
+                if($fileName['name'] == $answer->file){
+                    Storage::delete($fileName['path']);
+                }
+            }
+            $filename = $request->file('file')->store('');
+            $answer->file = $filename;
         }
         $answer->save();
         return redirect()->route('task.show', $request->input('task_id'))->with('message', 'Ваша відповіль успішно відредаговано');
@@ -160,14 +168,15 @@ class TaskController extends Controller
         $task->course_id = $request->input('course');
         $task->max_rating = $request->input('max_rating');
         if ($request->hasFile('file')) {
-            $imagePath = $request->file('file')->getClientOriginalName();
-            $filename = pathinfo($imagePath, PATHINFO_FILENAME);
-            $extension = pathinfo($imagePath, PATHINFO_EXTENSION);
-            if (file_exists(storage_path("app/public/$task->file"))) {
-                unlink(storage_path("app/public/$task->file"));
+            $files = Storage::allFiles();
+            foreach ($files as $file){
+                $fileName = Storage::getMetadata($file);
+                if($fileName['name'] == $task->file){
+                    Storage::delete($fileName['path']);
+                }
             }
-            $task->file = $filename . time() . '.' . $extension;
-            $request->file->storeAs('public', $task->file);
+            $filename = $request->file('file')->store('');
+            $task->file = $filename;
         }
         $task->save();
         return redirect()->route('administrating')->with('message', 'Завдання успішно відредаговано');
@@ -182,13 +191,29 @@ class TaskController extends Controller
     public function downloadCompletedTask($id)
     {
         $answer = Answer::where('id', $id)->first();
-        return response()->download(storage_path('app/public/') . $answer->file);
+        $files = Storage::allFiles();
+        $fileID = null;
+        foreach ($files as $file){
+            $fileName = Storage::getMetadata($file);
+            if($fileName['name'] == $answer->file){
+                $fileID = $fileName['path'];
+            }
+        }
+        return Storage::download($fileID, 'yes'. '.' . $fileName['extension']);
     }
 
     public function downloadTask($id)
     {
         $answer = Task::where('id', $id)->first();
-        return response()->download(storage_path('app/public/') . $answer->file);
+        $files = Storage::allFiles();
+        $fileID = null;
+        foreach ($files as $file){
+            $fileName = Storage::getMetadata($file);
+            if($fileName['name'] == $answer->file){
+                $fileID = $fileName['path'];
+            }
+        }
+        return Storage::download($fileID, 'yes'. '.' . $fileName['extension']);
     }
 
     public function answer(Request $request)
@@ -204,19 +229,19 @@ class TaskController extends Controller
         $answer->task_id = $request->input('task_id');
         $answer->message = $request->input('message');
         if ($request->hasFile('file')) {
-            $imagePath = $request->file('file')->getClientOriginalName();
-            $filename = pathinfo($imagePath, PATHINFO_FILENAME);
-            $extension = pathinfo($imagePath, PATHINFO_EXTENSION);
-            $answer->file = $filename . time() . '.' . $extension;
-            $request->file('file')->store("","google");
+            $filename = $request->file('file')->store('');
+            $answer->file = $filename;
         }
+        $task = Task::where('id', $answer->task_id)->first();
         $answer->save();
-        Mail::send(['text' => 'mail'], array(), function ($message) {
+        $data = array('task' => $task);
+        Mail::send(['text' => 'mail'], $data, function ($message) use ($task) {
             $message->to('tarnavskij2002@gmail.com', 'Tutorials Point')->subject
             ('Здане завдання');
             $message->from('tarnavskij2002@gmail.com', 'Петро Олексійович');
         });
-        return redirect()->route('task.show', $request->input('task_id'))->with('message', 'Ваша робота успішно відправлена на перевірку');
+        DB::table('completed_users_tasks')->insert(['user_id' => Auth::user()->id,'task_id' => $answer->task_id]);
+        return redirect()->route('task.show', $answer->task_id)->with('message', 'Ваша робота успішно відправлена на перевірку');
     }
 
     public function rate(Request $request, $answerID)
@@ -258,10 +283,7 @@ class TaskController extends Controller
     public function completed($task_id)
     {
         $answers = Answer::where('task_id', $task_id)->orderBy('status', 'desc')->get();
-        $userIDs = array();
-        foreach ($answers as $answer) {
-            $userIDs[] = $answer->user_id;
-        }
+        $userIDs = $answers->pluck('user_id');
         $users = User::whereIn('id', $userIDs)->get();
         $task = Task::where('id', $task_id)->first();
         return view('task.completed', ['answers' => $answers, 'task' => $task, 'users' => $users]);
@@ -270,15 +292,9 @@ class TaskController extends Controller
     public function journal()
     {
         $answers = Answer::where('user_id', Auth::user()->id)->get();
-        $taskIDs = array();
-        foreach ($answers as $answer) {
-            $taskIDs[] = $answer->task_id;
-        }
+        $taskIDs = $answers->pluck('task_id');
         $tasks = Task::whereIn('id', $taskIDs)->get();
-        $coursesIDs = array();
-        foreach ($tasks as $task) {
-            $coursesIDs[] = $task->course_id;
-        }
+        $coursesIDs = $tasks = pluck('course_id');
         $courses = Course::select('name', 'id')->whereIn('id', $coursesIDs)->get();
         return view('journal.journal', ['answers' => $answers, 'tasks' => $tasks, 'courses' => $courses]);
     }

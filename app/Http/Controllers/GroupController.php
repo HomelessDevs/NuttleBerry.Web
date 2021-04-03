@@ -17,10 +17,7 @@ class GroupController extends Controller
     {
         $groups = Group::all();
         $courses = Course::where('teacher_id', Auth::user()->id)->get();
-        $coursesIDs = array();
-        foreach ($courses as $course){
-            $coursesIDs[] = $course->id;
-        }
+        $coursesIDs = $courses->pluck('id');
         $tasks = Task::whereIn('course_id', $coursesIDs)->get();
         $topics = DB::select('select distinct topic from tasks');
         return view('course-group-list', ['courses' => $courses, 'groups' => $groups, 'topics' => $topics, 'tasks' => $tasks]);
