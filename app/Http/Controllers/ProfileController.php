@@ -18,9 +18,11 @@ class ProfileController extends Controller
     public function show($id)
     {
         $user = User::where('id', '=', $id)->first();
+        if (empty($user)){
+            return redirect('404');
+        }
         $course_ids = MyCourses::where('user_id', Auth::user()->id)->pluck('course_id');
         $courses = Course::whereIn('id', $course_ids)->get();
-        $user = Auth::user();
         if ($user->role == 'teacher' || $user->role == 'admin') {
             foreach ($courses as $course) {
                 if($course->teacher_id == $user->id) {
@@ -42,7 +44,11 @@ class ProfileController extends Controller
 
     public function edit($id)
     {
-        $user = User::where('id', '=', $id)->first();
+        if (empty($user) && $id != Auth::user()->id){
+            return redirect('404');
+        }
+        $user = User::where('id', '=', Auth::user()->id)->first();
+
         return view('profile.edit-profile', ['user' => $user]);
     }
 
@@ -53,7 +59,10 @@ class ProfileController extends Controller
             'surname' => 'required|min:2',
             'photo' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
-        $user = User::where('id', $id)->first();
+        $user = User::where('id', Auth::user()->id)->first();
+        if (empty($user)){
+            return redirect('404');
+        }
         $user->name = $request->input('name');
         $user->surname = $request->input('surname');
         if ($request->hasFile('photo')) {
@@ -71,17 +80,29 @@ class ProfileController extends Controller
         return redirect()->route('profile.show', Auth::user()->id)->with('message', 'Данні вашого профілю успішно змінені');
     }
 
-
+    /*
     public function destroy($id)
     {
         User::find($id)->delete();
     }
+    */
 
     public function promote($id)
     {
         $user = User::where('id', $id)->first();
+        if (empty($user)){
+            return redirect('404');
+        }
         $user->role = 'teacher';
         $user->save();
-        return view('profile.profile', ['user' => $user]);
+        $files = Storage::allFiles();
+        $photoID = '';
+        foreach ($files as $file){
+            $fileName = Storage::getMetadata($file);
+            if($fileName['name'] == $user->photo){
+                $photoID = $file;
+            }
+        }
+        return view('profile.profile', ['user' => $user, 'photo' => $photoID]);
     }
 }

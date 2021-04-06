@@ -26,6 +26,7 @@ class GroupController extends Controller
     {
         $courses = Course::all();
         $groups = Group::all();
+        $user = Auth::user();
         return view('group.groups', ['courses' => $courses, 'groups' => $groups]);
     }
 
@@ -50,6 +51,9 @@ class GroupController extends Controller
     public function edit($id)
     {
         $group = Group::where('id', $id)->first();
+        if (empty($group)){
+            return redirect('404');
+        }
         return view('group.edit-group', ['group' => $group]);
     }
 
@@ -59,6 +63,9 @@ class GroupController extends Controller
             'name' => 'required|max:30',
         ]);
         $group = Group::where('id', $id)->first();
+        if (empty($group)){
+            return redirect('404');
+        }
         $group->name = $request->input('name');
         $group->save();
         return redirect()->route('administrating')->with('message', 'Групу успішно відредаговано');

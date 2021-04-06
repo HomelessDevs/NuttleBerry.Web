@@ -32,6 +32,11 @@
                                             @endif
                                         @endforeach
                                     </div>
+                                    @if($task->deadline < mb_substr($answer->created_at, 0, 10))
+                                    <div class="deadline-failed">
+                                        Просрочено
+                                    </div>
+                                    @endif
                                     <div
                                         class="circle @if($answer->status == "Не оцінено") orange @elseif($answer->status == "Оцінено") green @endif"></div>
                                 </div>

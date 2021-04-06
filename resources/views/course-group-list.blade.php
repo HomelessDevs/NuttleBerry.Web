@@ -119,7 +119,7 @@
         <div class="new-form none-displayed" id="task-form">
             <form id="task-list-form" enctype="multipart/form-data" method="POST" action="{{ route('task.store')}}">
                 @php
-                    $inputNames = array('course', 'topic','title','type','max_rating','message','file');
+                    $inputNames = array('deadline', 'course', 'topic','title','type','max_rating','message','file');
                 @endphp
                 <ul class="add-new-errors-list">
                     @foreach($inputNames as $name)
@@ -131,7 +131,7 @@
                     @endforeach
                 </ul>
                 @csrf
-                <label>Курси</label>
+                <label>Курс</label>
                 <select required name="course">
                     @foreach ($courses as $course)
                         <option value="{{$course->id}}">{{$course->name}}</option>
@@ -139,7 +139,7 @@
                 </select>
                 <label>Назва</label>
                 <input minlength="3" maxlength="100" required name="title" type="text">
-                <label>Теми</label>
+                <label>Тема</label>
                 <input minlength="3" maxlength="100" required name="topic" list="topic">
                 <datalist id="topic">
                     @foreach ($topics as $topic)
@@ -161,7 +161,9 @@
                     <span class="drop-zone__prompt">Перенесіть сюди файл або натисніть, щоб завантажити (zip, rar)</span>
                     <input accept=".zip, .rar" type="file" name="file" class="drop-zone__input">
                 </div>
-                <button class="btn" type="submit">Додати</button>
+                <label>Термін здачі</label>
+                    <input name="deadline" type="date">
+               <button class="btn" type="submit">Додати</button>
             </form>
             <ul class="none-displayed" id="task-list">
                 @if(isset($tasks[0]))

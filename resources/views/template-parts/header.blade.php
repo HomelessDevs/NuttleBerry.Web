@@ -27,7 +27,6 @@
                 @endif
             </ul>
         </nav>
-
         @if (Route::has('login'))
             <nav class="login">
                 <ul>

@@ -18,11 +18,15 @@ class TaskController extends Controller
 {
     public function index($course_id)
     {
+        $course = Course::where('id', $course_id)->first();
+        if (empty($course)){
+            return redirect('404');
+        }
         $topics = DB::table('tasks')->select('topic')->distinct()->where('course_id', $course_id)->get();
         $tasks = Task::where('course_id', $course_id)->get();
         $tasksIDs = $tasks->pluck('id');
         $completedTasks = DB::table('completed_tasks')->where('user_id', Auth::user()->id)->whereIn('task_id', $tasksIDs)->get();
-        $course = Course::where('id', $course_id)->first();
+
         $MyCourses = MyCourses::where([['user_id', Auth::user()->id], ['course_id', $course_id]])->first();
         if (Auth::user()->id == $course->teacher_id) {
             $tasksIndicationValues = array();
@@ -51,6 +55,7 @@ class TaskController extends Controller
 
     public function store(Request $request)
     {
+        $today = date('Y-m-d');
         $validated = $request->validate([
             'topic' => 'required|max:100|min:3',
             'title' => 'required|max:100|min:3',
@@ -58,7 +63,8 @@ class TaskController extends Controller
             'type' => 'required',
             'course' => 'required',
             'max_rating' => 'required|max:5|min:1',
-            'file' => '|mimes:zip,rar|max:5048'
+            'file' => '|mimes:zip,rar|max:5048',
+            'deadline' => '|date|date_format:Y-m-d|after:today',
         ]);
         $task = new Task;
         $task->topic = $request->input('topic');
@@ -67,7 +73,7 @@ class TaskController extends Controller
         $task->description = nl2br($request->input('message'));
         $task->course_id = $request->input('course');
         $task->max_rating = $request->input('max_rating');
-
+        $task->deadline = $request->input('deadline');
         if ($request->hasFile('file')) {
             $filename = $request->file('file')->store('');
             $task->file = $filename;
@@ -80,6 +86,9 @@ class TaskController extends Controller
     public function show($task_id)
     {
         $task = Task::where('id', '=', $task_id)->first();
+        if (empty($task)){
+            return redirect('404');
+        }
         $course_id = $task->course_id;
         $teacher_id = Course::where('id', $course_id)->select('teacher_id')->first();
         $teacher = User::where('id', $teacher_id->teacher_id)->select('name', 'id')->first();
@@ -103,10 +112,12 @@ class TaskController extends Controller
 
     public function edit($id)
     {
-
+        $task = Task::where('id', $id)->first();
+        if (empty($task)){
+            return redirect('404');
+        }
         $groups = Group::all();
         $courses = Course::where('teacher_id', Auth::user()->id)->get();
-        $task = Task::where('id', $id)->first();
         $topics = DB::select('select distinct topic from tasks');
         return view('task.edit-task', ['courses' => $courses, 'groups' => $groups, 'task' => $task, 'topics' => $topics]);
     }
@@ -123,6 +134,9 @@ class TaskController extends Controller
             ['user_id', '=', $request->user_id],
             ['task_id', '=', $request->task_id],
         ])->first();
+        if (empty($answer)){
+            return redirect('404');
+        }
         $answer->message = $request->input('message');
         $answer->status = "Не оцінено";
         $answer->rating = "-";
@@ -153,20 +167,26 @@ class TaskController extends Controller
 
     public function update(Request $request, $id)
     {
+        $today = date('Y-m-d');
         $validated = $request->validate([
             'topic' => 'required|max:100|min:3',
             'title' => 'required|max:100|min:3',
             'message' => 'required|max:2000|min:3',
             'course' => 'required',
             'max_rating' => 'required|max:5|min:1',
-            'file' => '|mimes:zip,rar|max:5048'
+            'file' => '|mimes:zip,rar|max:5048',
+            'deadline' => '|date|date_format:Y-m-d|after:today',
         ]);
         $task = Task::where('id', $id)->first();
+        if (empty($task)){
+            return redirect('404');
+        }
         $task->topic = $request->input('topic');
         $task->title = $request->input('title');
         $task->description = $request->input('message');
         $task->course_id = $request->input('course');
         $task->max_rating = $request->input('max_rating');
+        $task->deadline = $request->input('deadline');
         if ($request->hasFile('file')) {
             $files = Storage::allFiles();
             foreach ($files as $file){
@@ -191,6 +211,9 @@ class TaskController extends Controller
     public function downloadCompletedTask($id)
     {
         $answer = Answer::where('id', $id)->first();
+        if (empty($answer)){
+            return redirect('404');
+        }
         $files = Storage::allFiles();
         $fileID = null;
         foreach ($files as $file){
@@ -205,6 +228,9 @@ class TaskController extends Controller
     public function downloadTask($id)
     {
         $answer = Task::where('id', $id)->first();
+        if (empty($answer)){
+            return redirect('404');
+        }
         $files = Storage::allFiles();
         $fileID = null;
         foreach ($files as $file){
@@ -251,6 +277,9 @@ class TaskController extends Controller
             'rating' => 'required',
         ]);
         $answer = Answer::where('id', $answerID)->first();
+        if (empty($answer)){
+            return redirect('404');
+        }
         if($answer->status == 'Не оцінено') {
             $task = Task::where('id', $answer->task_id)->first();
             $validated = $request->validate([
@@ -282,10 +311,13 @@ class TaskController extends Controller
 
     public function completed($task_id)
     {
+        $task = Task::where('id', $task_id)->first();
+        if (empty($task)){
+            return redirect('404');
+        }
         $answers = Answer::where('task_id', $task_id)->orderBy('status', 'desc')->get();
         $userIDs = $answers->pluck('user_id');
         $users = User::whereIn('id', $userIDs)->get();
-        $task = Task::where('id', $task_id)->first();
         return view('task.completed', ['answers' => $answers, 'task' => $task, 'users' => $users]);
     }
 

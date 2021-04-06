@@ -827,7 +827,7 @@ textarea {
     cursor: pointer;
 }
 @media screen and (max-width: 470px) {
-    .new-form form input, .new-form form select, .new-form form textarea{
+    .new-form form input, .new-form form select, .new-form form textarea, .new-form form textarea{
         font-size: 100% !important;
     }
 }
@@ -1179,6 +1179,32 @@ li{
     color: #fff;
     margin-left: 2px;
     font-size: 17px;
+}
+.logo-white{
+    filter: brightness(0) invert(1);
+    padding: 10px 0;
+    display: block;
+    margin: 0 auto;
+}
+.footer-block{
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+}
+.footer-block p, .footer-block ul{
+    margin-left: 50px;
+    color: #fff;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+.text-footer{
+    margin-left: auto;
+    text-align: right;
+    margin-right: 10px;
+}
+.deadline-failed{
+    color: red;
+    margin-left: auto;
 }
 /*
 #00e00d - green

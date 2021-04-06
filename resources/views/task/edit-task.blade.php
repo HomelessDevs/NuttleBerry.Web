@@ -39,6 +39,10 @@
             <input type="file" name="file" class="drop-zone__input">
         </div>
         <div>
+            <label>Термін здачі</label>
+            <input name="deadline" type="date">
+        </div>
+        <div>
             <button type="submit">Редагувати</button>
         </div>
     </form>

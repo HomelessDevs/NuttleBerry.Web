@@ -23,7 +23,7 @@ Route::get('/', function () {
     return redirect(route('group.index'));
 })->name('main');
 Route::middleware(['auth'])->group(function () {
-    Route::resource('profile', ProfileController::class)->name('*', 'profile')->only(['show', 'edit', 'update', 'destroy']);
+    Route::resource('profile', ProfileController::class)->name('*', 'profile')->only(['show', 'edit', 'update']);
 });
 
 Route::middleware(['auth', 'verified'])->group(function () {
