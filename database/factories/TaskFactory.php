@@ -29,6 +29,7 @@ class TaskFactory extends Factory
             'type' => $this->faker->randomElement(array('practice','theory','advertisement')),
             'topic' => $this->faker->word(),
             'description' => $this->faker->text(50),
+            'deadline' => '2021-05-20'
         ];
     }
 }

@@ -32,13 +32,15 @@
                                             @endif
                                         @endforeach
                                     </div>
-                                    @if($task->deadline < mb_substr($answer->created_at, 0, 10))
-                                    <div class="deadline-failed">
-                                        Просрочено
+                                    <div class="circle-deadline">
+                                        @if($task->deadline < mb_substr($answer->created_at, 0, 10))
+                                            <div class="deadline-failed">
+                                                Просрочено
+                                            </div>
+                                        @endif
+                                        <div
+                                            class="circle @if($answer->status == "Не оцінено") orange @elseif($answer->status == "Оцінено") green @endif"></div>
                                     </div>
-                                    @endif
-                                    <div
-                                        class="circle @if($answer->status == "Не оцінено") orange @elseif($answer->status == "Оцінено") green @endif"></div>
                                 </div>
                                 <div class="answer-message">
                                     <p>{{$answer->message}}</p>
@@ -55,12 +57,17 @@
                                   action="{{ route('task.rate', $answer->id) }}">
                                 @csrf
                                 <input type="hidden" name="taskID" value="{{$answer->task_id}}">
-                                <textarea @if($answer->status == "Оцінено") disabled @endif name="teacher-feedback">@if($answer->teacher_feedback == "none")@else{{ $answer->teacher_feedback }}@endif</textarea>
+                                <textarea @if($answer->status == "Оцінено") disabled
+                                          @endif name="teacher-feedback">@if($answer->teacher_feedback == "none")@else{{ $answer->teacher_feedback }}@endif</textarea>
                                 <div class="submit-rated-task-rating">
-                                    <input @if($answer->status == "Оцінено") disabled @endif required placeholder="{{$task->max_rating}}" class="rating-of-task-form" type="number"
+                                    <input @if($answer->status == "Оцінено") disabled @endif required
+                                           placeholder="{{$task->max_rating}}" class="rating-of-task-form" type="number"
                                            max="{{$task->max_rating}}" min="1" name="rating"
                                            value="{{ $answer->rating }}">
-                                    <button @if($answer->status == "Оцінено") disabled class="submit-rated-task-button disabled" @else class="submit-rated-task-button" @endif type="submit" >Оцінити</button>
+                                    <button @if($answer->status == "Оцінено") disabled
+                                            class="submit-rated-task-button disabled"
+                                            @else class="submit-rated-task-button" @endif type="submit">Оцінити
+                                    </button>
                                 </div>
 
                             </form>

@@ -33,12 +33,14 @@ class AnswerFactory extends Factory
         if ($status == 'Оцінено') {
             $rating = $this->faker->numberBetween(1, 5);
         }
+        $key = array_rand($myCoursesData);
+        $taskID = Task::where([['course_id', $myCoursesData[$key]],['type', 'practice']])->pluck('id')->first();
         return [
-            'task_id' => $this->faker->numberBetween(1, 5),
-            'user_id' => $this->faker->numberBetween(2, 10),
+            'task_id' => $taskID,
+            'user_id' => $key,
             'message' => $this->faker->text(50),
             'rating' => $rating,
-            'status' => $status
+            'status' => $status,
         ];
     }
 }
