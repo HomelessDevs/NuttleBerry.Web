@@ -39,7 +39,6 @@ class AppServiceProvider extends ServiceProvider
                     $courseIDs = Course::where('teacher_id', $user->id)->pluck('id');
                     $tasksIDs = Task::whereIn('course_id', $courseIDs)->pluck('id');
                     $count = Answer::whereIn('task_id', $tasksIDs)->where('status','Не оцінено')->count();
-
                 }
                 view()->share('count', $count);
             }

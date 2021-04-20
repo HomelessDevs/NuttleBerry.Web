@@ -17,10 +17,7 @@ class ProfileController extends Controller
 {
     public function show($id)
     {
-        $user = User::where('id', '=', $id)->first();
-        if (empty($user)){
-            return redirect('404');
-        }
+        $user = User::findOrFail($id);
         $course_ids = MyCourses::where('user_id', Auth::user()->id)->pluck('course_id');
         $courses = Course::whereIn('id', $course_ids)->get();
         if ($user->role == 'teacher' || $user->role == 'admin') {
@@ -59,10 +56,7 @@ class ProfileController extends Controller
             'surname' => 'required|min:2',
             'photo' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
-        $user = User::where('id', Auth::user()->id)->first();
-        if (empty($user)){
-            return redirect('404');
-        }
+        $user = User::findOrFail(Auth::user()->id);;
         $user->name = $request->input('name');
         $user->surname = $request->input('surname');
         if ($request->hasFile('photo')) {
@@ -89,10 +83,7 @@ class ProfileController extends Controller
 
     public function promote($id)
     {
-        $user = User::where('id', $id)->first();
-        if (empty($user)){
-            return redirect('404');
-        }
+        $user = User::findOrFail($id);
         $user->role = 'teacher';
         $user->save();
         $files = Storage::allFiles();

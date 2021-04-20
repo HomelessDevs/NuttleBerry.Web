@@ -11,6 +11,7 @@
 <body>
 <div class="app">
     @include('template-parts.header')
+    @include('template-parts.breadcrumbs')
     <div class="main-wrap">
         @yield('content')
     </div>

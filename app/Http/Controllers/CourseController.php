@@ -17,10 +17,7 @@ class CourseController extends Controller
 
     public function index($group_id)
     {
-        $group = Group::find($group_id);
-        if (empty($group)){
-            return redirect('404');
-        }
+        $group = Group::findOrFail($group_id);
         $courses = $group->courses;
         $user = Auth::user();
         if ($user->role == 'teacher' || $user->role == 'admin') {
@@ -71,10 +68,7 @@ class CourseController extends Controller
 
     public function edit($id)
     {
-        $course = Course::where('id', $id)->first();
-        if (empty($course)){
-            return redirect('404');
-        }
+        $course = Course::findOrFail($id);
         $groups = Group::all();
         return view('course.edit-course', ['course' => $course, 'groups' => $groups]);
     }
@@ -85,10 +79,7 @@ class CourseController extends Controller
             'name' => 'required|max:100|min:3',
             'group' => 'required'
         ]);
-        $course = Course::where('id', $id)->first();
-        if (empty($course)){
-            return redirect('404');
-        }
+        $course = Course::findOrFail($id);
         $teacherID = Auth::user()->id;
         $course->name = $request->input('name');
         $course->teacher_id = $teacherID;

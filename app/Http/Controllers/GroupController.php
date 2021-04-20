@@ -50,10 +50,7 @@ class GroupController extends Controller
 
     public function edit($id)
     {
-        $group = Group::where('id', $id)->first();
-        if (empty($group)){
-            return redirect('404');
-        }
+        $group = Group::findOrFail($id);
         return view('group.edit-group', ['group' => $group]);
     }
 
@@ -62,10 +59,7 @@ class GroupController extends Controller
         $validated = $request->validate([
             'name' => 'required|max:30',
         ]);
-        $group = Group::where('id', $id)->first();
-        if (empty($group)){
-            return redirect('404');
-        }
+        $group = Group::findOrFail($id);
         $group->name = $request->input('name');
         $group->save();
         return redirect()->route('administrating')->with('message', 'Групу успішно відредаговано');
