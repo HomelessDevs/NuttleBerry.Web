@@ -11,9 +11,10 @@
 }
 
 /*--------------------------------------Header--------------------------------------*/
-button, textarea, input{
+button, textarea, input {
     outline: #5d48ff !important;
 }
+
 header {
     font-size: 20px;
     background-color: #5d48ff;
@@ -76,10 +77,11 @@ header nav ul {
 
 /*--------------------------------------adaptive-meny--------------------------------------*/
 @media screen and (max-width: 576px) {
-    .circle-count{
+    .circle-count {
         top: 40px !important;
         margin-left: 98px !important;
     }
+
     .header-navigation {
         display: block;
         width: 36.6%;
@@ -142,9 +144,9 @@ header nav ul {
         display: grid !important;
         position: absolute;
         margin-top: 18.4px;
-        -webkit-box-shadow: 10px 10px 12px -6px rgba(0,0,0,0.75);
-        -moz-box-shadow: 10px 10px 12px -6px rgba(0,0,0,0.75);
-        box-shadow: 10px 10px 12px -6px rgba(0,0,0,0.75);
+        -webkit-box-shadow: 10px 10px 12px -6px rgba(0, 0, 0, 0.75);
+        -moz-box-shadow: 10px 10px 12px -6px rgba(0, 0, 0, 0.75);
+        box-shadow: 10px 10px 12px -6px rgba(0, 0, 0, 0.75);
     }
 
     .first-stick {
@@ -214,6 +216,7 @@ footer {
     left: 0;
     bottom: 0;
     width: 100%;
+    padding: 30px 0 100px 0;
 }
 
 /*--------------------------------------General--------------------------------------*/
@@ -225,8 +228,10 @@ footer {
     min-height: 759px;
     border-radius: 4px;
     background-color: #fff;
+    margin-top: 20px;
 }
-.main-wrap-form{
+
+.main-wrap-form {
     max-width: 400px;
     margin: 20px auto;
     padding: 20px;
@@ -237,12 +242,10 @@ footer {
 }
 
 
-
-
-
 .main-wrap-form p {
     font-size: 19px;
 }
+
 .main-wrap p {
     font-size: 19px;
 }
@@ -295,12 +298,15 @@ body {
 .course-group-form div {
     margin: 20px;
 }
-.group-list li div a{
+
+.group-list li div a {
     overflow: hidden;
 }
-.course-group-form div ul li div:first-child{
+
+.course-group-form div ul li div:first-child {
     overflow: hidden;
 }
+
 header a {
     text-decoration: none;
     color: white;
@@ -329,7 +335,8 @@ header a {
     font-size: 20px;
     margin-top: 20px;
 }
-.standard-list div div:first-child a{
+
+.standard-list div div:first-child a {
     width: 100%;
 }
 
@@ -343,40 +350,48 @@ header a {
     margin-bottom: 10px;
 }
 
-.standard-list div div:hover:first-child  {
+.standard-list div div:hover:first-child {
     background-color: #5d48ff;
 }
 
-.standard-list div div:hover:first-child a{
+.standard-list div div:hover:first-child a {
     color: #fff;
 }
-.standard-list div div:first-child{
+
+.standard-list div div:first-child {
     background: #FAFAFA;
 }
-.svg-a-edit svg{
+
+.svg-a-edit svg {
     height: 20px;
     width: 20px;
     fill: #5d48ff;
     margin-left: 10px;
 }
-.svg-a-edit:before{
+
+.svg-a-edit:before {
     border-left: none !important;
 }
-.svg-a-edit:hover:before{
+
+.svg-a-edit:hover:before {
     border-left: none !important;
 }
-.standard-list div div a{
+
+.standard-list div div a {
     display: block;
     padding: 16px 10px;
 }
-.standard-list div div:nth-child(2){
+
+.standard-list div div:nth-child(2) {
     margin-left: 20px;
 }
-.standard-list div div:first-child{
+
+.standard-list div div:first-child {
 
     width: 100%;
     overflow: hidden;
 }
+
 .task-list {
     padding-inline-start: 20px;
 }
@@ -421,18 +436,29 @@ header a {
 .task-list li a {
     font-size: 22px;
 }
-.task-list li{
+
+.task-list li {
     display: flex;
 }
-.task-list li div:nth-child(2){
+
+.task-list li div:nth-child(2) {
     margin-left: auto;
 }
+
 .completed-task:before {
     border-left: 4px solid #00e00d !important;
 }
 
 .pending-task:before {
     border-left: 4px solid #ffb248 !important;
+}
+
+.task-example a {
+    margin-left: 130px;
+}
+
+.task-example {
+    display: flex;
 }
 
 .theory:before {
@@ -557,9 +583,11 @@ textarea {
     border-radius: 4px;
     transition: 0.5s ease-in-out;
 }
-.task-form{
+
+.task-form {
     display: flex;
 }
+
 .textarea-task-form:focus {
     border: 2px solid #5d48ff;
     outline: none;
@@ -580,7 +608,6 @@ textarea {
 }
 
 /*--------------------------------------Drag-and-drop--------------------------------------*/
-
 
 
 .drop-zone {
@@ -625,26 +652,32 @@ textarea {
     content: attr(data-label);
     color: #fff;
 }
-.answer-download{
+
+.answer-download {
     overflow: hidden;
 }
+
 /*--------------------------------------Adaptive-answer-block--------------------------------------*/
 @media screen and (max-width: 520px) {
     .task-answer {
         display: block;
         border-bottom: none;
     }
-    .task-form{
+
+    .task-form {
         display: block;
     }
-    .textarea-task-form{
+
+    .textarea-task-form {
         width: 100%;
         margin-bottom: 20px;
     }
-    .drop-zone{
+
+    .drop-zone {
         width: 100%;
         margin-left: 0;
     }
+
     .task-info {
         border-left: none;
         padding-left: 0;
@@ -683,49 +716,56 @@ textarea {
 }
 
 .answer-form {
-    position: absolute;
-    width: 90%;
-    bottom: 20px;
+    position: relative;
+    width: 100%;
     padding-top: 20px;
     border-top: 2px solid #a09f9f;
+    margin-top: 15px;
+}
+
+.answer-form form {
+    margin-bottom: 0;
 }
 
 .answer-form:last-child {
     margin-bottom: 0;
 }
-.non-form-teacher{
+
+.non-form-teacher {
     border: 2px solid #a09f9f;
     border-radius: 4px;
     font-size: 17px;
     width: 100%;
 }
+
 .answer-form form input, .answer-form form textarea {
     margin-bottom: 20px;
-    border: 2px solid #a09f9f;
+    border: 2px solid #5d48ff;
     border-radius: 4px;
     font-size: 17px;
 }
 
+.rated form input, .rated form textarea {
+    border: 2px solid #a09f9f !important;
+}
+
 .answer-message p {
     margin: 0;
+    margin-top: 10px !important;
     overflow: hidden;
 }
 
-.user-answer-info {
-    margin-bottom: 170px !important;
+.answer-message{
+    position: relative;
 }
 
-.answer-block div {
-    margin-bottom: 20px;
-}
 
 .answer-block {
     padding: 20px;
-    border: 2px solid #a09f9f;
+    border: 2px solid #5d48ff;
     border-radius: 4px;
     width: 28.55%;
     margin: 20px 20px 0 0;
-    min-height: 250px;
     position: relative;
     flex-basis: 342px;
 }
@@ -756,7 +796,7 @@ textarea {
     cursor: pointer;
     border: none !important;
     border-radius: 4px;
-    font-size: 20px ;
+    font-size: 20px;
 }
 
 .rating-of-task-form {
@@ -794,82 +834,99 @@ textarea {
 
 .green {
     background: #00e00d !important;
+    margin-right: 10px;
 }
 
 .orange {
     background: #ffa249 !important;
+    margin-right: 10px;
 }
 
 .author-answer-status {
     display: flex;
 }
-.completed-task-rating{
+
+.completed-task-rating {
     font-size: 22px;
 }
-.create-courses-btns, .select-edit-create-courses-btns{
+
+.create-courses-btns, .select-edit-create-courses-btns {
     margin-top: 20px;
     display: flex;
     justify-content: space-between;
 }
-.create-courses-btns div, .select-edit-create-courses-btns div{
+
+.create-courses-btns div, .select-edit-create-courses-btns div {
     width: 30%;
 }
-.create-courses-btns div button, .select-edit-create-courses-btns div button{
+
+.create-courses-btns div button, .select-edit-create-courses-btns div button {
     font-size: 20px;
     font-style: inherit;
     width: 100%;
     border-radius: 4px;
-    border: 2px solid #5d48ff ;
+    border: 2px solid #5d48ff;
     background: #fff;
     height: 60px;
     color: #5d48ff;
     transition: 0.3s ease-in-out;
     cursor: pointer;
 }
+
 @media screen and (max-width: 470px) {
-    .new-form form input, .new-form form select, .new-form form textarea, .new-form form textarea{
+    .new-form form input, .new-form form select, .new-form form textarea, .new-form form textarea {
         font-size: 100% !important;
     }
 }
-.create-courses-btns div button:focus{
+
+.create-courses-btns div button:focus {
     outline: none;
 }
-.course-group-form ul{
+
+.course-group-form ul {
     padding-left: 0;
 }
-.course-group-form ul li a{
+
+.course-group-form ul li a {
     font-size: 20px;
 
 }
-.course-group-form ul li{
+
+.course-group-form ul li {
     margin-top: 20px;
     display: flex;
     border-bottom: 2px solid #a09f9f4f;
     padding-bottom: 3px;
 }
-.course-group-form ul div{
+
+.course-group-form ul div {
     margin: 0;
 }
-.course-group-form ul li div:nth-child(2){
+
+.course-group-form ul li div:nth-child(2) {
     margin-left: auto;
 }
-.course-group-form ul li form input{
+
+.course-group-form ul li form input {
     display: none;
 }
 
-.selected-btn{
-    background: #5d48ff  !important;
+.selected-btn {
+    background: #5d48ff !important;
     color: #fff !important;
 }
-.new-form{
+
+.new-form {
     margin: 20px 0 !important;
     width: 100%;
 }
-.new-form form{
-   display: grid;
+
+.new-form form {
+    display: grid;
     width: 100%;
 }
-.new-form form input, .new-form form select, .new-form form textarea{
+
+.new-form form input, .new-form form select, .new-form form textarea {
     box-sizing: border-box;
     height: 35px;
     font-size: 20px;
@@ -877,24 +934,28 @@ textarea {
     border-radius: 4px;
     border: 2px solid #a09f9f;
 }
-.new-form form textarea{
+
+.new-form form textarea {
     height: 100px;
 }
-.new-form form input:focus, .new-form form select:focus, .new-form form textarea:focus{
+
+.new-form form input:focus, .new-form form select:focus, .new-form form textarea:focus {
     border: 2px solid #5d48ff;
     outline: none;
 }
-.new-form form label{
+
+.new-form form label {
     font-size: 22px;
     font-family: Rubick;
     margin: 10px 0 3px 0;
 }
-.new-form form .btn{
+
+.new-form form .btn {
     font-size: 20px;
     font-style: inherit;
     width: 100%;
     border-radius: 4px;
-    border: 2px solid #5d48ff ;
+    border: 2px solid #5d48ff;
     background: #fff;
     height: 60px;
     color: #5d48ff;
@@ -902,20 +963,22 @@ textarea {
     cursor: pointer;
     margin-top: 30px;
 }
-.register-btn{
-    margin:0 auto;
+
+.register-btn {
+    margin: 0 auto;
     max-width: 320px;
     transition: 0.3s ease-in-out;
     padding-top: 30px;
     outline: none;
     border: none;
 }
-.btn{
+
+.btn {
     font-size: 20px;
     font-style: inherit;
     width: 100%;
     border-radius: 4px;
-    border: 2px solid #5d48ff ;
+    border: 2px solid #5d48ff;
     background: #fff;
     height: 60px;
     color: #5d48ff;
@@ -923,71 +986,85 @@ textarea {
     cursor: pointer;
     outline: none;
 }
-.new-form form .btn:hover{
+
+.new-form form .btn:hover {
     background-color: #5d48ff;
     color: #fff;
 }
-.create-task-drop-input{
+
+.create-task-drop-input {
     margin: 0 !important;
     width: 100% !important;
     padding: 0 !important;
     height: 100px;
 }
+
 @media screen and (max-width: 690px) {
     .create-courses-btns {
         display: block;
     }
-    .message-success{
+
+    .message-success {
         width: 100% !important;
     }
-    .create-courses-btns div{
+
+    .create-courses-btns div {
         margin-top: 20px;
         width: 100%;
     }
+
     .new-form {
         width: 100%;
     }
 }
-.profile-photo{
+
+.profile-photo {
     width: 200px;
     height: 200px;
     border-radius: 4px;
 }
-.profile-logout{
+
+.profile-logout {
     margin-top: 87px;
 }
-.profile-title{
+
+.profile-title {
     margin-bottom: 20px;
 }
-.main-profile-block{
+
+.main-profile-block {
     display: flex;
     padding-bottom: 20px;
     border-bottom: 2px solid #a09f9f;
 }
-.main-profile-block p, .main-profile-block a{
+
+.main-profile-block p, .main-profile-block a {
     margin: 0 0 10px 10px;
     font-size: 20px;
 }
 
-.main-profile-block a{
+.main-profile-block a {
     color: #5d48ff;
 }
 
-.my-courses-profile{
-text-align: center
+.my-courses-profile {
+    text-align: center
 }
-.simple-form{
+
+.simple-form {
 
     display: block;
     width: 100%;
     margin: 0 auto;
 }
-.simple-form div{
+
+.simple-form div {
     display: grid;
     width: 100%;
 
 }
-.simple-form div input, .simple-form div select, .simple-form div textarea{
+
+.simple-form div input, .simple-form div select, .simple-form div textarea {
     height: 45px;
     font-size: 20px;
     margin-top: 5px;
@@ -996,15 +1073,17 @@ text-align: center
     width: 100%;
     font-family: Rubick;
 }
-.simple-form div textarea{
+
+.simple-form div textarea {
     height: 150px;
 }
-.simple-form div button{
+
+.simple-form div button {
     font-size: 20px;
     font-style: inherit;
     width: 100%;
     border-radius: 4px;
-    border: 2px solid #5d48ff ;
+    border: 2px solid #5d48ff;
     background: #fff;
     height: 60px;
     color: #5d48ff;
@@ -1012,38 +1091,47 @@ text-align: center
     cursor: pointer;
     margin-top: 10px;
 }
-.simple-form div button:hover{
+
+.simple-form div button:hover {
     background-color: #5d48ff;
     color: #fff;
 }
-.forgot-register a{
+
+.forgot-register a {
     color: #5d48ff;
 }
-.forgot-register{
+
+.forgot-register {
     display: flex !important;
 }
-.forgot-register a:nth-child(2){
+
+.forgot-register a:nth-child(2) {
     margin-left: auto;
 }
-.profile-photo img{
+
+.profile-photo img {
     height: 100%;
     width: 100%;
     border-radius: 4px;
 }
-.completed-none-answers{
+
+.completed-none-answers {
     text-align: center;
 }
 
-.select-edit-create-courses-btns div{
+.select-edit-create-courses-btns div {
     width: 48%;
 }
-.error-text{
+
+.error-text {
     color: red;
     text-align: center;
 }
-li{
+
+li {
     list-style-type: none; /* Убираем маркеры */
 }
+
 .message-success {
     display: flex;
     width: 30%;
@@ -1056,15 +1144,20 @@ li{
     box-shadow: 2px 2px 8px 0px rgba(34, 60, 80, 0.2);
     background: #b4febb;
 }
-.message-success p{
+
+.message-success p {
     text-align: center;
     margin: 0 auto;
     color: #5d48ff;
     font-size: 20px;
 }
-.disabled{
-    background-color: #a2a2a7;
+
+.disabled {
+    background-color: #fff;
+    border: 2px solid #a09f9f !important;
+    color: #a09f9f !important;
 }
+
 .register-btn:hover a button {
     background-color: #5d48ff;
 }
@@ -1072,89 +1165,112 @@ li{
 .register-btn:hover a button {
     color: #fff !important;
 }
-.resend-btn:hover{
+
+.resend-btn:hover {
     background-color: #5d48ff;
 }
 
-.resend-btn:hover{
+.resend-btn:hover {
     color: #fff !important;
 }
-.text-to-verify{
+
+.text-to-verify {
     text-align: center;
 }
-.noone-create-group{
+
+.noone-create-group {
     text-align: center;
 }
-.here-point{
+
+.here-point {
     cursor: pointer;
     color: #5d48ff;
 }
-.destroy-btn{
+
+.destroy-btn {
     color: #e31d1d !important;
     border: 2px solid #e31d1d !important;
 }
-.destroy-btn:hover{
+
+.destroy-btn:hover {
     color: #fff !important;
     border: 2px solid #e31d1d !important;
     background: #e31d1d !important;
 }
-.promote-block{
+
+.promote-block {
     margin-top: 10px;
     margin-left: 10px;
 }
-.promote-block form button{
+
+.promote-block form button {
     height: 50px !important;
 }
-.promote-block form button{
+
+.promote-block form button {
     font-size: 16px !important;
     font-family: Rubick;
 }
-.nuttleberry-text{
+
+.nuttleberry-text {
     color: #5d48ff;
 }
+
 .promote-block form button:hover {
     background-color: #5d48ff;
     color: #fff !important;
 }
-.error-message{
+
+.error-message {
     color: red;
 }
-.status-span-message{
+
+.status-span-message {
     color: #00e00d
 }
-.profile-info p{
-    margin-bottom: 10;
+
+.profile-info p {
+    margin-bottom: 10px;
 }
-.add-new-errors-list{
+
+.add-new-errors-list {
     margin: 0;
 }
-.opps-no-tasks{
+
+.opps-no-tasks {
     text-align: center;
 }
+
 @media screen and (max-width: 515px) {
-.main-profile-block{
-    display: block;
-}
-    .profile-photo{
+    .main-profile-block {
+        display: block;
+    }
+
+    .profile-photo {
         margin: 0 auto;
     }
-    .profile-info{
+
+    .profile-info {
         text-align: center;
     }
-    .profile-logout{
+
+    .profile-logout {
         margin-top: 10px;
     }
 }
-.exit-a{
+
+.exit-a {
     color: red !important;
 }
-.svg-crown{
+
+.svg-crown {
     height: 28px;
     width: 24px;
     margin-top: 14px;
     fill: #ffd80b !important;
 }
-.circle-count{
+
+.circle-count {
     width: 20px;
     height: 20px;
     line-height: 20px;
@@ -1167,7 +1283,8 @@ li{
     margin-left: 88px;
     font-size: 17px;
 }
-.circle-count-list{
+
+.circle-count-list {
     width: 20px;
     height: 20px;
     line-height: 20px;
@@ -1180,46 +1297,151 @@ li{
     margin-left: 2px;
     font-size: 17px;
 }
-.logo-white{
+
+.logo-white {
     filter: brightness(0) invert(1);
-    padding: 10px 0;
     display: block;
-    margin: 0 auto;
 }
-.footer-block{
+
+.footer-block {
     max-width: 1200px;
     margin: 0 auto;
     display: flex;
+    justify-content: space-between;
+    padding: 0 20px;
 }
-.footer-block p, .footer-block ul{
-    margin-left: 50px;
+
+.copyright-footer {
+    width: 200px;
+}
+
+.footer-block p, .footer-block ul {
     color: #fff;
-    margin-top: 5px;
-    margin-bottom: 5px;
+    margin: 0;
 }
-.text-footer{
+
+.contact-us {
+    text-align: right;
+    width: 200px;
+}
+
+.contact-title {
+    margin-bottom: 20px;
+    display: block;
+}
+
+.deadline-date-time {
+    text-align: center;
+}
+
+.purple {
+    color: #5d48ff;
+}
+
+.contact-us-copyright {
+    display: flex;
+}
+
+footer a {
+    color: #fff;
+    display: block;
+}
+
+.text-footer {
     margin-left: auto;
     text-align: right;
     margin-right: 10px;
 }
-.deadline-failed{
-    color: red;
-    margin-left: auto;
+
+.deadline-failed {
     margin-right: 10px;
-}
-.circle-deadline{
-    margin-left: auto;
     display: flex;
 }
-.breadcrumbs{
+
+.circle-author {
+    display: flex;
+    margin-bottom: 10px;
+}
+
+.circle-deadline {
+    margin-left: auto;
+    display: flex;
+    margin-bottom: 0 !important;
+}
+
+.circle-deadline div p {
+    margin-top: 0;
+    font-size: 17px;
+}
+
+.breadcrumbs {
     width: 1240px;
     height: 50px;
     margin: 0 auto;
     border-radius: 4px;
 }
-.breadcrumbs p{
+
+.breadcrumbs p {
     padding: 15px 0;
     margin-top: 0;
+}
+
+.deadline-completed p span {
+    color: #00e00d;
+}
+
+.deadline-completed {
+    display: flex;
+}
+
+.deadline-failed p span {
+    color: red;
+}
+
+.rating-num {
+    color: #5d48ff;
+}
+@media screen and (max-width: 640px) {
+    .copyright-footer {
+        text-align: center;
+        width: auto;
+    }
+
+    .contact-us {
+        text-align: center;
+        width: auto;
+    }
+
+    .footer-block {
+        display: table;
+    }
+
+    .logo-white {
+        margin: 35px auto;
+    }
+}
+
+.svg-time-failed {
+    height: 20px;
+    width: 20px;
+    fill: red;
+}
+.rating-task{
+    margin-right: 10px;
+    color: #5d48ff;
+}
+.red {
+    color: red;
+}
+.teacher-feedback-block{
+    border-top: 2px solid #a09f9f;
+    margin-top: 10px;
+    padding-top: 10px;
+}
+@media screen and (max-width: 1171px){
+    .task-example{
+        display: none;
+    }
 }
 /*
 #00e00d - green

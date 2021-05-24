@@ -70,7 +70,8 @@ class TaskController extends Controller
         $task->description = nl2br($request->input('message'));
         $task->course_id = $request->input('course');
         $task->max_rating = $request->input('max_rating');
-        $task->deadline = $request->input('deadline');
+        $task->deadline_date = $request->input('deadline_date');
+        $task->deadline_time = $request->input('deadline_time');
         if ($request->hasFile('file')) {
             $filename = $request->file('file')->store('');
             $task->file = $filename;
@@ -175,6 +176,7 @@ class TaskController extends Controller
         $task->course_id = $request->input('course');
         $task->max_rating = $request->input('max_rating');
         $task->deadline = $request->input('deadline');
+        $task->deadline_time = $request->input('deadline_time');
         if ($request->hasFile('file')) {
             $files = Storage::allFiles();
             foreach ($files as $file){

@@ -162,7 +162,8 @@
                     <input accept=".zip, .rar" type="file" name="file" class="drop-zone__input">
                 </div>
                 <label>Термін здачі</label>
-                    <input name="deadline" type="date">
+                <input name="deadline_date" type="date">
+                <input name="deadline_time" type="time">
                <button class="btn" type="submit">Додати</button>
             </form>
             <ul class="none-displayed" id="task-list">

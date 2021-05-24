@@ -1,5 +1,14 @@
 <html lang="UA">
 <head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-55EC3CBLBC"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-55EC3CBLBC');
+    </script>
     <meta charset="UTF-8">
     <title>Nuttleberry</title>
     <link href="{{ url('css/app.css') }}" rel="stylesheet">
@@ -11,7 +20,6 @@
 <body>
 <div class="app">
     @include('template-parts.header')
-    @include('template-parts.breadcrumbs')
     <div class="main-wrap">
         @yield('content')
     </div>

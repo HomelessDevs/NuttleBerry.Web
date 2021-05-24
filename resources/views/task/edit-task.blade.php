@@ -40,7 +40,8 @@
         </div>
         <div>
             <label>Термін здачі</label>
-            <input name="deadline" type="date">
+            <input name="deadline_date" type="date">
+            <input name="deadline_time" type="time">
         </div>
         <div>
             <button type="submit">Редагувати</button>

@@ -20,7 +20,8 @@ class CreateTasksTable extends Migration
             $table->string('title');
             $table->string('type');
             $table->string('topic');
-            $table->date('deadline')->default(null);
+            $table->date('deadline_date')->default(null);
+            $table->time('deadline_time')->default(null);
             $table->integer('max_rating')->default('1');;
             $table->string('description');
             $table->string('file')->default('none');

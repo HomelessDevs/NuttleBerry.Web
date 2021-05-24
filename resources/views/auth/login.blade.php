@@ -1,18 +1,15 @@
 @extends('templates.form-template')
 @section('content')
     <h1>Логін</h1>
-
     <form class="simple-form" method="post" action="{{ route('login') }}">
         @csrf
         <div>
             <label>Е-мейл</label>
             <input required type="email" name="email">
-
         </div>
         <div>
             <label>Пароль</label>
             <input required type="password" name="password">
-
         </div>
         @error('password')
         <span class="error-message">{{ $message }}</span>
@@ -25,5 +22,4 @@
             <button type="submit">Ввійти</button>
         </div>
     </form>
-
 @endsection
